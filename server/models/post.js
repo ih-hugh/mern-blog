@@ -10,4 +10,6 @@ const postSchema = new Schema({
   datetime: { type: 'Date', default: Date.now, required: true },
 });
 
+postSchema.plugin(require('mongoose-paginate'));
+
 export default mongoose.model('Post', postSchema);

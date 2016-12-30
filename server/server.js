@@ -11,6 +11,8 @@ import config from '../webpack.config.dev';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
+import dummyData from './dummyData';
+
 // Initialize the Express App
 const app = new Express();
 
@@ -19,6 +21,8 @@ if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
+
+  dummyData();
 }
 
 // React And Redux Setup
@@ -37,11 +41,8 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
 import posts from './routes/post.routes';
-import dummyData from './dummyData';
 import serverConfig from './config';
 
-import { addPostRequest, fetchPosts } from '../client/modules/Blog/BlogActions';
-// import { getPosts } from '../client/modules/Blog/BlogReducer';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
@@ -52,9 +53,6 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
     console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
     throw error;
   }
-
-  // feed some dummy data in DB.
-  dummyData();
 });
 
 // Apply body Parser and server public assets and routes
@@ -166,20 +164,20 @@ const clients = [];
 
 io.on('connection', (socket) => {
   clients.push(socket);
-  console.log('Connected Clients: ', clients.length);
-
   socket.on('disconnect', () => {
     const index = clients.indexOf(socket);
     clients.splice(index, 1);
   });
   socket.on('action', (action) => {
     if (action.type === 'server/addPost') {
-      console.log('Got hello data!', action.post);
       io.sockets.emit('action', { type: 'ADD_POST', post: action.post });
+    }
+
+    if (action.type === 'server/updatePost') {
+      io.sockets.emit('action', { type: 'UPDATE_POST', post: action.post });
     }
   });
   socket.on('refresh bloglist', () => {
-    console.log('refresh bloglist');
     io.sockets.emit('refresh bloglist');
   });
 });

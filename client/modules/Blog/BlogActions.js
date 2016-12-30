@@ -1,15 +1,24 @@
 import callApi from '../../util/apiCaller';
-import { batchActions } from 'redux-batched-actions';
 // Export Constants
 export const ADD_POST = 'ADD_POST';
 export const ADD_POSTS = 'ADD_POSTS';
 export const DELETE_POST = 'DELETE_POST';
+export const UPDATE_POST = 'UPDATE_POST';
+
 export const SERVER_ADD_POST = 'server/addPost';
+export const SERVER_UPDATE_POST = 'server/updatePost';
 
 // Export Actions
 export function addPost(post) {
   return {
     type: ADD_POST,
+    post,
+  };
+}
+
+export function updatePost(post) {
+  return {
+    type: UPDATE_POST,
     post,
   };
 }
@@ -23,6 +32,20 @@ export function addPostRequest(post) {
         content: post.content,
       },
     }).then(res => dispatch(addPost(res.post)));
+  };
+}
+
+export function emitUpdatePostRequest(post, cuid) {
+  return (dispatch) => {
+    return callApi(`/posts/${cuid}`, 'put', {
+      post: {
+        title: post.title,
+        content: post.content,
+      },
+    }).then(res => {
+      console.log(res);
+      dispatch({ type: SERVER_UPDATE_POST, post: res.post });
+    });
   };
 }
 
@@ -71,3 +94,4 @@ export function deletePostRequest(cuid) {
     return callApi(`posts/${cuid}`, 'delete').then(() => dispatch(deletePost(cuid)));
   };
 }
+

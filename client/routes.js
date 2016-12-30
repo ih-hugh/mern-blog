@@ -18,6 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
   // Require async routes only in development for react-hot-reloader to work.
   require('./modules/Blog/pages/BlogListPage/BlogListPage');
   require('./modules/Blog/pages/BlogDetailPage/BlogDetailPage');
+  require('./modules/Blog/pages/BlogEditorPage/BlogEditorPage');
   require('./modules/Blog/components/BlogCreator/BlogCreator');
   require('./modules/Registration/Registration');
   require('./modules/Login/Login');
@@ -55,6 +56,14 @@ export default (
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Blog/components/BlogCreator/BlogCreator').default);
+        });
+      }}
+    />
+    <Route
+      path="/edit/post/:slug-:cuid"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Blog/pages/BlogEditorPage/BlogEditorPage').default);
         });
       }}
     />

@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import BlogList from '../../components/BlogList';
 
 // Import Actions
-import { fetchPosts, deletePostRequest } from '../../BlogActions';
+import { fetchPosts, deletePostRequest, editPostRequest } from '../../BlogActions';
+import { getUser } from '../../../App/AppReducer';
 
 // Import Selectors
 import { getPosts } from '../../BlogReducer';
@@ -18,21 +19,39 @@ class BlogListPage extends Component {
     this.props.dispatch(fetchPosts());
 
     socket.on('refresh bloglist', () => {
-      console.log('REFRESH POSTS');
       this.props.dispatch(fetchPosts());
     });
   }
 
   handleDeletePost = post => {
+    console.log(post);
     if (confirm('Do you want to delete this post')) { // eslint-disable-line
-      this.props.dispatch(deletePostRequest(post));
+      this.props.dispatch(deletePostRequest(post.cuid));
+      socket.emit('refresh bloglist', () => {
+        this.props.dispatch(fetchPosts());
+      });
     }
   };
+
+  handleEditPost = post => {
+    console.log(post);
+    if (confirm('Do you want to edit this post')) { // eslint-disable-line
+      this.props.dispatch(editPostRequest(post.cuid));
+      socket.emit('refresh bloglist', () => {
+        this.props.dispatch(fetchPosts());
+      });
+    }
+  }
 
   render() {
     return (
       <div>
-        <BlogList handleDeletePost={this.handleDeletePost} posts={this.props.posts} />
+        <BlogList
+          user={this.props.user || 'Loading'}
+          handleDeletePost={this.handleDeletePost}
+          handleEditPost={this.handleEditPost}
+          posts={this.props.posts}
+        />
       </div>
     );
   }
@@ -45,6 +64,7 @@ BlogListPage.need = [() => { return fetchPosts(); }];
 function mapStateToProps(state) {
   return {
     posts: getPosts(state),
+    user: getUser(state),
   };
 }
 
@@ -55,6 +75,7 @@ BlogListPage.propTypes = {
     content: PropTypes.string.isRequired,
   })).isRequired,
   dispatch: PropTypes.func.isRequired,
+  user: PropTypes.object,
 };
 
 BlogListPage.contextTypes = {

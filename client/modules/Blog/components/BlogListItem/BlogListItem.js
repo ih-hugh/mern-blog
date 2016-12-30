@@ -1,9 +1,14 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { FormattedMessage } from 'react-intl';
+import format from 'date-fns/format';
+import RaisedButton from 'material-ui/RaisedButton';
 
 // Import Style
 import styles from './BlogListItem.css';
+
+const actionStyles = {
+  margin: '10px',
+};
 
 function BlogListItem(props) {
   return (
@@ -13,10 +18,25 @@ function BlogListItem(props) {
           {props.post.title}
         </Link>
       </h3>
-      <p className={styles['author-name']}><FormattedMessage id="by" /> {props.post.username}</p>
+
+      <p className={styles['author-name']}>{props.post.username}</p>
       <p className={styles['post-desc']}>{props.post.content}</p>
-      <p className={styles['post-action']}><a href="#" onClick={props.onDelete}><FormattedMessage id="deletePost" /></a></p>
+      {
+        props.post.username === props.user.email ?
+          <div className={styles['post-action']}>
+            <RaisedButton style={actionStyles} label="Delete" onTouchTap={props.onDelete} />
+            <RaisedButton
+              style={actionStyles}
+              label="Edit"
+              containerElement={
+                <Link to={`/edit/post/${props.post.slug}-${props.post.cuid}`} />}
+            />
+          </div> : <div></div>
+      }
       <hr className={styles.divider} />
+      <p className={styles['post-date']}>
+        {`${format(props.post.datetime, 'YYYY-MM-DD h:m:s A')}`}
+      </p>
     </div>
   );
 }
@@ -28,8 +48,11 @@ BlogListItem.propTypes = {
     content: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
     cuid: PropTypes.string.isRequired,
+    datetime: PropTypes.string.isRequired,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  user: PropTypes.object,
 };
 
 export default BlogListItem;

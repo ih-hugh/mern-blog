@@ -10,12 +10,16 @@ import sanitizeHtml from 'sanitize-html';
  * @returns void
  */
 export function getPosts(req, res) {
-  Post.find().sort('-dateAdded').exec((err, posts) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.json({ posts });
-  });
+  const { limit = 5, page = 0 } = req.params;
+  Post.find().sort('-datetime')
+    .limit(limit)
+    .skip(limit * page)
+    .exec((err, posts) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.json({ posts });
+    });
 }
 
 /**
@@ -76,5 +80,32 @@ export function deletePost(req, res) {
     post.remove(() => {
       res.status(200).end();
     });
+  });
+}
+
+/**
+ * Update a post
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function updatePost(req, res) {
+  if (!req.body.post.title || !req.body.post.content) {
+    res.status(403).end();
+  }
+
+  const title = req.body.post.title;
+  const content = req.body.post.content;
+
+  Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+
+    post.content = content; // eslint-disable-line
+    post.title = title; // eslint-disable-line
+    post.save();
+
+    res.send(post);
   });
 }

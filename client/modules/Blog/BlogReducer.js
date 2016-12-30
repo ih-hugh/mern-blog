@@ -1,26 +1,32 @@
-import { ADD_POST, ADD_POSTS, DELETE_POST, SERVER_ADD_POST } from './BlogActions';
+import { ADD_POST, ADD_POSTS, DELETE_POST, SERVER_ADD_POST, SERVER_UPDATE_POST } from './BlogActions';
+
 
 // Initial State
 const initialState = { data: [] };
 
 const BlogReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_POST :
+    case ADD_POST:
       return {
         data: [action.post, ...state.data],
       };
 
-    case SERVER_ADD_POST :
+    case SERVER_ADD_POST:
       return {
         data: [action.post, ...state.data],
       };
 
-    case ADD_POSTS :
+    case SERVER_UPDATE_POST:
+      return {
+        data: [action.post, ...state.data],
+      };
+
+    case ADD_POSTS:
       return {
         data: action.posts,
       };
 
-    case DELETE_POST :
+    case DELETE_POST:
       return {
         data: state.data.filter(post => post.cuid !== action.cuid),
       };
