@@ -6,7 +6,7 @@ import fbStyles from '../../../../styles/flexboxgrid.css';
 
 const Header = () => (
   <Parallax bgImage={bgImage} strength={400} >
-    <div style={{ position: 'relative', top: '100px', height: '482px' }}>
+    <div style={{ position: 'relative', top: '150px', height: '482px' }}>
       <div className={`${fbStyles['container-fluid']}`}>
         <div className={`${fbStyles.row}`}>
           <div className={styles['header-copy']}>

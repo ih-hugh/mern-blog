@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 63);
+/******/ 	return __webpack_require__(__webpack_require__.s = 64);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,7 +70,7 @@
 	});
 	exports.getPosts = exports.getUser = exports.getError = exports.getAuthenticatedStatus = undefined;
 
-	var _AppActions = __webpack_require__(8);
+	var _AppActions = __webpack_require__(9);
 
 	// Initial State
 	var initialState = {
@@ -250,22 +250,6 @@
 	  };
 	}
 
-	// export function fetchPosts(limit, offset) {
-	//   return (dispatch) => {
-	//     return callApi(`posts/?limit=${limit}&offset=${offset}`).then(res => {
-	//       dispatch(addPosts(res.posts));
-	//     });
-	//   };
-	// }
-
-	// export function fetchPostsCount() {
-	//   return (dispatch) => {
-	//     return callApi('posts/').then(res => {
-	//       dispatch(setPostCount(res.postsCount));
-	//     });
-	//   };
-	// }
-
 	function fetchPost(cuid) {
 	  return function (dispatch) {
 	    return (0, _apiCaller2.default)('posts/' + cuid).then(function (res) {
@@ -384,7 +368,7 @@
 	});
 	exports.socket = undefined;
 
-	var _socket = __webpack_require__(89);
+	var _socket = __webpack_require__(90);
 
 	var _socket2 = _interopRequireDefault(_socket);
 
@@ -396,10 +380,16 @@
 /* 7 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-helmet");
+	module.exports = require("material-ui/RaisedButton");
 
 /***/ },
 /* 8 */
+/***/ function(module, exports) {
+
+	module.exports = require("react-helmet");
+
+/***/ },
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -417,7 +407,7 @@
 	exports.addPostRequest = addPostRequest;
 	exports.verifyAuth = verifyAuth;
 
-	var _firebase = __webpack_require__(9);
+	var _firebase = __webpack_require__(10);
 
 	var _firebase2 = _interopRequireDefault(_firebase);
 
@@ -501,16 +491,10 @@
 	}
 
 /***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	module.exports = require("firebase");
-
-/***/ },
 /* 10 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/RaisedButton");
+	module.exports = require("firebase");
 
 /***/ },
 /* 11 */
@@ -585,17 +569,17 @@
 
 	var _reactIntl = __webpack_require__(11);
 
-	var _intl = __webpack_require__(67);
+	var _intl = __webpack_require__(68);
 
 	var _intl2 = _interopRequireDefault(_intl);
 
-	var _intlLocalesSupported = __webpack_require__(68);
+	var _intlLocalesSupported = __webpack_require__(69);
 
 	var _intlLocalesSupported2 = _interopRequireDefault(_intlLocalesSupported);
 
-	__webpack_require__(69);
+	__webpack_require__(70);
 
-	var _en = __webpack_require__(78);
+	var _en = __webpack_require__(79);
 
 	var _en2 = _interopRequireDefault(_en);
 
@@ -603,9 +587,9 @@
 
 	var _en4 = _interopRequireDefault(_en3);
 
-	__webpack_require__(70);
+	__webpack_require__(71);
 
-	var _fr = __webpack_require__(79);
+	var _fr = __webpack_require__(80);
 
 	var _fr2 = _interopRequireDefault(_fr);
 
@@ -691,13 +675,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reduxDevtools = __webpack_require__(83);
+	var _reduxDevtools = __webpack_require__(84);
 
-	var _reduxDevtoolsLogMonitor = __webpack_require__(85);
+	var _reduxDevtoolsLogMonitor = __webpack_require__(86);
 
 	var _reduxDevtoolsLogMonitor2 = _interopRequireDefault(_reduxDevtoolsLogMonitor);
 
-	var _reduxDevtoolsDockMonitor = __webpack_require__(84);
+	var _reduxDevtoolsDockMonitor = __webpack_require__(85);
 
 	var _reduxDevtoolsDockMonitor2 = _interopRequireDefault(_reduxDevtoolsDockMonitor);
 
@@ -730,6 +714,12 @@
 
 	var _reactRedux = __webpack_require__(1);
 
+	var _reactRouter = __webpack_require__(2);
+
+	var _RaisedButton = __webpack_require__(7);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
 	var _AppReducer = __webpack_require__(3);
 
 	var _BlogActions = __webpack_require__(4);
@@ -759,6 +749,10 @@
 
 
 	// Import Style
+
+	var _ref2 = _jsx(_reactRouter.Link, {
+	  to: '/'
+	});
 
 	var BlogCreator = exports.BlogCreator = function (_Component) {
 	  _inherits(BlogCreator, _Component);
@@ -801,11 +795,13 @@
 	        className: _BlogCreator2.default['form-content']
 	      }, void 0, _jsx('h2', {
 	        className: _BlogCreator2.default['form-title']
-	      }, void 0, 'Create New Blog Post'), _jsx('h3', {}, void 0, this.props.user ? this.props.user.email : 'Loading'), _react2.default.createElement('input', { placeholder: 'Blog Title', className: _BlogCreator2.default['form-field'], ref: 'title' }), _react2.default.createElement('textarea', { placeholder: 'Blog Content', className: _BlogCreator2.default['form-field'], ref: 'content' }), _jsx('a', {
-	        className: _BlogCreator2.default['post-submit-button'],
-	        href: '/',
-	        onClick: this.addPost
-	      }, void 0, 'Submit')));
+	      }, void 0, 'Create New Blog Post'), _jsx('h3', {}, void 0, this.props.user ? this.props.user.email : 'Loading'), _react2.default.createElement('input', { placeholder: 'Blog Title', className: _BlogCreator2.default['form-field'], ref: 'title' }), _react2.default.createElement('textarea', { placeholder: 'Blog Content', className: _BlogCreator2.default['form-field'], ref: 'content' }), _jsx(_RaisedButton2.default, {
+	        backgroundColor: '#333c5a',
+	        labelColor: '#fff',
+	        onTouchTap: this.addPost,
+	        label: 'Submit',
+	        containerElement: _ref2
+	      })));
 	    }
 	  }]);
 
@@ -851,7 +847,7 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _reactHelmet = __webpack_require__(7);
+	var _reactHelmet = __webpack_require__(8);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
@@ -1053,11 +1049,11 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _reactJsPagination = __webpack_require__(80);
+	var _reactJsPagination = __webpack_require__(81);
 
 	var _reactJsPagination2 = _interopRequireDefault(_reactJsPagination);
 
-	var _BlogList = __webpack_require__(57);
+	var _BlogList = __webpack_require__(58);
 
 	var _BlogList2 = _interopRequireDefault(_BlogList);
 
@@ -1096,16 +1092,6 @@
 	      if (confirm('Do you want to delete this post')) {
 	        // eslint-disable-line
 	        _this.props.dispatch((0, _BlogActions.deletePostRequest)(post.cuid));
-	        _initSocket.socket.emit('refresh bloglist', function () {
-	          _this.props.dispatch((0, _BlogActions.fetchPosts)());
-	        });
-	      }
-	    };
-
-	    _this.handleEditPost = function (post) {
-	      if (confirm('Do you want to edit this post')) {
-	        // eslint-disable-line
-	        _this.props.dispatch((0, _BlogActions.editPostRequest)(post.cuid));
 	        _initSocket.socket.emit('refresh bloglist', function () {
 	          _this.props.dispatch((0, _BlogActions.fetchPosts)());
 	        });
@@ -1219,7 +1205,7 @@
 
 	var _lib = __webpack_require__(33);
 
-	var _RaisedButton = __webpack_require__(10);
+	var _RaisedButton = __webpack_require__(7);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -1526,7 +1512,7 @@
 	exports.fetchSignedInUser = fetchSignedInUser;
 	exports.logUserIn = logUserIn;
 
-	var _firebase = __webpack_require__(9);
+	var _firebase = __webpack_require__(10);
 
 	var _firebase2 = _interopRequireDefault(_firebase);
 
@@ -1661,7 +1647,7 @@
 
 	var _lib = __webpack_require__(33);
 
-	var _RaisedButton = __webpack_require__(10);
+	var _RaisedButton = __webpack_require__(7);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -1983,7 +1969,7 @@
 	exports.authError = authError;
 	exports.signUserUp = signUserUp;
 
-	var _firebase = __webpack_require__(9);
+	var _firebase = __webpack_require__(10);
 
 	var _firebase2 = _interopRequireDefault(_firebase);
 
@@ -2089,7 +2075,7 @@
 	exports.API_URL = undefined;
 	exports.default = callApi;
 
-	var _isomorphicFetch = __webpack_require__(71);
+	var _isomorphicFetch = __webpack_require__(72);
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
@@ -2157,7 +2143,7 @@
 	  datetime: { type: 'Date', default: Date.now, required: true }
 	});
 
-	postSchema.plugin(__webpack_require__(74));
+	postSchema.plugin(__webpack_require__(75));
 
 	exports.default = _mongoose2.default.model('Post', postSchema);
 
@@ -2334,7 +2320,7 @@
 
 	var _redux = __webpack_require__(35);
 
-	var _reduxThunk = __webpack_require__(87);
+	var _reduxThunk = __webpack_require__(88);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -2344,11 +2330,11 @@
 
 	var _reduxBatchedActions = __webpack_require__(36);
 
-	var _reduxSocket = __webpack_require__(86);
+	var _reduxSocket = __webpack_require__(87);
 
 	var _reduxSocket2 = _interopRequireDefault(_reduxSocket);
 
-	var _reducers = __webpack_require__(61);
+	var _reducers = __webpack_require__(62);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -2441,7 +2427,7 @@
 
 	var _express = __webpack_require__(13);
 
-	var _post = __webpack_require__(62);
+	var _post = __webpack_require__(63);
 
 	var PostController = _interopRequireWildcard(_post);
 
@@ -2481,7 +2467,7 @@
 	});
 	exports.fetchComponentData = fetchComponentData;
 
-	var _promiseUtils = __webpack_require__(64);
+	var _promiseUtils = __webpack_require__(65);
 
 	function fetchComponentData(store, components, params) {
 	  var needs = components.reduce(function (prev, current) {
@@ -2504,9 +2490,9 @@
 	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
 
 	var webpack = __webpack_require__(18);
-	var cssnext = __webpack_require__(75);
-	var postcssFocus = __webpack_require__(76);
-	var postcssReporter = __webpack_require__(77);
+	var cssnext = __webpack_require__(76);
+	var postcssFocus = __webpack_require__(77);
+	var postcssReporter = __webpack_require__(78);
 
 	module.exports = {
 	  devtool: 'cheap-module-eval-source-map',
@@ -2700,7 +2686,7 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _reactHelmet = __webpack_require__(7);
+	var _reactHelmet = __webpack_require__(8);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
@@ -2720,6 +2706,10 @@
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
+	var _TechShowcase = __webpack_require__(57);
+
+	var _TechShowcase2 = _interopRequireDefault(_TechShowcase);
+
 	var _MuiThemeProvider = __webpack_require__(15);
 
 	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
@@ -2730,11 +2720,11 @@
 
 	var _lightBaseTheme2 = _interopRequireDefault(_lightBaseTheme);
 
-	var _reactTapEventPlugin = __webpack_require__(82);
+	var _reactTapEventPlugin = __webpack_require__(83);
 
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 
-	var _AppActions = __webpack_require__(8);
+	var _AppActions = __webpack_require__(9);
 
 	var _AppReducer = __webpack_require__(3);
 
@@ -2760,7 +2750,9 @@
 
 	var _ref2 = _jsx(_Header2.default, {});
 
-	var _ref3 = _jsx(_Footer2.default, {});
+	var _ref3 = _jsx(_TechShowcase2.default, {});
+
+	var _ref4 = _jsx(_Footer2.default, {});
 
 	var App = exports.App = function (_Component) {
 	  _inherits(App, _Component);
@@ -2791,7 +2783,7 @@
 	      return _jsx(_MuiThemeProvider2.default, {
 	        muiTheme: muiTheme
 	      }, void 0, _jsx('div', {}, void 0, this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && _ref, _jsx('div', {}, void 0, _jsx(_reactHelmet2.default, {
-	        title: 'MERN Starter - Blog App',
+	        title: 'Magic Leap Assignment - Blog App',
 	        titleTemplate: '%s - Blog App',
 	        meta: [{ charset: 'utf-8' }, {
 	          'http-equiv': 'X-UA-Compatible',
@@ -2805,7 +2797,7 @@
 	        isAuthenticated: this.props.isAuthenticated
 	      }), _ref2, _jsx('div', {
 	        className: _App2.default.container
-	      }, void 0, this.props.children), _ref3)));
+	      }, void 0, this.props.children), _ref3, _ref4)));
 	    }
 	  }]);
 
@@ -2881,7 +2873,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactParallax = __webpack_require__(81);
+	var _reactParallax = __webpack_require__(82);
 
 	var _Header = {
 	  "header-container": "_3eQVt3GEC69Gxh4gZaqvd7",
@@ -3059,7 +3051,7 @@
 	    bgImage: _writer2.default,
 	    strength: 400
 	  }, void 0, _jsx('div', {
-	    style: { position: 'relative', top: '100px', height: '482px' }
+	    style: { position: 'relative', top: '150px', height: '482px' }
 	  }, void 0, _jsx('div', {
 	    className: '' + _flexboxgrid2.default['container-fluid']
 	  }, void 0, _jsx('div', {
@@ -3094,9 +3086,9 @@
 
 	var _reactRouter = __webpack_require__(2);
 
-	var _materialUi = __webpack_require__(73);
+	var _materialUi = __webpack_require__(74);
 
-	var _AppActions = __webpack_require__(8);
+	var _AppActions = __webpack_require__(9);
 
 	var _AppReducer = __webpack_require__(3);
 
@@ -3212,15 +3204,6 @@
 
 	var _ref2 = _jsx(_materialUi.ListItem, {
 	  containerElement: _jsx(_reactRouter.Link, {
-	    to: '/create'
-	  }),
-	  hoverColor: hoverColor,
-	  style: listItemStyle,
-	  primaryText: 'Create Blog'
-	});
-
-	var _ref3 = _jsx(_materialUi.ListItem, {
-	  containerElement: _jsx(_reactRouter.Link, {
 	    to: '/'
 	  }),
 	  hoverColor: hoverColor,
@@ -3228,9 +3211,25 @@
 	  primaryText: 'Home'
 	});
 
+	var _ref3 = _jsx(_materialUi.ListItem, {
+	  containerElement: _jsx(_reactRouter.Link, {
+	    to: '/create'
+	  }),
+	  hoverColor: hoverColor,
+	  style: listItemStyle,
+	  primaryText: 'Create Blog'
+	});
+
 	var _ref4 = _jsx(_materialUi.List, {
 	  style: listStyle
 	}, void 0, _jsx(_materialUi.ListItem, {
+	  containerElement: _jsx(_reactRouter.Link, {
+	    to: '/'
+	  }),
+	  hoverColor: hoverColor,
+	  style: listItemStyle,
+	  primaryText: 'Home'
+	}), _jsx(_materialUi.ListItem, {
 	  containerElement: _jsx(_reactRouter.Link, {
 	    to: '/register'
 	  }),
@@ -3244,13 +3243,6 @@
 	  hoverColor: hoverColor,
 	  style: listItemStyle,
 	  primaryText: 'Login'
-	}), _jsx(_materialUi.ListItem, {
-	  containerElement: _jsx(_reactRouter.Link, {
-	    to: '/'
-	  }),
-	  hoverColor: hoverColor,
-	  style: listItemStyle,
-	  primaryText: 'Home'
 	}));
 
 	var Navbar = function (_Component) {
@@ -3282,16 +3274,16 @@
 	      return this.props.isAuthenticated ? _jsx(_materialUi.List, {
 	        className: _animate2.default.animated + ' ' + _animate2.default.fadeIn,
 	        style: listStyle
-	      }, void 0, _jsx(_materialUi.ListItem, {
-	        hoverColor: hoverColor,
-	        style: { justifyContent: 'left', color: '#fff' },
-	        primaryText: this.props.user.email ? this.props.user.email : 'Loading...'
-	      }), _jsx(_materialUi.ListItem, {
+	      }, void 0, _ref2, _jsx(_materialUi.ListItem, {
 	        onTouchTap: this.handleLogout,
 	        hoverColor: hoverColor,
 	        style: listItemStyle,
 	        primaryText: 'Logout'
-	      }), _ref2, _ref3) : _ref4;
+	      }), _ref3, _jsx(_materialUi.ListItem, {
+	        hoverColor: hoverColor,
+	        style: { justifyContent: 'left', color: '#fff' },
+	        primaryText: this.props.user.email ? this.props.user.email : 'Loading...'
+	      })) : _ref4;
 	    }
 	  }, {
 	    key: 'render',
@@ -3325,6 +3317,112 @@
 
 	var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
 
+	var _react = __webpack_require__(0);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _TechShowcase = {
+	  "tech-showcase": "_1rBrajJUG8QmnkJk7hR9vB",
+	  "tech-box": "_3ATtK-GuUF6URQUBuwMa-h",
+	  "title": "_3jgHgX7TixuXGS3IVS2fdy",
+	  "mongodb-img": "_2x2T0FvIhTiBPz_B6eeHvR",
+	  "react-img": "_3onUZsTjzujyYWFXX_qmqt",
+	  "nodejs-img": "s2gEXhN3n9u7A6fa2Ay4h",
+	  "redux-img": "_30e0-42_W_j-JVu1WRqi5z",
+	  "webpack-img": "_3pbTHnoPPWEaqRENpvcFxy"
+	};
+
+	var _TechShowcase2 = _interopRequireDefault(_TechShowcase);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _ref = _jsx('a', {
+	  href: 'https://www.mongodb.com/',
+	  target: '_blank'
+	}, void 0, _jsx('img', {
+	  className: 'mongodb-img',
+	  role: 'presentation',
+	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456749/static_imgs/mern/v2/mongodb.jpg'
+	}));
+
+	var _ref2 = _jsx('a', {
+	  href: 'http://expressjs.com',
+	  target: '_blank'
+	}, void 0, _jsx('img', {
+	  className: 'express-img',
+	  role: 'presentation',
+	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456747/static_imgs/mern/v2/express.jpg'
+	}));
+
+	var _ref3 = _jsx('a', {
+	  href: 'https://facebook.github.io/react/',
+	  target: '_blank'
+	}, void 0, _jsx('img', {
+	  className: 'react-img',
+	  role: 'presentation',
+	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456747/static_imgs/mern/v2/react.png'
+	}));
+
+	var _ref4 = _jsx('a', {
+	  href: 'https://nodejs.org/en/',
+	  target: '_blank'
+	}, void 0, _jsx('img', {
+	  className: 'nodejs-img',
+	  role: 'presentation',
+	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456747/static_imgs/mern/v2/nodejs.png'
+	}));
+
+	var _ref5 = _jsx('a', {
+	  href: 'http://redux.js.org/',
+	  target: '_blank'
+	}, void 0, _jsx('img', {
+	  className: 'redux-img',
+	  role: 'presentation',
+	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456747/static_imgs/mern/v2/redux-logo.png'
+	}));
+
+	var _ref6 = _jsx('a', {
+	  href: 'https://webpack.github.io/',
+	  target: '_blank'
+	}, void 0, _jsx('img', {
+	  className: 'webpack-img',
+	  role: 'presentation',
+	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456748/static_imgs/mern/v2/webpack.png'
+	}));
+
+	var TechShowcase = function TechShowcase() {
+	  return _jsx('div', {
+	    className: '' + _TechShowcase2.default['tech-showcase']
+	  }, void 0, _jsx('div', {
+	    className: '' + _TechShowcase2.default['tech-box']
+	  }, void 0, _ref), _jsx('div', {
+	    className: '' + _TechShowcase2.default['tech-box']
+	  }, void 0, _ref2), _jsx('div', {
+	    className: '' + _TechShowcase2.default['tech-box']
+	  }, void 0, _ref3), _jsx('div', {
+	    className: '' + _TechShowcase2.default['tech-box']
+	  }, void 0, _ref4), _jsx('div', {
+	    className: '' + _TechShowcase2.default['tech-box']
+	  }, void 0, _ref5), _jsx('div', {
+	    className: '' + _TechShowcase2.default['tech-box']
+	  }, void 0, _ref6));
+	};
+
+	exports.default = TechShowcase;
+
+/***/ },
+/* 58 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
+
 	// Import Components
 
 
@@ -3332,7 +3430,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _BlogListItem = __webpack_require__(58);
+	var _BlogListItem = __webpack_require__(59);
 
 	var _BlogListItem2 = _interopRequireDefault(_BlogListItem);
 
@@ -3496,6 +3594,89 @@
 
 	var _flexboxgrid2 = _interopRequireDefault(_flexboxgrid);
 
+	var _animate = {
+	  "animated": "_2EKhZHq2OINFMF630dOojQ",
+	  "infinite": "MBYVn6X60QAHkwVlSPAJF",
+	  "hinge": "_18zmag_auWOw3FCr9EoMCZ",
+	  "flipOutX": "_30cmfC1VpE0LAx0l8jVuAQ",
+	  "flipOutY": "QGq1g2qBdE7BPfvlF8tAR",
+	  "bounceIn": "_3C7BCSpQzlN7dHSZILGUch",
+	  "bounceOut": "_1iEAe0tvs4iJfXqfzM9n5-",
+	  "bounce": "_3eQhBLkORm3N8djTP40NNj",
+	  "flash": "kEusQGIXWBnu-7S9m-Ijb",
+	  "pulse": "_2Nm8KYiOI76nANpjwHqiTH",
+	  "rubberBand": "_1i-kQ1a1H-tjDVqJCvQb0e",
+	  "shake": "_1AHBBe-8mGZE8SoR0ReXMG",
+	  "headShake": "_2POGeFew5dcihZQLujjNmZ",
+	  "swing": "_2gLTAsw_i-W-cf209B3TCH",
+	  "tada": "_1yVUMlrjBXZdc-VGPGwmLv",
+	  "wobble": "_2LNBIKDVF1k4mv6wvw92Uc",
+	  "jello": "_3MyrMRaznrFn_fwShxi-dB",
+	  "bounceInDown": "_1AN6KjZWHpSlemwIMnizn9",
+	  "bounceInLeft": "_1QaGPaJrc_nwzFtkMquNFT",
+	  "bounceInRight": "ohymGJkN9WrkU0i6ifFVw",
+	  "bounceInUp": "_3liE2Wj-JDSfsllcVkWbyb",
+	  "bounceOutDown": "_305U_r4j-Rcg4wsnVMNx-R",
+	  "bounceOutLeft": "_1Bzti1RwndEvdct-JozCrT",
+	  "bounceOutRight": "a12Toos9y-EaTeHl62EQk",
+	  "bounceOutUp": "_1WDhIwp5y5EXKkZ2hPtd39",
+	  "fadeIn": "_1Poe9YeDEAGRcqESikkgT8",
+	  "fadeInDown": "_1he78N2ftOw_M53-Nj4e3G",
+	  "fadeInDownBig": "_3PXem82WMp72gchr11UCpX",
+	  "fadeInLeft": "_70xKA3jzaHuyLmO4cJd4w",
+	  "fadeInLeftBig": "obYTM9KjWLX2m9mWzhC4E",
+	  "fadeInRight": "l7V6PyPFQ9CuWdBNQLZLO",
+	  "fadeInRightBig": "_18ufSpYkahpZWDUu-XKs6l",
+	  "fadeInUp": "_17dcs_IlBr05xYOcHQtwRp",
+	  "fadeInUpBig": "VLFP9kOqvKXl3ip5-RSi8",
+	  "fadeOut": "_3dEfcusTUu_vf9Rld6YREd",
+	  "fadeOutDown": "_2PdKc8VHeDCBd-v6xUGr_M",
+	  "fadeOutDownBig": "_39xXF1SnesD-MTVVuGxzg6",
+	  "fadeOutLeft": "_2aLDDxGwgooW8gHSXfyliX",
+	  "fadeOutLeftBig": "XGAUblLT9cXlF8IXwWMlT",
+	  "fadeOutRight": "_3VYe5diEqB2nG_NWKNOiM5",
+	  "fadeOutRightBig": "bdS1x51L23Iesh0CmUgUj",
+	  "fadeOutUp": "_1Hi-Qzg8WlxkC5I3T-aTfS",
+	  "fadeOutUpBig": "_2IXnjb3MHdCXTE0W8cb6aM",
+	  "flip": "_2fqgix-k0SfqpfAljkq3n9",
+	  "flipInX": "tmSEvtgQ8MuzmfvGEJzo1",
+	  "flipInY": "_36gmFIJW13sBnJKysUvYJh",
+	  "lightSpeedIn": "wOFjgtTyT5b80mG6xTVJ1",
+	  "lightSpeedOut": "_2dg5QTycmc823nLnbrJYQ9",
+	  "rotateIn": "_9yj17ssFTJX2Mo68PpmAy",
+	  "rotateInDownLeft": "_3EG7BR8EKQ2_TZRkjtiDKd",
+	  "rotateInDownRight": "_3el3Mm19RFTcIRAC0IJIQq",
+	  "rotateInUpLeft": "_1eEF2MgQ6LyrNrev2l-Aj_",
+	  "rotateInUpRight": "_27WRhNdKWtQekmw2qzTPi_",
+	  "rotateOut": "_2TPzpqe8K4AhalPFmJcjFA",
+	  "rotateOutDownLeft": "_2SRvq1_x5TK1PrYfPvgv_Y",
+	  "rotateOutDownRight": "_273Hw4BnQhhJGxdYShEnav",
+	  "rotateOutUpLeft": "_3BfXkq6U94pNgR4_vpyBcs",
+	  "rotateOutUpRight": "_12dhDegckiGm03x2QEaAjc",
+	  "rollIn": "_3XsPCGzEtdlGYdIRy5wief",
+	  "rollOut": "RsTsSj9Isss1FOfGMwQdD",
+	  "zoomIn": "uTIeKcAIFd9-eHGK08K6R",
+	  "zoomInDown": "_2x5W6YS2h3VZ5Iw9D0juyO",
+	  "zoomInLeft": "_1rVWv8jBVtAFHKrgYKQBXz",
+	  "zoomInRight": "_2m5CRJ0c2kODD7YKxJHd7Y",
+	  "zoomInUp": "_1y-MzG1Ew7uTuMbrEPBXR1",
+	  "zoomOut": "_1eO-pxPIIj-TxRDz83vyke",
+	  "zoomOutDown": "WcQxj2SXfBjw_YLqqq0Tr",
+	  "zoomOutLeft": "_3y2HRe2GzUr8YYshpO1VfP",
+	  "zoomOutRight": "_1636h6-Nre6QvL7NsjmGCf",
+	  "zoomOutUp": "GcZG9FbVnyYre4aWYFshd",
+	  "slideInDown": "_1Qg604EF9cqFQq7pMItGbv",
+	  "slideInLeft": "_2umpK-fz2Noh3FFvrAjAVB",
+	  "slideInRight": "FskrwoBNsJeAnmlsCV045",
+	  "slideInUp": "_33GNZAcn-DyOr97sHLLX3i",
+	  "slideOutDown": "_3URDCM8WlmfgBpydDWDwHl",
+	  "slideOutLeft": "_1E-u055M9PXElmsNw0WwC-",
+	  "slideOutRight": "wgQ0Mw_hBtETYjffFpyv2",
+	  "slideOutUp": "_1O1Phcf5lv2TELTeYxj6OE"
+	};
+
+	var _animate2 = _interopRequireDefault(_animate);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var _ref = _jsx('p', {}, void 0, 'Start Blogging');
@@ -3505,25 +3686,28 @@
 	    className: 'listView'
 	  }, void 0, props.posts.length === 0 ? _jsx('div', {
 	    className: _flexboxgrid2.default['container-fluid'] + ' ' + _BlogList2.default['no-post-message']
-	  }, void 0, _ref) : props.posts.map(function (post) {
-	    return _jsx(_BlogListItem2.default, {
+	  }, void 0, _ref) : props.posts.map(function (post, i) {
+	    return _jsx('div', {
+	      className: _animate2.default.animated + ' ' + _animate2.default.fadeIn,
+	      style: {
+	        WebkitAnimationDuration: '1s',
+	        WebkitAnimationDelay: i / 2 + 's'
+	      }
+	    }, post.cuid, _jsx(_BlogListItem2.default, {
 	      user: props.user,
 	      isAuthenticated: props.isAuthenticated,
 	      post: post,
-	      onEdit: function onEdit() {
-	        return props.handleEditPost(post);
-	      },
 	      onDelete: function onDelete() {
 	        return props.handleDeletePost(post);
 	      }
-	    }, post.cuid);
+	    }));
 	  }));
 	}
 
 	exports.default = BlogList;
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3544,13 +3728,96 @@
 
 	var _reactRouter = __webpack_require__(2);
 
-	var _format = __webpack_require__(66);
+	var _format = __webpack_require__(67);
 
 	var _format2 = _interopRequireDefault(_format);
 
-	var _RaisedButton = __webpack_require__(10);
+	var _RaisedButton = __webpack_require__(7);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	var _animate = {
+	  "animated": "_2EKhZHq2OINFMF630dOojQ",
+	  "infinite": "MBYVn6X60QAHkwVlSPAJF",
+	  "hinge": "_18zmag_auWOw3FCr9EoMCZ",
+	  "flipOutX": "_30cmfC1VpE0LAx0l8jVuAQ",
+	  "flipOutY": "QGq1g2qBdE7BPfvlF8tAR",
+	  "bounceIn": "_3C7BCSpQzlN7dHSZILGUch",
+	  "bounceOut": "_1iEAe0tvs4iJfXqfzM9n5-",
+	  "bounce": "_3eQhBLkORm3N8djTP40NNj",
+	  "flash": "kEusQGIXWBnu-7S9m-Ijb",
+	  "pulse": "_2Nm8KYiOI76nANpjwHqiTH",
+	  "rubberBand": "_1i-kQ1a1H-tjDVqJCvQb0e",
+	  "shake": "_1AHBBe-8mGZE8SoR0ReXMG",
+	  "headShake": "_2POGeFew5dcihZQLujjNmZ",
+	  "swing": "_2gLTAsw_i-W-cf209B3TCH",
+	  "tada": "_1yVUMlrjBXZdc-VGPGwmLv",
+	  "wobble": "_2LNBIKDVF1k4mv6wvw92Uc",
+	  "jello": "_3MyrMRaznrFn_fwShxi-dB",
+	  "bounceInDown": "_1AN6KjZWHpSlemwIMnizn9",
+	  "bounceInLeft": "_1QaGPaJrc_nwzFtkMquNFT",
+	  "bounceInRight": "ohymGJkN9WrkU0i6ifFVw",
+	  "bounceInUp": "_3liE2Wj-JDSfsllcVkWbyb",
+	  "bounceOutDown": "_305U_r4j-Rcg4wsnVMNx-R",
+	  "bounceOutLeft": "_1Bzti1RwndEvdct-JozCrT",
+	  "bounceOutRight": "a12Toos9y-EaTeHl62EQk",
+	  "bounceOutUp": "_1WDhIwp5y5EXKkZ2hPtd39",
+	  "fadeIn": "_1Poe9YeDEAGRcqESikkgT8",
+	  "fadeInDown": "_1he78N2ftOw_M53-Nj4e3G",
+	  "fadeInDownBig": "_3PXem82WMp72gchr11UCpX",
+	  "fadeInLeft": "_70xKA3jzaHuyLmO4cJd4w",
+	  "fadeInLeftBig": "obYTM9KjWLX2m9mWzhC4E",
+	  "fadeInRight": "l7V6PyPFQ9CuWdBNQLZLO",
+	  "fadeInRightBig": "_18ufSpYkahpZWDUu-XKs6l",
+	  "fadeInUp": "_17dcs_IlBr05xYOcHQtwRp",
+	  "fadeInUpBig": "VLFP9kOqvKXl3ip5-RSi8",
+	  "fadeOut": "_3dEfcusTUu_vf9Rld6YREd",
+	  "fadeOutDown": "_2PdKc8VHeDCBd-v6xUGr_M",
+	  "fadeOutDownBig": "_39xXF1SnesD-MTVVuGxzg6",
+	  "fadeOutLeft": "_2aLDDxGwgooW8gHSXfyliX",
+	  "fadeOutLeftBig": "XGAUblLT9cXlF8IXwWMlT",
+	  "fadeOutRight": "_3VYe5diEqB2nG_NWKNOiM5",
+	  "fadeOutRightBig": "bdS1x51L23Iesh0CmUgUj",
+	  "fadeOutUp": "_1Hi-Qzg8WlxkC5I3T-aTfS",
+	  "fadeOutUpBig": "_2IXnjb3MHdCXTE0W8cb6aM",
+	  "flip": "_2fqgix-k0SfqpfAljkq3n9",
+	  "flipInX": "tmSEvtgQ8MuzmfvGEJzo1",
+	  "flipInY": "_36gmFIJW13sBnJKysUvYJh",
+	  "lightSpeedIn": "wOFjgtTyT5b80mG6xTVJ1",
+	  "lightSpeedOut": "_2dg5QTycmc823nLnbrJYQ9",
+	  "rotateIn": "_9yj17ssFTJX2Mo68PpmAy",
+	  "rotateInDownLeft": "_3EG7BR8EKQ2_TZRkjtiDKd",
+	  "rotateInDownRight": "_3el3Mm19RFTcIRAC0IJIQq",
+	  "rotateInUpLeft": "_1eEF2MgQ6LyrNrev2l-Aj_",
+	  "rotateInUpRight": "_27WRhNdKWtQekmw2qzTPi_",
+	  "rotateOut": "_2TPzpqe8K4AhalPFmJcjFA",
+	  "rotateOutDownLeft": "_2SRvq1_x5TK1PrYfPvgv_Y",
+	  "rotateOutDownRight": "_273Hw4BnQhhJGxdYShEnav",
+	  "rotateOutUpLeft": "_3BfXkq6U94pNgR4_vpyBcs",
+	  "rotateOutUpRight": "_12dhDegckiGm03x2QEaAjc",
+	  "rollIn": "_3XsPCGzEtdlGYdIRy5wief",
+	  "rollOut": "RsTsSj9Isss1FOfGMwQdD",
+	  "zoomIn": "uTIeKcAIFd9-eHGK08K6R",
+	  "zoomInDown": "_2x5W6YS2h3VZ5Iw9D0juyO",
+	  "zoomInLeft": "_1rVWv8jBVtAFHKrgYKQBXz",
+	  "zoomInRight": "_2m5CRJ0c2kODD7YKxJHd7Y",
+	  "zoomInUp": "_1y-MzG1Ew7uTuMbrEPBXR1",
+	  "zoomOut": "_1eO-pxPIIj-TxRDz83vyke",
+	  "zoomOutDown": "WcQxj2SXfBjw_YLqqq0Tr",
+	  "zoomOutLeft": "_3y2HRe2GzUr8YYshpO1VfP",
+	  "zoomOutRight": "_1636h6-Nre6QvL7NsjmGCf",
+	  "zoomOutUp": "GcZG9FbVnyYre4aWYFshd",
+	  "slideInDown": "_1Qg604EF9cqFQq7pMItGbv",
+	  "slideInLeft": "_2umpK-fz2Noh3FFvrAjAVB",
+	  "slideInRight": "FskrwoBNsJeAnmlsCV045",
+	  "slideInUp": "_33GNZAcn-DyOr97sHLLX3i",
+	  "slideOutDown": "_3URDCM8WlmfgBpydDWDwHl",
+	  "slideOutLeft": "_1E-u055M9PXElmsNw0WwC-",
+	  "slideOutRight": "wgQ0Mw_hBtETYjffFpyv2",
+	  "slideOutUp": "_1O1Phcf5lv2TELTeYxj6OE"
+	};
+
+	var _animate2 = _interopRequireDefault(_animate);
 
 	var _BlogListItem = {
 	  "single-post": "_2nT19X4_beVcVb92lXwBkn",
@@ -3574,29 +3841,38 @@
 	var _ref = _jsx('div', {});
 
 	function BlogListItem(props) {
+	  var post = props.post,
+	      onDelete = props.onDelete,
+	      isAuthenticated = props.isAuthenticated,
+	      user = props.user;
+
 	  return _jsx('div', {
-	    className: _BlogListItem2.default['single-post']
+	    className: _BlogListItem2.default['single-post'] + ' ' + _animate2.default.animated + ' ' + _animate2.default.fadeIn
 	  }, void 0, _jsx('h3', {
 	    className: _BlogListItem2.default['post-title']
 	  }, void 0, _jsx(_reactRouter.Link, {
-	    to: '/posts/' + props.post.slug + '-' + props.post.cuid
-	  }, void 0, props.post.title)), _jsx('p', {
+	    to: '/posts/' + post.slug + '-' + post.cuid
+	  }, void 0, post.title)), _jsx('p', {
 	    className: _BlogListItem2.default['author-name']
-	  }, void 0, props.post.username), _jsx('p', {
+	  }, void 0, 'By ', post.username.substr(0, post.username.indexOf('@'))), _jsx('p', {
 	    className: _BlogListItem2.default['post-desc']
-	  }, void 0, props.post.content), _jsx('p', {
+	  }, void 0, post.content), _jsx('p', {
 	    className: _BlogListItem2.default['post-date']
-	  }, void 0, '' + (0, _format2.default)(props.post.datetime, 'YYYY-MM-DD h:m:s A')), props.isAuthenticated && props.post.username === props.user.email ? _jsx('div', {
+	  }, void 0, '' + (0, _format2.default)(post.datetime, 'YYYY-MM-DD h:m:s A')), isAuthenticated && post.username === user.email ? _jsx('div', {
 	    className: _BlogListItem2.default['post-action']
 	  }, void 0, _jsx(_RaisedButton2.default, {
+	    backgroundColor: '#333c5a',
+	    labelColor: '#fff',
 	    style: actionStyles,
 	    label: 'Delete',
-	    onTouchTap: props.onDelete
+	    onTouchTap: onDelete
 	  }), _jsx(_RaisedButton2.default, {
+	    backgroundColor: '#333c5a',
+	    labelColor: '#fff',
 	    style: actionStyles,
 	    label: 'Edit',
 	    containerElement: _jsx(_reactRouter.Link, {
-	      to: '/edit/post/' + props.post.slug + '-' + props.post.cuid
+	      to: '/edit/post/' + post.slug + '-' + post.cuid
 	    })
 	  })) : _ref, _jsx('hr', {
 	    className: _BlogListItem2.default.divider
@@ -3606,7 +3882,7 @@
 	exports.default = BlogListItem;
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3633,7 +3909,7 @@
 	}
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3647,7 +3923,7 @@
 
 	var _setup = __webpack_require__(19);
 
-	var _IntlActions = __webpack_require__(59);
+	var _IntlActions = __webpack_require__(60);
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
@@ -3680,7 +3956,7 @@
 	exports.default = IntlReducer;
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3700,7 +3976,7 @@
 
 	var _BlogReducer2 = _interopRequireDefault(_BlogReducer);
 
-	var _IntlReducer = __webpack_require__(60);
+	var _IntlReducer = __webpack_require__(61);
 
 	var _IntlReducer2 = _interopRequireDefault(_IntlReducer);
 
@@ -3729,7 +4005,7 @@
 	// Import Reducers
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3749,15 +4025,15 @@
 
 	var _post2 = _interopRequireDefault(_post);
 
-	var _cuid = __webpack_require__(65);
+	var _cuid = __webpack_require__(66);
 
 	var _cuid2 = _interopRequireDefault(_cuid);
 
-	var _limax = __webpack_require__(72);
+	var _limax = __webpack_require__(73);
 
 	var _limax2 = _interopRequireDefault(_limax);
 
-	var _sanitizeHtml = __webpack_require__(88);
+	var _sanitizeHtml = __webpack_require__(89);
 
 	var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
@@ -3889,7 +4165,7 @@
 	}
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3960,7 +4236,7 @@
 
 	var _reactRouter = __webpack_require__(2);
 
-	var _reactHelmet = __webpack_require__(7);
+	var _reactHelmet = __webpack_require__(8);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
@@ -4094,9 +4370,11 @@
 
 	io.on('connection', function (socket) {
 	  clients.push(socket);
+	  console.log('client connected');
 	  socket.on('disconnect', function () {
 	    var index = clients.indexOf(socket);
 	    clients.splice(index, 1);
+	    console.log('client disconnected');
 	  });
 	  socket.on('action', function (action) {
 	    if (action.type === 'server/addPost') {
@@ -4116,7 +4394,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "server"))
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4147,151 +4425,151 @@
 	}
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports) {
 
 	module.exports = require("cuid");
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports) {
 
 	module.exports = require("date-fns/format");
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports) {
 
 	module.exports = require("intl");
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports) {
 
 	module.exports = require("intl-locales-supported");
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports) {
 
 	module.exports = require("intl/locale-data/jsonp/en");
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports) {
 
 	module.exports = require("intl/locale-data/jsonp/fr");
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports) {
 
 	module.exports = require("isomorphic-fetch");
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports) {
 
 	module.exports = require("limax");
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui");
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports) {
 
 	module.exports = require("mongoose-paginate");
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports) {
 
 	module.exports = require("postcss-cssnext");
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports) {
 
 	module.exports = require("postcss-focus");
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports) {
 
 	module.exports = require("postcss-reporter");
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-intl/locale-data/en");
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-intl/locale-data/fr");
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-js-pagination");
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-parallax");
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-tap-event-plugin");
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-devtools");
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-devtools-dock-monitor");
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-devtools-log-monitor");
 
 /***/ },
-/* 86 */
+/* 87 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-socket.io");
 
 /***/ },
-/* 87 */
+/* 88 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 88 */
+/* 89 */
 /***/ function(module, exports) {
 
 	module.exports = require("sanitize-html");
 
 /***/ },
-/* 89 */
+/* 90 */
 /***/ function(module, exports) {
 
 	module.exports = require("socket.io-client");

@@ -10,6 +10,7 @@ import DevTools from './components/DevTools';
 import Navbar from './components/Navbar/Navbar';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import TechShowcase from './components/TechShowcase/TechShowcase';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { getMuiTheme } from 'material-ui/styles';
@@ -44,7 +45,7 @@ export class App extends Component {
           {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
           <div>
             <Helmet
-              title="MERN Starter - Blog App"
+              title="Magic Leap Assignment - Blog App"
               titleTemplate="%s - Blog App"
               meta={[
                 { charset: 'utf-8' },
@@ -63,6 +64,7 @@ export class App extends Component {
             <div className={styles.container}>
               {this.props.children}
             </div>
+            <TechShowcase />
             <Footer />
           </div>
         </div>

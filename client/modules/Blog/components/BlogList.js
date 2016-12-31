@@ -15,6 +15,7 @@ function BlogList(props) {
           ? <div className={`${fbStyles['container-fluid']} ${styles['no-post-message']}`}><p>Start Blogging</p></div>
           : props.posts.map((post, i) => (
             <div
+              key={post.cuid}
               className={`${animateStyles.animated} ${animateStyles.fadeIn}`}
               style={{
                 WebkitAnimationDuration: '1s',
@@ -25,8 +26,6 @@ function BlogList(props) {
                 user={props.user}
                 isAuthenticated={props.isAuthenticated}
                 post={post}
-                key={post.cuid}
-                onEdit={() => props.handleEditPost(post)}
                 onDelete={() => props.handleDeletePost(post)}
               />
             </div>
@@ -45,7 +44,6 @@ BlogList.propTypes = {
     cuid: PropTypes.string.isRequired,
   })).isRequired,
   handleDeletePost: PropTypes.func.isRequired,
-  handleEditPost: PropTypes.func.isRequired,
   user: PropTypes.object,
   isAuthenticated: PropTypes.bool.isRequired,
 };

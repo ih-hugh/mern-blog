@@ -88,22 +88,6 @@ export function fetchPosts(limit, offset) {
   };
 }
 
-// export function fetchPosts(limit, offset) {
-//   return (dispatch) => {
-//     return callApi(`posts/?limit=${limit}&offset=${offset}`).then(res => {
-//       dispatch(addPosts(res.posts));
-//     });
-//   };
-// }
-
-// export function fetchPostsCount() {
-//   return (dispatch) => {
-//     return callApi('posts/').then(res => {
-//       dispatch(setPostCount(res.postsCount));
-//     });
-//   };
-// }
-
 export function fetchPost(cuid) {
   return (dispatch) => {
     return callApi(`posts/${cuid}`).then(res => dispatch(addPost(res.post)));

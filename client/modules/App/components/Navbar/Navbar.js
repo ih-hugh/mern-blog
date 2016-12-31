@@ -44,9 +44,10 @@ class Navbar extends Component {
       ?
       <List className={`${animateStyles.animated} ${animateStyles.fadeIn}`} style={listStyle}>
         <ListItem
+          containerElement={<Link to="/" />}
           hoverColor={hoverColor}
-          style={{ justifyContent: 'left', color: '#fff' }}
-          primaryText={this.props.user.email ? this.props.user.email : 'Loading...'}
+          style={listItemStyle}
+          primaryText="Home"
         />
         <ListItem
           onTouchTap={this.handleLogout}
@@ -61,14 +62,19 @@ class Navbar extends Component {
           primaryText="Create Blog"
         />
         <ListItem
+          hoverColor={hoverColor}
+          style={{ justifyContent: 'left', color: '#fff' }}
+          primaryText={this.props.user.email ? this.props.user.email : 'Loading...'}
+        />
+      </List>
+      :
+      <List style={listStyle}>
+        <ListItem
           containerElement={<Link to="/" />}
           hoverColor={hoverColor}
           style={listItemStyle}
           primaryText="Home"
         />
-      </List>
-      :
-      <List style={listStyle}>
         <ListItem
           containerElement={<Link to="/register" />}
           hoverColor={hoverColor}
@@ -80,12 +86,6 @@ class Navbar extends Component {
           hoverColor={hoverColor}
           style={listItemStyle}
           primaryText="Login"
-        />
-        <ListItem
-          containerElement={<Link to="/" />}
-          hoverColor={hoverColor}
-          style={listItemStyle}
-          primaryText="Home"
         />
       </List>;
   }

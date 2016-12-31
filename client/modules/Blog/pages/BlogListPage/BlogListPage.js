@@ -6,7 +6,7 @@ import { socket } from '../../../../util/initSocket';
 
 import { getUser, getAuthenticatedStatus } from '../../../App/AppReducer';
 
-import { fetchPosts, deletePostRequest, editPostRequest } from '../../BlogActions';
+import { fetchPosts, deletePostRequest } from '../../BlogActions';
 import { getPosts, getPostsCount } from '../../BlogReducer';
 
 
@@ -55,16 +55,6 @@ class BlogListPage extends Component {
       });
     }
   };
-
-  handleEditPost = post => {
-    if (confirm('Do you want to edit this post')) { // eslint-disable-line
-      this.props.dispatch(editPostRequest(post.cuid));
-      socket.emit('refresh bloglist', () => {
-        this.props.dispatch(fetchPosts());
-      });
-    }
-  }
-
 
   render() {
     return (

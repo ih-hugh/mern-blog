@@ -165,9 +165,11 @@ const clients = [];
 
 io.on('connection', (socket) => {
   clients.push(socket);
+  console.log('client connected');
   socket.on('disconnect', () => {
     const index = clients.indexOf(socket);
     clients.splice(index, 1);
+    console.log('client disconnected');
   });
   socket.on('action', (action) => {
     if (action.type === 'server/addPost') {

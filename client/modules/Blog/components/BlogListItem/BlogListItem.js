@@ -13,36 +13,36 @@ const actionStyles = {
 };
 
 function BlogListItem(props) {
+  const { post, onDelete, isAuthenticated, user } = props;
   return (
     <div className={`${styles['single-post']} ${animateStyles.animated} ${animateStyles.fadeIn}`} >
       <h3 className={styles['post-title']}>
-        <Link to={`/posts/${props.post.slug}-${props.post.cuid}`} >
-          {props.post.title}
+        <Link to={`/posts/${post.slug}-${post.cuid}`} >
+          {post.title}
         </Link>
       </h3>
 
-      <p className={styles['author-name']}>{props.post.username}</p>
-      <p className={styles['post-desc']}>{props.post.content}</p>
+      <p className={styles['author-name']}>By {post.username.substr(0, post.username.indexOf('@'))}</p>
+      <p className={styles['post-desc']}>{post.content}</p>
       <p className={styles['post-date']}>
-        {`${format(props.post.datetime, 'YYYY-MM-DD h:m:s A')}`}
+        {`${format(post.datetime, 'YYYY-MM-DD h:m:s A')}`}
       </p>
       {
-        props.isAuthenticated && props.post.username === props.user.email ?
+        isAuthenticated && post.username === user.email ?
           <div className={styles['post-action']}>
             <RaisedButton
               backgroundColor="#333c5a"
               labelColor="#fff"
               style={actionStyles}
               label="Delete"
-              onTouchTap={props.onDelete}
+              onTouchTap={onDelete}
             />
             <RaisedButton
               backgroundColor="#333c5a"
               labelColor="#fff"
               style={actionStyles}
               label="Edit"
-              containerElement={
-                <Link to={`/edit/post/${props.post.slug}-${props.post.cuid}`} />}
+              containerElement={<Link to={`/edit/post/${post.slug}-${post.cuid}`} />}
             />
           </div> : <div></div>
       }
@@ -61,7 +61,6 @@ BlogListItem.propTypes = {
     datetime: PropTypes.string.isRequired,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
   user: PropTypes.object,
   isAuthenticated: PropTypes.bool.isRequired,
 };
