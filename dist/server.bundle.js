@@ -374,9 +374,23 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = require("socket.io-client");
+	"use strict";
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _socket = __webpack_require__(89);
+
+	var _socket2 = _interopRequireDefault(_socket);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var socket = _socket2.default.connect('http://localhost:8000');
+	exports.default = socket;
 
 /***/ },
 /* 7 */
@@ -720,6 +734,10 @@
 
 	var _BlogActions = __webpack_require__(4);
 
+	var _initSocket = __webpack_require__(6);
+
+	var _initSocket2 = _interopRequireDefault(_initSocket);
+
 	var _BlogCreator = {
 	  "form": "_38jANhpciMq2hB_fIEqYWv",
 	  "form-content": "_2TstRqmLSSgjshd8GPSqBO",
@@ -730,10 +748,6 @@
 	};
 
 	var _BlogCreator2 = _interopRequireDefault(_BlogCreator);
-
-	var _socket = __webpack_require__(6);
-
-	var _socket2 = _interopRequireDefault(_socket);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -747,9 +761,6 @@
 
 
 	// Import Style
-
-
-	var socket = (0, _socket2.default)('http://localhost:8000');
 
 	var BlogCreator = exports.BlogCreator = function (_Component) {
 	  _inherits(BlogCreator, _Component);
@@ -776,7 +787,7 @@
 	          content: contentRef
 	        };
 	        _this.props.dispatch((0, _BlogActions.emitAddPostRequest)(post));
-	        socket.emit('refresh bloglist');
+	        _initSocket2.default.emit('refresh bloglist');
 	        titleRef = contentRef = '';
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -921,9 +932,9 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _socket = __webpack_require__(6);
+	var _initSocket = __webpack_require__(6);
 
-	var _socket2 = _interopRequireDefault(_socket);
+	var _initSocket2 = _interopRequireDefault(_initSocket);
 
 	var _AppReducer = __webpack_require__(3);
 
@@ -955,9 +966,6 @@
 
 	// Import Style
 
-
-	var socket = (0, _socket2.default)('http://localhost:8000');
-
 	var BlogEditor = exports.BlogEditor = function (_Component) {
 	  _inherits(BlogEditor, _Component);
 
@@ -984,7 +992,7 @@
 	          content: contentRef
 	        };
 	        _this.props.dispatch((0, _BlogActions.emitUpdatePostRequest)(post, _this.props.post.cuid));
-	        socket.emit('refresh bloglist');
+	        _initSocket2.default.emit('refresh bloglist');
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -1057,15 +1065,15 @@
 
 	var _BlogList2 = _interopRequireDefault(_BlogList);
 
+	var _initSocket = __webpack_require__(6);
+
+	var _initSocket2 = _interopRequireDefault(_initSocket);
+
 	var _AppReducer = __webpack_require__(3);
 
 	var _BlogActions = __webpack_require__(4);
 
 	var _BlogReducer = __webpack_require__(5);
-
-	var _socket = __webpack_require__(6);
-
-	var _socket2 = _interopRequireDefault(_socket);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1074,8 +1082,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var socket = (0, _socket2.default)('http://localhost:8000');
 
 	var paginateContainerStyle = {
 	  display: 'flex',
@@ -1096,7 +1102,7 @@
 	      if (confirm('Do you want to delete this post')) {
 	        // eslint-disable-line
 	        _this.props.dispatch((0, _BlogActions.deletePostRequest)(post.cuid));
-	        socket.emit('refresh bloglist', function () {
+	        _initSocket2.default.emit('refresh bloglist', function () {
 	          _this.props.dispatch((0, _BlogActions.fetchPosts)());
 	        });
 	      }
@@ -1106,7 +1112,7 @@
 	      if (confirm('Do you want to edit this post')) {
 	        // eslint-disable-line
 	        _this.props.dispatch((0, _BlogActions.editPostRequest)(post.cuid));
-	        socket.emit('refresh bloglist', function () {
+	        _initSocket2.default.emit('refresh bloglist', function () {
 	          _this.props.dispatch((0, _BlogActions.fetchPosts)());
 	        });
 	      }
@@ -1128,7 +1134,7 @@
 	      var _this2 = this;
 
 	      this.props.dispatch((0, _BlogActions.fetchPosts)(5, 0));
-	      socket.on('refresh bloglist', function () {
+	      _initSocket2.default.on('refresh bloglist', function () {
 	        _this2.props.dispatch((0, _BlogActions.fetchPosts)(5, 0));
 	      });
 	    }
@@ -2352,19 +2358,15 @@
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _socket = __webpack_require__(6);
+	var _initSocket = __webpack_require__(6);
 
-	var _socket2 = _interopRequireDefault(_socket);
+	var _initSocket2 = _interopRequireDefault(_initSocket);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var socket = (0, _socket2.default)('http://localhost:8000'); /**
-	                                                              * Main store function
-	                                                              */
-
-
-	var socketIoMiddleware = (0, _reduxSocket2.default)(socket, 'server/');
-
+	var socketIoMiddleware = (0, _reduxSocket2.default)(_initSocket2.default, 'server/'); /**
+	                                                                                       * Main store function
+	                                                                                       */
 	function configureStore() {
 	  var initialState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -4295,6 +4297,12 @@
 /***/ function(module, exports) {
 
 	module.exports = require("sanitize-html");
+
+/***/ },
+/* 89 */
+/***/ function(module, exports) {
+
+	module.exports = require("socket.io-client");
 
 /***/ }
 /******/ ]);

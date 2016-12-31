@@ -1,7 +1,7 @@
 const isBrowser = typeof window != 'undefined' && window.document; // eslint-disable-line
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import io from 'socket.io-client';
+import socket from '../../../../util/initSocket';
 
 import { getAuthenticatedStatus, getUser } from '../../../App/AppReducer';
 import { emitUpdatePostRequest } from '../../BlogActions';
@@ -10,7 +10,6 @@ import { getPost } from '../../BlogReducer';
 // Import Style
 import styles from './BlogEditorPage.css';
 
-const socket = io('http://localhost:8000');
 
 export class BlogEditor extends Component {
 

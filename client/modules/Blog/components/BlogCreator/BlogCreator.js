@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 
 import { getAuthenticatedStatus, getUser } from '../../../App/AppReducer';
 import { emitAddPostRequest } from '../../BlogActions';
+import socket from '../../../../util/initSocket';
 
 // Import Style
 import styles from './BlogCreator.css';
-import io from 'socket.io-client';
 
-const socket = io('http://localhost:8000');
 
 export class BlogCreator extends Component {
 

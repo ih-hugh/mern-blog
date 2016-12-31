@@ -7,8 +7,8 @@ import DevTools from './modules/App/components/DevTools';
 import { enableBatching } from 'redux-batched-actions';
 import createSocketIoMiddleware from 'redux-socket.io';
 import rootReducer from './reducers';
-import io from 'socket.io-client';
-const socket = io('http://localhost:8000');
+import socket from './util/initSocket';
+
 
 const socketIoMiddleware = createSocketIoMiddleware(socket, 'server/');
 

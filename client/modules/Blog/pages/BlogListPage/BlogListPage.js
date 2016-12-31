@@ -2,14 +2,13 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from 'react-js-pagination';
 import BlogList from '../../components/BlogList';
+import socket from '../../../../util/initSocket';
 
 import { getUser, getAuthenticatedStatus } from '../../../App/AppReducer';
 
 import { fetchPosts, deletePostRequest, editPostRequest } from '../../BlogActions';
 import { getPosts, getPostsCount } from '../../BlogReducer';
 
-import io from 'socket.io-client';
-const socket = io('http://localhost:8000');
 
 const paginateContainerStyle = {
   display: 'flex',
