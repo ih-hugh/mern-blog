@@ -21,8 +21,11 @@ function BlogListItem(props) {
 
       <p className={styles['author-name']}>{props.post.username}</p>
       <p className={styles['post-desc']}>{props.post.content}</p>
+      <p className={styles['post-date']}>
+        {`${format(props.post.datetime, 'YYYY-MM-DD h:m:s A')}`}
+      </p>
       {
-        props.post.username === props.user.email ?
+        props.isAuthenticated && props.post.username === props.user.email ?
           <div className={styles['post-action']}>
             <RaisedButton style={actionStyles} label="Delete" onTouchTap={props.onDelete} />
             <RaisedButton
@@ -34,9 +37,6 @@ function BlogListItem(props) {
           </div> : <div></div>
       }
       <hr className={styles.divider} />
-      <p className={styles['post-date']}>
-        {`${format(props.post.datetime, 'YYYY-MM-DD h:m:s A')}`}
-      </p>
     </div>
   );
 }
@@ -53,6 +53,7 @@ BlogListItem.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   user: PropTypes.object,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default BlogListItem;

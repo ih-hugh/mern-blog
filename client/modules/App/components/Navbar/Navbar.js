@@ -5,7 +5,8 @@ import { Link } from 'react-router';
 import { List, ListItem } from 'material-ui';
 import { logUserOut } from '../../AppActions';
 import { getUser, getAuthenticatedStatus } from '../../AppReducer';
-import styles from './Navbar.css';
+
+import animateStyles from '../../../../styles/animate.css';
 
 const listStyle = {
   display: 'flex',
@@ -14,10 +15,13 @@ const listStyle = {
   padding: 0,
   width: '100%',
   backgroundColor: '#333c5a',
+  position: 'fixed',
+  zIndex: '100000',
 };
 
 const listItemStyle = {
   color: '#fff',
+  WebkitAnimationDuration: '3s',
 };
 
 const hoverColor = 'rgb(100%, 70.2%, 0%)';
@@ -38,7 +42,7 @@ class Navbar extends Component {
   renderOptions() {
     return this.props.isAuthenticated
       ?
-      <List style={listStyle}>
+      <List className={`${animateStyles.animated} ${animateStyles.fadeIn}`} style={listStyle}>
         <ListItem
           hoverColor={hoverColor}
           style={{ justifyContent: 'left', color: '#fff' }}
@@ -88,7 +92,7 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div className={styles.navbar}>
+      <div>
        {this.renderOptions()}
       </div>
     );

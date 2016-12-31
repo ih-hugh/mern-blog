@@ -1,9 +1,12 @@
 import callApi from '../../util/apiCaller';
+import { batchActions } from 'redux-batched-actions';
+
 // Export Constants
 export const ADD_POST = 'ADD_POST';
 export const ADD_POSTS = 'ADD_POSTS';
 export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_POST = 'UPDATE_POST';
+export const SET_POSTS_COUNT = 'SET_POSTS_COUNT';
 
 export const SERVER_ADD_POST = 'server/addPost';
 export const SERVER_UPDATE_POST = 'server/updatePost';
@@ -13,6 +16,13 @@ export function addPost(post) {
   return {
     type: ADD_POST,
     post,
+  };
+}
+
+export function setPostCount(postsCount) {
+  return {
+    type: SET_POSTS_COUNT,
+    postsCount,
   };
 }
 
@@ -43,7 +53,6 @@ export function emitUpdatePostRequest(post, cuid) {
         content: post.content,
       },
     }).then(res => {
-      console.log(res);
       dispatch({ type: SERVER_UPDATE_POST, post: res.post });
     });
   };
@@ -68,13 +77,32 @@ export function addPosts(posts) {
   };
 }
 
-export function fetchPosts() {
+export function fetchPosts(limit, offset) {
   return (dispatch) => {
-    return callApi('posts').then(res => {
-      dispatch(addPosts(res.posts));
+    return callApi(`posts/?limit=${limit}&offset=${offset}`).then(res => {
+      batchActions([
+        dispatch(addPosts(res.posts)),
+        dispatch(setPostCount(res.postsCount)),
+      ]);
     });
   };
 }
+
+// export function fetchPosts(limit, offset) {
+//   return (dispatch) => {
+//     return callApi(`posts/?limit=${limit}&offset=${offset}`).then(res => {
+//       dispatch(addPosts(res.posts));
+//     });
+//   };
+// }
+
+// export function fetchPostsCount() {
+//   return (dispatch) => {
+//     return callApi('posts/').then(res => {
+//       dispatch(setPostCount(res.postsCount));
+//     });
+//   };
+// }
 
 export function fetchPost(cuid) {
   return (dispatch) => {

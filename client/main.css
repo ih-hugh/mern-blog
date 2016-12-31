@@ -1,3 +1,5 @@
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+
 /*
   Global CSS file
 */
@@ -14,3 +16,4 @@ body {
 	margin: 0;
 	padding: 0;
 }
+

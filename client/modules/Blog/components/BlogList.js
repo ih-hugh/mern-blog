@@ -15,6 +15,7 @@ function BlogList(props) {
           : props.posts.map(post => (
             <BlogListItem
               user={props.user}
+              isAuthenticated={props.isAuthenticated}
               post={post}
               key={post.cuid}
               onEdit={() => props.handleEditPost(post)}
@@ -37,6 +38,7 @@ BlogList.propTypes = {
   handleDeletePost: PropTypes.func.isRequired,
   handleEditPost: PropTypes.func.isRequired,
   user: PropTypes.object,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default BlogList;

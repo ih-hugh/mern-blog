@@ -10,16 +10,37 @@ import sanitizeHtml from 'sanitize-html';
  * @returns void
  */
 export function getPosts(req, res) {
-  const { limit = 5, page = 0 } = req.params;
+  const offset = parseInt(req.query.offset) || 0; // eslint-disable-line
+  const limit = parseInt(req.query.limit) || 5; // eslint-disable-line
   Post.find().sort('-datetime')
+    .skip(offset * limit)
     .limit(limit)
-    .skip(limit * page)
     .exec((err, posts) => {
       if (err) {
-        res.status(500).send(err);
+        return res.status(500).send(err);
       }
-      res.json({ posts });
+
+      return Post.count((_err, postsCount) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+        return res.json({ posts, postsCount });
+      });
     });
+}
+/**
+ * Get posts count
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function getPostsCount(req, res) {
+  Post.count((err, postsCount) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    return res.json({ postsCount });
+  });
 }
 
 /**

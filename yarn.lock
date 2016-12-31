@@ -1309,6 +1309,10 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
+bootstrap@^3.3.7:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
+
 bowser@^1.0.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.6.0.tgz#37fc387b616cb6aef370dab4d6bd402b74c5c54d"
@@ -5699,6 +5703,10 @@ package-json@^2.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
+paginator@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/paginator/-/paginator-1.0.0.tgz#7565702af9ab9616dca61fc22c70eba2a4357265"
+
 pako@~0.2.0:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/pako/-/pako-0.2.9.tgz#f3f7522f4ef782348da8161bad9ecfd51bf83a75"
@@ -6659,6 +6667,10 @@ raw-body@~2.1.7:
     iconv-lite "0.4.13"
     unpipe "1.0.0"
 
+rc-pagination@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/rc-pagination/-/rc-pagination-1.6.2.tgz#1cef57e512263d755433adb5146ba13b7021c2b5"
+
 rc@^1.0.1, rc@^1.1.6, rc@~1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.1.6.tgz#43651b76b6ae53b5c802f1151fa3fc3b059969c9"
@@ -6739,7 +6751,7 @@ react-helmet@^3.1.0:
     object-assign "^4.0.1"
     react-side-effect "1.0.2"
 
-react-hot-loader@^3.0.0-beta.2:
+react-hot-loader@^3.0.0-beta.2, react-hot-loader@^3.0.0-beta.6:
   version "3.0.0-beta.6"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-3.0.0-beta.6.tgz#463fac0bfc8b63a8385258af20c91636abce75f4"
   dependencies:
@@ -6759,6 +6771,14 @@ react-intl@^2.1.2:
     intl-relativeformat "^1.3.0"
     invariant "^2.1.1"
 
+react-js-pagination@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-js-pagination/-/react-js-pagination-2.0.2.tgz#09b77793f3c4769e21a78c39a32d43f8ccb45c3e"
+  dependencies:
+    classnames "^2.2.5"
+    paginator "^1.0.0"
+    react-hot-loader "^3.0.0-beta.6"
+
 react-json-tree@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/react-json-tree/-/react-json-tree-0.10.0.tgz#92d5c223fc7718614a906591cd916127ce2b6033"
@@ -6767,6 +6787,12 @@ react-json-tree@^0.10.0:
     babel-runtime "^6.6.1"
     react-base16-styling "^0.4.1"
     react-pure-render "^1.0.2"
+
+react-paginate@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-4.1.0.tgz#1a3379f1a029874fc9bf173438fd621f83648940"
+  dependencies:
+    classnames "^2.2.5"
 
 react-parallax@^1.2.2:
   version "1.2.2"

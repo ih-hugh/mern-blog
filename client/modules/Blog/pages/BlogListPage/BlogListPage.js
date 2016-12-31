@@ -1,30 +1,54 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-
-// Import Components
+import Pagination from 'react-js-pagination';
 import BlogList from '../../components/BlogList';
 
-// Import Actions
+import { getUser, getAuthenticatedStatus } from '../../../App/AppReducer';
+
 import { fetchPosts, deletePostRequest, editPostRequest } from '../../BlogActions';
-import { getUser } from '../../../App/AppReducer';
+import { getPosts, getPostsCount } from '../../BlogReducer';
 
-// Import Selectors
-import { getPosts } from '../../BlogReducer';
 import io from 'socket.io-client';
-
 const socket = io('http://localhost:8000');
 
-class BlogListPage extends Component {
-  componentDidMount() {
-    this.props.dispatch(fetchPosts());
+const paginateContainerStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  width: '100%',
+};
 
+class BlogListPage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      offset: 0,
+      limit: 5,
+      page: 1,
+    };
+
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(fetchPosts(5, 0));
     socket.on('refresh bloglist', () => {
-      this.props.dispatch(fetchPosts());
+      this.props.dispatch(fetchPosts(5, 0));
     });
   }
 
+  onChange(page) {
+    const offset = page - 1;
+    this.setState({ offset, page }, () => {
+      this.props.dispatch(fetchPosts(this.state.limit, this.state.offset));
+    });
+    if (typeof window !== undefined) {
+      window.scrollTo(0, 482);
+    }
+  }
+
   handleDeletePost = post => {
-    console.log(post);
     if (confirm('Do you want to delete this post')) { // eslint-disable-line
       this.props.dispatch(deletePostRequest(post.cuid));
       socket.emit('refresh bloglist', () => {
@@ -34,7 +58,6 @@ class BlogListPage extends Component {
   };
 
   handleEditPost = post => {
-    console.log(post);
     if (confirm('Do you want to edit this post')) { // eslint-disable-line
       this.props.dispatch(editPostRequest(post.cuid));
       socket.emit('refresh bloglist', () => {
@@ -43,28 +66,41 @@ class BlogListPage extends Component {
     }
   }
 
+
   render() {
     return (
       <div>
         <BlogList
+          isAuthenticated={this.props.isAuthenticated}
           user={this.props.user || 'Loading'}
           handleDeletePost={this.handleDeletePost}
           handleEditPost={this.handleEditPost}
           posts={this.props.posts}
         />
+        <div style={paginateContainerStyle}>
+          <Pagination
+            activePage={this.state.page}
+            itemsCountPerPage={this.state.limit}
+            totalItemsCount={this.props.postsCount}
+            pageRangeDisplayed={5}
+            onChange={this.onChange}
+          />
+        </div>
       </div>
     );
   }
 }
 
 // Actions required to provide data for this component to render in sever side.
-BlogListPage.need = [() => { return fetchPosts(); }];
+BlogListPage.need = [() => { return fetchPosts(5, 0); }];
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
   return {
     posts: getPosts(state),
     user: getUser(state),
+    postsCount: getPostsCount(state),
+    isAuthenticated: getAuthenticatedStatus(state),
   };
 }
 
@@ -76,6 +112,8 @@ BlogListPage.propTypes = {
   })).isRequired,
   dispatch: PropTypes.func.isRequired,
   user: PropTypes.object,
+  postsCount: PropTypes.number.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 BlogListPage.contextTypes = {
