@@ -1,4 +1,4 @@
 import io from 'socket.io-client';
-
-const socket = io.connect('http://localhost:8000');
-export default socket;
+export const socket = process.env.NODE_ENV === 'development'
+  ? io.connect('http://localhost:8000')
+  : io.connect('http://mern-blog.herokuapp.com/');

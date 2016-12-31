@@ -1,7 +1,7 @@
 const isBrowser = typeof window != 'undefined' && window.document; // eslint-disable-line
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import socket from '../../../../util/initSocket';
+import { socket } from '../../../../util/initSocket';
 
 import { getAuthenticatedStatus, getUser } from '../../../App/AppReducer';
 import { emitUpdatePostRequest } from '../../BlogActions';

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { getAuthenticatedStatus, getUser } from '../../../App/AppReducer';
 import { emitAddPostRequest } from '../../BlogActions';
-import socket from '../../../../util/initSocket';
+import { socket } from '../../../../util/initSocket';
 
 // Import Style
 import styles from './BlogCreator.css';

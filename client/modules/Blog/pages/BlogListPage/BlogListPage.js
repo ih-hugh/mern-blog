@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from 'react-js-pagination';
 import BlogList from '../../components/BlogList';
-import socket from '../../../../util/initSocket';
+import { socket } from '../../../../util/initSocket';
 
 import { getUser, getAuthenticatedStatus } from '../../../App/AppReducer';
 

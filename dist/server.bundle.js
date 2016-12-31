@@ -382,6 +382,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.socket = undefined;
 
 	var _socket = __webpack_require__(89);
 
@@ -389,8 +390,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var socket = _socket2.default.connect('http://localhost:8000');
-	exports.default = socket;
+	var socket = exports.socket = process.env.NODE_ENV === 'development' ? _socket2.default.connect('http://localhost:8000') : _socket2.default.connect('http://mern-blog.herokuapp.com/');
 
 /***/ },
 /* 7 */
@@ -736,8 +736,6 @@
 
 	var _initSocket = __webpack_require__(6);
 
-	var _initSocket2 = _interopRequireDefault(_initSocket);
-
 	var _BlogCreator = {
 	  "form": "_38jANhpciMq2hB_fIEqYWv",
 	  "form-content": "_2TstRqmLSSgjshd8GPSqBO",
@@ -787,7 +785,7 @@
 	          content: contentRef
 	        };
 	        _this.props.dispatch((0, _BlogActions.emitAddPostRequest)(post));
-	        _initSocket2.default.emit('refresh bloglist');
+	        _initSocket.socket.emit('refresh bloglist');
 	        titleRef = contentRef = '';
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -934,8 +932,6 @@
 
 	var _initSocket = __webpack_require__(6);
 
-	var _initSocket2 = _interopRequireDefault(_initSocket);
-
 	var _AppReducer = __webpack_require__(3);
 
 	var _BlogActions = __webpack_require__(4);
@@ -992,7 +988,7 @@
 	          content: contentRef
 	        };
 	        _this.props.dispatch((0, _BlogActions.emitUpdatePostRequest)(post, _this.props.post.cuid));
-	        _initSocket2.default.emit('refresh bloglist');
+	        _initSocket.socket.emit('refresh bloglist');
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -1067,8 +1063,6 @@
 
 	var _initSocket = __webpack_require__(6);
 
-	var _initSocket2 = _interopRequireDefault(_initSocket);
-
 	var _AppReducer = __webpack_require__(3);
 
 	var _BlogActions = __webpack_require__(4);
@@ -1102,7 +1096,7 @@
 	      if (confirm('Do you want to delete this post')) {
 	        // eslint-disable-line
 	        _this.props.dispatch((0, _BlogActions.deletePostRequest)(post.cuid));
-	        _initSocket2.default.emit('refresh bloglist', function () {
+	        _initSocket.socket.emit('refresh bloglist', function () {
 	          _this.props.dispatch((0, _BlogActions.fetchPosts)());
 	        });
 	      }
@@ -1112,7 +1106,7 @@
 	      if (confirm('Do you want to edit this post')) {
 	        // eslint-disable-line
 	        _this.props.dispatch((0, _BlogActions.editPostRequest)(post.cuid));
-	        _initSocket2.default.emit('refresh bloglist', function () {
+	        _initSocket.socket.emit('refresh bloglist', function () {
 	          _this.props.dispatch((0, _BlogActions.fetchPosts)());
 	        });
 	      }
@@ -1134,7 +1128,7 @@
 	      var _this2 = this;
 
 	      this.props.dispatch((0, _BlogActions.fetchPosts)(5, 0));
-	      _initSocket2.default.on('refresh bloglist', function () {
+	      _initSocket.socket.on('refresh bloglist', function () {
 	        _this2.props.dispatch((0, _BlogActions.fetchPosts)(5, 0));
 	      });
 	    }
@@ -2360,13 +2354,11 @@
 
 	var _initSocket = __webpack_require__(6);
 
-	var _initSocket2 = _interopRequireDefault(_initSocket);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var socketIoMiddleware = (0, _reduxSocket2.default)(_initSocket2.default, 'server/'); /**
-	                                                                                       * Main store function
-	                                                                                       */
+	var socketIoMiddleware = (0, _reduxSocket2.default)(_initSocket.socket, 'server/'); /**
+	                                                                                     * Main store function
+	                                                                                     */
 	function configureStore() {
 	  var initialState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
