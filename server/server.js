@@ -21,9 +21,10 @@ if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
-
-  dummyData();
 }
+
+// load dummy data if there aren't any
+dummyData();
 
 // React And Redux Setup
 import { configureStore } from '../client/store';
