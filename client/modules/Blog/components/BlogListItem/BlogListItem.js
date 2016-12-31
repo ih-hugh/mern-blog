@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import format from 'date-fns/format';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import animateStyles from '../../../../styles/animate.css';
+
 // Import Style
 import styles from './BlogListItem.css';
 
@@ -12,7 +14,7 @@ const actionStyles = {
 
 function BlogListItem(props) {
   return (
-    <div className={styles['single-post']}>
+    <div className={`${styles['single-post']} ${animateStyles.animated} ${animateStyles.fadeIn}`} >
       <h3 className={styles['post-title']}>
         <Link to={`/posts/${props.post.slug}-${props.post.cuid}`} >
           {props.post.title}
@@ -27,8 +29,16 @@ function BlogListItem(props) {
       {
         props.isAuthenticated && props.post.username === props.user.email ?
           <div className={styles['post-action']}>
-            <RaisedButton style={actionStyles} label="Delete" onTouchTap={props.onDelete} />
             <RaisedButton
+              backgroundColor="#333c5a"
+              labelColor="#fff"
+              style={actionStyles}
+              label="Delete"
+              onTouchTap={props.onDelete}
+            />
+            <RaisedButton
+              backgroundColor="#333c5a"
+              labelColor="#fff"
               style={actionStyles}
               label="Edit"
               containerElement={

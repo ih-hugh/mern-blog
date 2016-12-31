@@ -2,6 +2,9 @@ const isBrowser = typeof window != 'undefined' && window.document; // eslint-dis
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import { Link } from 'react-router';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import { getAuthenticatedStatus, getUser } from '../../../App/AppReducer';
 import { emitAddPostRequest } from '../../BlogActions';
 import { socket } from '../../../../util/initSocket';
@@ -37,7 +40,13 @@ export class BlogCreator extends Component {
           <h3>{this.props.user ? this.props.user.email : 'Loading'}</h3>
           <input placeholder="Blog Title" className={styles['form-field']} ref="title" />
           <textarea placeholder="Blog Content" className={styles['form-field']} ref="content" />
-          <a className={styles['post-submit-button']} href="/" onClick={this.addPost}>Submit</a>
+          <RaisedButton
+            backgroundColor="#333c5a"
+            labelColor="#fff"
+            onTouchTap={this.addPost}
+            label="Submit"
+            containerElement={<Link to={'/'} />}
+          />
         </div>
       </div>
     );

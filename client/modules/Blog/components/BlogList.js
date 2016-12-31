@@ -5,6 +5,7 @@ import BlogListItem from './BlogListItem/BlogListItem';
 
 import styles from './BlogList.css';
 import fbStyles from '../../../styles/flexboxgrid.css';
+import animateStyles from '../../../styles/animate.css';
 
 function BlogList(props) {
   return (
@@ -12,15 +13,23 @@ function BlogList(props) {
       {
         (props.posts.length === 0)
           ? <div className={`${fbStyles['container-fluid']} ${styles['no-post-message']}`}><p>Start Blogging</p></div>
-          : props.posts.map(post => (
-            <BlogListItem
-              user={props.user}
-              isAuthenticated={props.isAuthenticated}
-              post={post}
-              key={post.cuid}
-              onEdit={() => props.handleEditPost(post)}
-              onDelete={() => props.handleDeletePost(post)}
-            />
+          : props.posts.map((post, i) => (
+            <div
+              className={`${animateStyles.animated} ${animateStyles.fadeIn}`}
+              style={{
+                WebkitAnimationDuration: '1s',
+                WebkitAnimationDelay: `${i / 2}s`,
+              }}
+            >
+              <BlogListItem
+                user={props.user}
+                isAuthenticated={props.isAuthenticated}
+                post={post}
+                key={post.cuid}
+                onEdit={() => props.handleEditPost(post)}
+                onDelete={() => props.handleDeletePost(post)}
+              />
+            </div>
           ))
       }
     </div>
