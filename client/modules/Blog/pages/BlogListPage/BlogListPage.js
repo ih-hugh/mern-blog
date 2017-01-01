@@ -66,15 +66,18 @@ class BlogListPage extends Component {
           handleEditPost={this.handleEditPost}
           posts={this.props.posts}
         />
-        <div style={paginateContainerStyle}>
-          <Pagination
-            activePage={this.state.page}
-            itemsCountPerPage={this.state.limit}
-            totalItemsCount={this.props.postsCount}
-            pageRangeDisplayed={5}
-            onChange={this.onChange}
-          />
-        </div>
+        {
+          this.props.postsCount > 5 ?
+            <div style={paginateContainerStyle}>
+              <Pagination
+                activePage={this.state.page}
+                itemsCountPerPage={this.state.limit}
+                totalItemsCount={this.props.postsCount}
+                pageRangeDisplayed={5}
+                onChange={this.onChange}
+              />
+            </div> : <div></div>
+        }
       </div>
     );
   }

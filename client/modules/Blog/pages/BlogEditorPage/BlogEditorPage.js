@@ -1,8 +1,9 @@
 const isBrowser = typeof window != 'undefined' && window.document; // eslint-disable-line
 import React, { Component, PropTypes } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { socket } from '../../../../util/initSocket';
-
 import { getAuthenticatedStatus, getUser } from '../../../App/AppReducer';
 import { emitUpdatePostRequest } from '../../BlogActions';
 import { getPost } from '../../BlogReducer';
@@ -43,7 +44,13 @@ export class BlogEditor extends Component {
           <h3>{this.props.user ? this.props.user.email : 'Loading'}</h3>
           <input placeholder="Blog Title" className={styles['form-field']} ref="title" />
           <textarea placeholder="Blog Content" className={styles['form-field']} ref="content" />
-          <a className={styles['post-submit-button']} href="/" onClick={this.updatePost}>Submit</a>
+          <RaisedButton
+            backgroundColor="#333c5a"
+            labelColor="#fff"
+            onTouchTap={this.updatePost}
+            label="Submit"
+            containerElement={<Link to={'/'} />}
+          />
         </div>
       </div>
     );

@@ -7,6 +7,8 @@ export const ADD_POSTS = 'ADD_POSTS';
 export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const SET_POSTS_COUNT = 'SET_POSTS_COUNT';
+export const ADD_COMMENTS = 'ADD_COMMENTS';
+export const SET_COMMENTS_COUNT = 'SET_COMMENTS_COUNT';
 
 export const SERVER_ADD_POST = 'server/addPost';
 export const SERVER_UPDATE_POST = 'server/updatePost';
@@ -92,6 +94,30 @@ export function fetchPost(cuid) {
   return (dispatch) => {
     return callApi(`posts/${cuid}`).then(res => dispatch(addPost(res.post)));
   };
+}
+
+export function addComments(comments) {
+  return {
+    type: ADD_COMMENTS,
+    comments,
+  };
+}
+
+export function setCommentsCount(commentsCount) {
+  return {
+    type: SET_COMMENTS_COUNT,
+    commentsCount,
+  };
+}
+
+export function fetchComments(limit, offset, postID) {
+  return dispatch => callApi(`comments/${postID}/?limit=${limit}&offset=${offset}`)
+    .then(res => {
+      batchActions([
+        dispatch(addComments(res.comments)),
+        dispatch(setCommentsCount(res.commentsCount)),
+      ]);
+    });
 }
 
 export function deletePost(cuid) {

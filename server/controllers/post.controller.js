@@ -28,20 +28,6 @@ export function getPosts(req, res) {
       });
     });
 }
-/**
- * Get posts count
- * @param req
- * @param res
- * @returns void
- */
-export function getPostsCount(req, res) {
-  Post.count((err, postsCount) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    return res.json({ postsCount });
-  });
-}
 
 /**
  * Save a post

@@ -35,11 +35,5 @@ export function configureStore(initialState = {}) {
     });
   }
 
-  store.subscribe(() => {
-    return console.log('State Changed');
-  });
-
-  // store.dispatch({ type: 'server/hello', data: 'Hello!' });
-
   return store;
 }

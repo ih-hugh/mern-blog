@@ -1,0 +1,12 @@
+.no-post-message {
+  width: 100%;
+  height: 20vh;
+}
+
+.list-view h4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 50px;  
+}
