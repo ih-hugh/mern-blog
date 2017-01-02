@@ -494,7 +494,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.GET_USER = exports.ADD_POST = exports.LOGOUT = exports.AUTH_ERROR = exports.AUTHENTICATE_USER = exports.SET_USER = undefined;
+	exports.ADD_POST = exports.LOGOUT = exports.AUTH_ERROR = exports.AUTHENTICATE_USER = exports.SET_USER = undefined;
 	exports.authenticateUser = authenticateUser;
 	exports.logUserOut = logUserOut;
 	exports.authError = authError;
@@ -521,7 +521,6 @@
 	var AUTH_ERROR = exports.AUTH_ERROR = 'AUTH_ERROR';
 	var LOGOUT = exports.LOGOUT = 'LOGOUT';
 	var ADD_POST = exports.ADD_POST = 'ADD_POST';
-	var GET_USER = exports.GET_USER = 'GET_USER';
 
 	// Export Actions
 	function authenticateUser() {
@@ -4659,7 +4658,7 @@
 	    props.dispatch((0, _BlogActions.fetchComments)(5, 0, props.post.cuid));
 	    setTimeout(function () {
 	      _reactRouter.browserHistory.push('/posts/' + post.slug + '-' + post.cuid);
-	    }, 1000);
+	    }, 600);
 	  };
 
 	  return _jsx('div', {

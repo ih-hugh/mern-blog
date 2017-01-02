@@ -1,5 +1,5 @@
 // Import Actions
-import { AUTHENTICATE_USER, LOGOUT, AUTH_ERROR, SET_USER, ADD_POSTS, GET_USER } from './AppActions';
+import { AUTHENTICATE_USER, LOGOUT, AUTH_ERROR, SET_USER, ADD_POSTS } from './AppActions';
 
 // Initial State
 const initialState = {

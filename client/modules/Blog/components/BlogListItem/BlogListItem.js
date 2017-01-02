@@ -22,7 +22,7 @@ function BlogListItem(props) {
     props.dispatch(fetchComments(5, 0, props.post.cuid));
     setTimeout(() => {
       browserHistory.push(`/posts/${post.slug}-${post.cuid}`);
-    }, 1000);
+    }, 600);
   };
 
   return (
