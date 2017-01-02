@@ -26,8 +26,6 @@ class BlogListPage extends Component {
       limit: 5,
       page: 1,
     };
-
-    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
@@ -37,7 +35,13 @@ class BlogListPage extends Component {
     });
   }
 
-  onChange(page) {
+  componentWillUnmount() {
+    socket.removeListener('refresh bloglist', () => {
+      this.props.dispatch(fetchPosts(5, 0));
+    });
+  }
+
+  onChange = page => {
     const offset = page - 1;
     this.setState({ offset, page }, () => {
       this.props.dispatch(fetchPosts(this.state.limit, this.state.offset));
@@ -51,7 +55,7 @@ class BlogListPage extends Component {
     if (confirm('Do you want to delete this post')) { // eslint-disable-line
       this.props.dispatch(deletePostRequest(post.cuid));
       socket.emit('refresh bloglist', () => {
-        this.props.dispatch(fetchPosts());
+        this.props.dispatch(fetchPosts(5, 0));
       });
     }
   };
@@ -64,7 +68,7 @@ class BlogListPage extends Component {
           user={this.props.user || 'Loading'}
           handleDeletePost={this.handleDeletePost}
           handleEditPost={this.handleEditPost}
-          posts={this.props.posts}
+          posts={this.props.posts || []}
         />
         {
           this.props.postsCount > 5 ?
@@ -84,7 +88,7 @@ class BlogListPage extends Component {
 }
 
 // Actions required to provide data for this component to render in sever side.
-BlogListPage.need = [() => { return fetchPosts(5, 0); }];
+BlogListPage.need = [() => fetchPosts(5, 0)];
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
@@ -105,7 +109,7 @@ BlogListPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   user: PropTypes.object,
   postsCount: PropTypes.number.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
 BlogListPage.contextTypes = {

@@ -1,5 +1,5 @@
 // Import Actions
-import { AUTHENTICATE_USER, LOGOUT, AUTH_ERROR, SET_USER, ADD_POSTS } from './AppActions';
+import { AUTHENTICATE_USER, LOGOUT, AUTH_ERROR, SET_USER, ADD_POSTS, GET_USER } from './AppActions';
 
 // Initial State
 const initialState = {
@@ -15,23 +15,28 @@ const AppReducer = (state = initialState, action) => {
         isAuthenticated: true,
         error: null,
       });
+
     case ADD_POSTS:
       return {
         data: action.posts,
       };
+
     case LOGOUT:
       return Object.assign({}, state, {
         isAuthenticated: false,
         error: null,
       });
+
     case AUTH_ERROR:
       return Object.assign({}, state, {
         error: action.error,
       });
+
     case SET_USER:
       return Object.assign({}, state, {
         user: action.user,
       });
+
     default:
       return state;
   }

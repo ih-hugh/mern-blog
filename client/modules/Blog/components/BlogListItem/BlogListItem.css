@@ -35,10 +35,10 @@
 
 .post-date {
   color: #888;
-  margin: 0 30px;
   text-decoration: none;
   font-size: 14px;
   font-style: italic;
+  font-weight: 200;
 }
 
 .post-action a{

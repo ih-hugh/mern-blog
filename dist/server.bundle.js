@@ -68,6 +68,203 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.SERVER_ADD_COMMENT = exports.SET_COMMENTS_COUNT = exports.ADD_COMMENT = exports.ADD_COMMENTS = exports.SERVER_UPDATE_POST = exports.SERVER_ADD_POST = exports.SET_POSTS_COUNT = exports.UPDATE_POST = exports.DELETE_POST = exports.ADD_POSTS = exports.ADD_POST = undefined;
+	exports.addPost = addPost;
+	exports.setPostCount = setPostCount;
+	exports.updatePost = updatePost;
+	exports.serverAddPost = serverAddPost;
+	exports.emitUpdatePostRequest = emitUpdatePostRequest;
+	exports.emitAddPostRequest = emitAddPostRequest;
+	exports.addPosts = addPosts;
+	exports.fetchPosts = fetchPosts;
+	exports.fetchPost = fetchPost;
+	exports.deletePost = deletePost;
+	exports.deletePostRequest = deletePostRequest;
+	exports.addComments = addComments;
+	exports.addComment = addComment;
+	exports.setCommentsCount = setCommentsCount;
+	exports.fetchComments = fetchComments;
+	exports.serverAddComment = serverAddComment;
+	exports.emitAddCommentRequest = emitAddCommentRequest;
+
+	var _apiCaller = __webpack_require__(30);
+
+	var _apiCaller2 = _interopRequireDefault(_apiCaller);
+
+	var _reduxBatchedActions = __webpack_require__(39);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// Export Constants
+	var ADD_POST = exports.ADD_POST = 'ADD_POST';
+	var ADD_POSTS = exports.ADD_POSTS = 'ADD_POSTS';
+	var DELETE_POST = exports.DELETE_POST = 'DELETE_POST';
+	var UPDATE_POST = exports.UPDATE_POST = 'UPDATE_POST';
+	var SET_POSTS_COUNT = exports.SET_POSTS_COUNT = 'SET_POSTS_COUNT';
+	var SERVER_ADD_POST = exports.SERVER_ADD_POST = 'server/addPost';
+	var SERVER_UPDATE_POST = exports.SERVER_UPDATE_POST = 'server/updatePost';
+
+	var ADD_COMMENTS = exports.ADD_COMMENTS = 'ADD_COMMENTS';
+	var ADD_COMMENT = exports.ADD_COMMENT = 'ADD_COMMENT';
+	var SET_COMMENTS_COUNT = exports.SET_COMMENTS_COUNT = 'SET_COMMENTS_COUNT';
+	var SERVER_ADD_COMMENT = exports.SERVER_ADD_COMMENT = 'server/addComment';
+
+	// Export Actions
+	function addPost(post) {
+	  return {
+	    type: ADD_POST,
+	    post: post
+	  };
+	}
+
+	function setPostCount(postsCount) {
+	  return {
+	    type: SET_POSTS_COUNT,
+	    postsCount: postsCount
+	  };
+	}
+
+	function updatePost(post) {
+	  return {
+	    type: UPDATE_POST,
+	    post: post
+	  };
+	}
+
+	function serverAddPost(post) {
+	  return {
+	    type: SERVER_ADD_POST,
+	    post: post
+	  };
+	}
+
+	function emitUpdatePostRequest(post, cuid) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('/posts/' + cuid, 'put', {
+	      post: {
+	        title: post.title,
+	        content: post.content
+	      }
+	    }).then(function (res) {
+	      return dispatch({ type: SERVER_UPDATE_POST, post: res.post });
+	    });
+	  };
+	}
+
+	function emitAddPostRequest(post) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('posts', 'post', {
+	      post: {
+	        username: post.username,
+	        title: post.title,
+	        content: post.content
+	      }
+	    }).then(function (res) {
+	      return dispatch(serverAddPost(res.post));
+	    });
+	  };
+	}
+
+	function addPosts(posts) {
+	  return {
+	    type: ADD_POSTS,
+	    posts: posts
+	  };
+	}
+
+	function fetchPosts(limit, offset) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('posts/?limit=' + limit + '&offset=' + offset).then(function (res) {
+	      return (0, _reduxBatchedActions.batchActions)([dispatch(addPosts(res.posts)), dispatch(setPostCount(res.postsCount))]);
+	    });
+	  };
+	}
+
+	function fetchPost(cuid) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('posts/' + cuid).then(function (res) {
+	      return dispatch(addPost(res.post));
+	    });
+	  };
+	}
+
+	function deletePost(cuid) {
+	  return {
+	    type: DELETE_POST,
+	    cuid: cuid
+	  };
+	}
+
+	function deletePostRequest(cuid) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('posts/' + cuid, 'delete').then(function () {
+	      return dispatch(deletePost(cuid));
+	    });
+	  };
+	}
+
+	// Comment Actions
+
+	function addComments(comments) {
+	  return {
+	    type: ADD_COMMENTS,
+	    comments: comments
+	  };
+	}
+
+	function addComment(comment) {
+	  return {
+	    type: ADD_COMMENT,
+	    comment: comment
+	  };
+	}
+
+	function setCommentsCount(commentsCount) {
+	  return {
+	    type: SET_COMMENTS_COUNT,
+	    commentsCount: commentsCount
+	  };
+	}
+
+	function fetchComments(limit, offset, postID) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('comments/' + postID + '/?limit=' + limit + '&offset=' + offset).then(function (res) {
+	      return (0, _reduxBatchedActions.batchActions)([dispatch(addComments(res.comments)), dispatch(setCommentsCount(res.commentsCount))]);
+	    });
+	  };
+	}
+
+	function serverAddComment(comment) {
+	  return {
+	    type: SERVER_ADD_COMMENT,
+	    comment: comment
+	  };
+	}
+
+	function emitAddCommentRequest(comment) {
+	  return function (dispatch) {
+	    return (0, _apiCaller2.default)('comments', 'post', {
+	      comment: {
+	        username: comment.username,
+	        content: comment.content,
+	        postID: comment.postID
+	      }
+	    }).then(function (res) {
+	      return dispatch(serverAddComment(res.comment));
+	    });
+	  };
+	}
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.getPosts = exports.getUser = exports.getError = exports.getAuthenticatedStatus = undefined;
 
 	var _AppActions = __webpack_require__(11);
@@ -90,23 +287,28 @@
 	        isAuthenticated: true,
 	        error: null
 	      });
+
 	    case _AppActions.ADD_POSTS:
 	      return {
 	        data: action.posts
 	      };
+
 	    case _AppActions.LOGOUT:
 	      return Object.assign({}, state, {
 	        isAuthenticated: false,
 	        error: null
 	      });
+
 	    case _AppActions.AUTH_ERROR:
 	      return Object.assign({}, state, {
 	        error: action.error
 	      });
+
 	    case _AppActions.SET_USER:
 	      return Object.assign({}, state, {
 	        user: action.user
 	      });
+
 	    default:
 	      return state;
 	  }
@@ -132,7 +334,7 @@
 	exports.default = AppReducer;
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -141,173 +343,24 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.SERVER_UPDATE_POST = exports.SERVER_ADD_POST = exports.SET_COMMENTS_COUNT = exports.ADD_COMMENTS = exports.SET_POSTS_COUNT = exports.UPDATE_POST = exports.DELETE_POST = exports.ADD_POSTS = exports.ADD_POST = undefined;
-	exports.addPost = addPost;
-	exports.setPostCount = setPostCount;
-	exports.updatePost = updatePost;
-	exports.addPostRequest = addPostRequest;
-	exports.emitUpdatePostRequest = emitUpdatePostRequest;
-	exports.emitAddPostRequest = emitAddPostRequest;
-	exports.addPosts = addPosts;
-	exports.fetchPosts = fetchPosts;
-	exports.fetchPost = fetchPost;
-	exports.addComments = addComments;
-	exports.setCommentsCount = setCommentsCount;
-	exports.fetchComments = fetchComments;
-	exports.deletePost = deletePost;
-	exports.deletePostRequest = deletePostRequest;
+	exports.socket = undefined;
 
-	var _apiCaller = __webpack_require__(30);
+	var _socket = __webpack_require__(96);
 
-	var _apiCaller2 = _interopRequireDefault(_apiCaller);
-
-	var _reduxBatchedActions = __webpack_require__(40);
+	var _socket2 = _interopRequireDefault(_socket);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// Export Constants
-	var ADD_POST = exports.ADD_POST = 'ADD_POST';
-	var ADD_POSTS = exports.ADD_POSTS = 'ADD_POSTS';
-	var DELETE_POST = exports.DELETE_POST = 'DELETE_POST';
-	var UPDATE_POST = exports.UPDATE_POST = 'UPDATE_POST';
-	var SET_POSTS_COUNT = exports.SET_POSTS_COUNT = 'SET_POSTS_COUNT';
-	var ADD_COMMENTS = exports.ADD_COMMENTS = 'ADD_COMMENTS';
-	var SET_COMMENTS_COUNT = exports.SET_COMMENTS_COUNT = 'SET_COMMENTS_COUNT';
-
-	var SERVER_ADD_POST = exports.SERVER_ADD_POST = 'server/addPost';
-	var SERVER_UPDATE_POST = exports.SERVER_UPDATE_POST = 'server/updatePost';
-
-	// Export Actions
-	function addPost(post) {
-	  return {
-	    type: ADD_POST,
-	    post: post
-	  };
-	}
-
-	function setPostCount(postsCount) {
-	  return {
-	    type: SET_POSTS_COUNT,
-	    postsCount: postsCount
-	  };
-	}
-
-	function updatePost(post) {
-	  return {
-	    type: UPDATE_POST,
-	    post: post
-	  };
-	}
-
-	function addPostRequest(post) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('posts', 'post', {
-	      post: {
-	        username: post.username,
-	        title: post.title,
-	        content: post.content
-	      }
-	    }).then(function (res) {
-	      return dispatch(addPost(res.post));
-	    });
-	  };
-	}
-
-	function emitUpdatePostRequest(post, cuid) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('/posts/' + cuid, 'put', {
-	      post: {
-	        title: post.title,
-	        content: post.content
-	      }
-	    }).then(function (res) {
-	      dispatch({ type: SERVER_UPDATE_POST, post: res.post });
-	    });
-	  };
-	}
-
-	function emitAddPostRequest(post) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('posts', 'post', {
-	      post: {
-	        username: post.username,
-	        title: post.title,
-	        content: post.content
-	      }
-	    }).then(function (res) {
-	      return dispatch({ type: SERVER_ADD_POST, post: res.post });
-	    });
-	  };
-	}
-
-	function addPosts(posts) {
-	  return {
-	    type: ADD_POSTS,
-	    posts: posts
-	  };
-	}
-
-	function fetchPosts(limit, offset) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('posts/?limit=' + limit + '&offset=' + offset).then(function (res) {
-	      (0, _reduxBatchedActions.batchActions)([dispatch(addPosts(res.posts)), dispatch(setPostCount(res.postsCount))]);
-	    });
-	  };
-	}
-
-	function fetchPost(cuid) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('posts/' + cuid).then(function (res) {
-	      return dispatch(addPost(res.post));
-	    });
-	  };
-	}
-
-	function addComments(comments) {
-	  return {
-	    type: ADD_COMMENTS,
-	    comments: comments
-	  };
-	}
-
-	function setCommentsCount(commentsCount) {
-	  return {
-	    type: SET_COMMENTS_COUNT,
-	    commentsCount: commentsCount
-	  };
-	}
-
-	function fetchComments(limit, offset, postID) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('comments/' + postID + '/?limit=' + limit + '&offset=' + offset).then(function (res) {
-	      (0, _reduxBatchedActions.batchActions)([dispatch(addComments(res.comments)), dispatch(setCommentsCount(res.commentsCount))]);
-	    });
-	  };
-	}
-
-	function deletePost(cuid) {
-	  return {
-	    type: DELETE_POST,
-	    cuid: cuid
-	  };
-	}
-
-	function deletePostRequest(cuid) {
-	  return function (dispatch) {
-	    return (0, _apiCaller2.default)('posts/' + cuid, 'delete').then(function () {
-	      return dispatch(deletePost(cuid));
-	    });
-	  };
-	}
+	var socket = exports.socket = process.env.NODE_ENV === 'development' ? _socket2.default.connect('http://localhost:8000') : _socket2.default.connect('http://mern-blog.herokuapp.com/');
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui/RaisedButton");
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -316,9 +369,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getPost = exports.getPostsCount = exports.getComments = exports.getPosts = undefined;
+	exports.getPost = exports.getCommentsCount = exports.getPostsCount = exports.getComments = exports.getPosts = undefined;
 
-	var _BlogActions = __webpack_require__(4);
+	var _BlogActions = __webpack_require__(3);
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -349,6 +402,11 @@
 	      return {
 	        data: [action.post].concat(_toConsumableArray(state.data))
 	      };
+
+	    case _BlogActions.SERVER_ADD_COMMENT:
+	      return Object.assign({}, state, {
+	        comments: [action.comment].concat(_toConsumableArray(state.comments))
+	      });
 
 	    case _BlogActions.SET_POSTS_COUNT:
 	      return Object.assign({}, state, {
@@ -389,9 +447,13 @@
 	  return state.blog.comments;
 	};
 
-	// Get Post Count
 	var getPostsCount = exports.getPostsCount = function getPostsCount(state) {
 	  return state.blog.postsCount;
+	};
+
+	// Get Comment Count
+	var getCommentsCount = exports.getCommentsCount = function getCommentsCount(state) {
+	  return state.blog.commentsCount;
 	};
 
 	// Get post by cuid
@@ -403,26 +465,6 @@
 
 	// Export Reducer
 	exports.default = BlogReducer;
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.socket = undefined;
-
-	var _socket = __webpack_require__(95);
-
-	var _socket2 = _interopRequireDefault(_socket);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var socket = exports.socket = process.env.NODE_ENV === 'development' ? _socket2.default.connect('http://localhost:8000') : _socket2.default.connect('http://mern-blog.herokuapp.com/');
 
 /***/ },
 /* 8 */
@@ -452,7 +494,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.ADD_POST = exports.LOGOUT = exports.AUTH_ERROR = exports.AUTHENTICATE_USER = exports.SET_USER = undefined;
+	exports.GET_USER = exports.ADD_POST = exports.LOGOUT = exports.AUTH_ERROR = exports.AUTHENTICATE_USER = exports.SET_USER = undefined;
 	exports.authenticateUser = authenticateUser;
 	exports.logUserOut = logUserOut;
 	exports.authError = authError;
@@ -479,6 +521,7 @@
 	var AUTH_ERROR = exports.AUTH_ERROR = 'AUTH_ERROR';
 	var LOGOUT = exports.LOGOUT = 'LOGOUT';
 	var ADD_POST = exports.ADD_POST = 'ADD_POST';
+	var GET_USER = exports.GET_USER = 'GET_USER';
 
 	// Export Actions
 	function authenticateUser() {
@@ -603,33 +646,33 @@
 	});
 	exports.localizationData = exports.enabledLanguages = undefined;
 
-	var _reactIntl = __webpack_require__(38);
+	var _reactIntl = __webpack_require__(36);
 
-	var _intl = __webpack_require__(75);
+	var _intl = __webpack_require__(76);
 
 	var _intl2 = _interopRequireDefault(_intl);
 
-	var _intlLocalesSupported = __webpack_require__(76);
+	var _intlLocalesSupported = __webpack_require__(77);
 
 	var _intlLocalesSupported2 = _interopRequireDefault(_intlLocalesSupported);
 
-	__webpack_require__(77);
+	__webpack_require__(78);
 
-	var _en = __webpack_require__(85);
+	var _en = __webpack_require__(87);
 
 	var _en2 = _interopRequireDefault(_en);
 
-	var _en3 = __webpack_require__(57);
+	var _en3 = __webpack_require__(56);
 
 	var _en4 = _interopRequireDefault(_en3);
 
-	__webpack_require__(78);
+	__webpack_require__(79);
 
-	var _fr = __webpack_require__(86);
+	var _fr = __webpack_require__(88);
 
 	var _fr2 = _interopRequireDefault(_fr);
 
-	var _fr3 = __webpack_require__(58);
+	var _fr3 = __webpack_require__(57);
 
 	var _fr4 = _interopRequireDefault(_fr3);
 
@@ -711,13 +754,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reduxDevtools = __webpack_require__(90);
+	var _reduxDevtools = __webpack_require__(91);
 
-	var _reduxDevtoolsLogMonitor = __webpack_require__(92);
+	var _reduxDevtoolsLogMonitor = __webpack_require__(93);
 
 	var _reduxDevtoolsLogMonitor2 = _interopRequireDefault(_reduxDevtoolsLogMonitor);
 
-	var _reduxDevtoolsDockMonitor = __webpack_require__(91);
+	var _reduxDevtoolsDockMonitor = __webpack_require__(92);
 
 	var _reduxDevtoolsDockMonitor2 = _interopRequireDefault(_reduxDevtoolsDockMonitor);
 
@@ -752,15 +795,15 @@
 
 	var _reactRouter = __webpack_require__(2);
 
-	var _RaisedButton = __webpack_require__(5);
+	var _RaisedButton = __webpack_require__(6);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
-	var _AppReducer = __webpack_require__(3);
+	var _AppReducer = __webpack_require__(4);
 
-	var _BlogActions = __webpack_require__(4);
+	var _BlogActions = __webpack_require__(3);
 
-	var _initSocket = __webpack_require__(7);
+	var _initSocket = __webpack_require__(5);
 
 	var _BlogCreator = {
 	  "form": "_38jANhpciMq2hB_fIEqYWv",
@@ -866,14 +909,7 @@
 
 	var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
 
-	// Import Style
-
-
-	// Import Actions
-
-
-	// Import Selectors
-
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(0);
 
@@ -885,13 +921,13 @@
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
-	var _Divider = __webpack_require__(81);
+	var _Divider = __webpack_require__(83);
 
 	var _Divider2 = _interopRequireDefault(_Divider);
 
-	var _BlogCommentList = __webpack_require__(64);
+	var _WrapBlogListWithComments = __webpack_require__(67);
 
-	var _BlogCommentList2 = _interopRequireDefault(_BlogCommentList);
+	var _WrapBlogListWithComments2 = _interopRequireDefault(_WrapBlogListWithComments);
 
 	var _BlogListItem = {
 	  "single-post": "_2nT19X4_beVcVb92lXwBkn",
@@ -906,42 +942,95 @@
 
 	var _BlogListItem2 = _interopRequireDefault(_BlogListItem);
 
-	var _BlogActions = __webpack_require__(4);
+	var _BlogActions = __webpack_require__(3);
 
-	var _BlogReducer = __webpack_require__(6);
+	var _BlogReducer = __webpack_require__(7);
+
+	var _AppReducer = __webpack_require__(4);
+
+	var _initSocket = __webpack_require__(5);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// Import Style
+
+
+	// Import Actions
+
+
+	// Import Selectors
+
+
 	var _ref = _jsx(_Divider2.default, {});
 
-	var BlogDetailPage = function BlogDetailPage(props) {
-	  return _jsx('div', {}, void 0, _jsx(_reactHelmet2.default, {
-	    title: props.post.title
-	  }), _jsx('div', {
-	    className: _BlogListItem2.default['single-post'] + ' ' + _BlogListItem2.default['post-detail']
-	  }, void 0, _jsx('h3', {
-	    className: _BlogListItem2.default['post-title']
-	  }, void 0, props.post.title), _jsx('p', {
-	    className: _BlogListItem2.default['author-name']
-	  }, void 0, props.post.username), _jsx('p', {
-	    className: _BlogListItem2.default['post-desc']
-	  }, void 0, props.post.content)), _ref, _jsx(_BlogCommentList2.default, {
-	    comments: props.comments
-	  }));
-	};
+	var BlogDetailPage = function (_Component) {
+	  _inherits(BlogDetailPage, _Component);
+
+	  function BlogDetailPage() {
+	    _classCallCheck(this, BlogDetailPage);
+
+	    return _possibleConstructorReturn(this, (BlogDetailPage.__proto__ || Object.getPrototypeOf(BlogDetailPage)).apply(this, arguments));
+	  }
+
+	  _createClass(BlogDetailPage, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      this.props.dispatch((0, _BlogActions.fetchPost)(this.props.params.cuid));
+	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.params.cuid));
+
+	      _initSocket.socket.on('refresh commentlist', function () {
+	        return _this2.props.dispatch((0, _BlogActions.fetchComments)(5, 0, _this2.props.post.cuid));
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _jsx('div', {}, void 0, _jsx('div', {}, void 0, _jsx(_reactHelmet2.default, {
+	        title: this.props.post.title || 'Loading'
+	      }), _jsx('div', {
+	        className: _BlogListItem2.default['single-post'] + ' ' + _BlogListItem2.default['post-detail']
+	      }, void 0, _jsx('h3', {
+	        className: _BlogListItem2.default['post-title']
+	      }, void 0, this.props.post.title), _jsx('p', {
+	        className: _BlogListItem2.default['author-name']
+	      }, void 0, 'By ', this.props.post.username.substr(0, this.props.post.username.indexOf('@'))), _jsx('p', {
+	        className: _BlogListItem2.default['post-desc']
+	      }, void 0, this.props.post.content)), _ref, _jsx(_WrapBlogListWithComments2.default, {
+	        commentsCount: this.props.commentsCount,
+	        comments: this.props.comments,
+	        post: this.props.post,
+	        user: this.props.user,
+	        params: this.props.params,
+	        dispatch: this.props.dispatch
+	      })));
+	    }
+	  }]);
+
+	  return BlogDetailPage;
+	}(_react.Component);
 
 	// Actions required to provide data for this component to render in sever side.
+
+
 	BlogDetailPage.need = [function (params) {
 	  return (0, _BlogActions.fetchPost)(params.cuid);
-	}, function (params) {
-	  return (0, _BlogActions.fetchComments)(5, 0, params.cuid);
 	}];
 
 	// Retrieve data from store as props
 	function mapStateToProps(state, props) {
 	  return {
 	    post: (0, _BlogReducer.getPost)(state, props.params.cuid),
-	    comments: (0, _BlogReducer.getComments)(state)
+	    comments: (0, _BlogReducer.getComments)(state),
+	    user: (0, _AppReducer.getUser)(state),
+	    commentsCount: (0, _BlogReducer.getCommentsCount)(state)
 	  };
 	}
 
@@ -967,7 +1056,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _RaisedButton = __webpack_require__(5);
+	var _RaisedButton = __webpack_require__(6);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -975,13 +1064,13 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _initSocket = __webpack_require__(7);
+	var _initSocket = __webpack_require__(5);
 
-	var _AppReducer = __webpack_require__(3);
+	var _AppReducer = __webpack_require__(4);
 
-	var _BlogActions = __webpack_require__(4);
+	var _BlogActions = __webpack_require__(3);
 
-	var _BlogReducer = __webpack_require__(6);
+	var _BlogReducer = __webpack_require__(7);
 
 	var _BlogEditorPage = {
 	  "form": "m5IN0hZJQGoy7iZ5dOHub",
@@ -1026,13 +1115,11 @@
 	    }
 
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = BlogEditor.__proto__ || Object.getPrototypeOf(BlogEditor)).call.apply(_ref, [this].concat(args))), _this), _this.updatePost = function () {
-	      var usernameRef = _this.props.user.email || 'Loading';
 	      var titleRef = _this.refs.title.value;
 	      var contentRef = _this.refs.content.value;
 
-	      if (usernameRef && titleRef && contentRef) {
+	      if (titleRef && contentRef) {
 	        var post = {
-	          username: usernameRef,
 	          title: titleRef,
 	          content: contentRef
 	        };
@@ -1071,6 +1158,10 @@
 	  return BlogEditor;
 	}(_react.Component);
 
+	BlogEditor.need = [function (params) {
+	  return (0, _BlogActions.fetchPost)(params.cuid);
+	}];
+
 	function mapStateToProps(store, props) {
 	  return {
 	    isAuthenticated: (0, _AppReducer.getAuthenticatedStatus)(store),
@@ -1104,21 +1195,21 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _reactJsPagination = __webpack_require__(87);
+	var _reactJsPagination = __webpack_require__(37);
 
 	var _reactJsPagination2 = _interopRequireDefault(_reactJsPagination);
 
-	var _BlogList = __webpack_require__(66);
+	var _BlogList = __webpack_require__(65);
 
 	var _BlogList2 = _interopRequireDefault(_BlogList);
 
-	var _initSocket = __webpack_require__(7);
+	var _initSocket = __webpack_require__(5);
 
-	var _AppReducer = __webpack_require__(3);
+	var _AppReducer = __webpack_require__(4);
 
-	var _BlogActions = __webpack_require__(4);
+	var _BlogActions = __webpack_require__(3);
 
-	var _BlogReducer = __webpack_require__(6);
+	var _BlogReducer = __webpack_require__(7);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1145,12 +1236,22 @@
 
 	    var _this = _possibleConstructorReturn(this, (BlogListPage.__proto__ || Object.getPrototypeOf(BlogListPage)).call(this, props));
 
+	    _this.onChange = function (page) {
+	      var offset = page - 1;
+	      _this.setState({ offset: offset, page: page }, function () {
+	        _this.props.dispatch((0, _BlogActions.fetchPosts)(_this.state.limit, _this.state.offset));
+	      });
+	      if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined) {
+	        window.scrollTo(0, 482);
+	      }
+	    };
+
 	    _this.handleDeletePost = function (post) {
 	      if (confirm('Do you want to delete this post')) {
 	        // eslint-disable-line
 	        _this.props.dispatch((0, _BlogActions.deletePostRequest)(post.cuid));
 	        _initSocket.socket.emit('refresh bloglist', function () {
-	          _this.props.dispatch((0, _BlogActions.fetchPosts)());
+	          _this.props.dispatch((0, _BlogActions.fetchPosts)(5, 0));
 	        });
 	      }
 	    };
@@ -1160,8 +1261,6 @@
 	      limit: 5,
 	      page: 1
 	    };
-
-	    _this.onChange = _this.onChange.bind(_this);
 	    return _this;
 	  }
 
@@ -1176,17 +1275,13 @@
 	      });
 	    }
 	  }, {
-	    key: 'onChange',
-	    value: function onChange(page) {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
 	      var _this3 = this;
 
-	      var offset = page - 1;
-	      this.setState({ offset: offset, page: page }, function () {
-	        _this3.props.dispatch((0, _BlogActions.fetchPosts)(_this3.state.limit, _this3.state.offset));
+	      _initSocket.socket.removeListener('refresh bloglist', function () {
+	        _this3.props.dispatch((0, _BlogActions.fetchPosts)(5, 0));
 	      });
-	      if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined) {
-	        window.scrollTo(0, 482);
-	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -1196,7 +1291,7 @@
 	        user: this.props.user || 'Loading',
 	        handleDeletePost: this.handleDeletePost,
 	        handleEditPost: this.handleEditPost,
-	        posts: this.props.posts
+	        posts: this.props.posts || []
 	      }), this.props.postsCount > 5 ? _jsx('div', {
 	        style: paginateContainerStyle
 	      }, void 0, _jsx(_reactJsPagination2.default, {
@@ -1256,13 +1351,13 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _formsyReact = __webpack_require__(36);
+	var _formsyReact = __webpack_require__(35);
 
 	var _formsyReact2 = _interopRequireDefault(_formsyReact);
 
-	var _lib = __webpack_require__(35);
+	var _lib = __webpack_require__(34);
 
-	var _RaisedButton = __webpack_require__(5);
+	var _RaisedButton = __webpack_require__(6);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -1698,13 +1793,13 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _formsyReact = __webpack_require__(36);
+	var _formsyReact = __webpack_require__(35);
 
 	var _formsyReact2 = _interopRequireDefault(_formsyReact);
 
-	var _lib = __webpack_require__(35);
+	var _lib = __webpack_require__(34);
 
-	var _RaisedButton = __webpack_require__(5);
+	var _RaisedButton = __webpack_require__(6);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -2132,7 +2227,7 @@
 	exports.API_URL = undefined;
 	exports.default = callApi;
 
-	var _isomorphicFetch = __webpack_require__(79);
+	var _isomorphicFetch = __webpack_require__(80);
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
@@ -2234,58 +2329,52 @@
 /* 33 */
 /***/ function(module, exports) {
 
-	module.exports = require("cuid");
+	module.exports = require("date-fns/format");
 
 /***/ },
 /* 34 */
 /***/ function(module, exports) {
 
-	module.exports = require("date-fns/format");
+	module.exports = require("formsy-material-ui/lib");
 
 /***/ },
 /* 35 */
 /***/ function(module, exports) {
 
-	module.exports = require("formsy-material-ui/lib");
+	module.exports = require("formsy-react");
 
 /***/ },
 /* 36 */
 /***/ function(module, exports) {
 
-	module.exports = require("formsy-react");
+	module.exports = require("react-intl");
 
 /***/ },
 /* 37 */
 /***/ function(module, exports) {
 
-	module.exports = require("limax");
+	module.exports = require("react-js-pagination");
 
 /***/ },
 /* 38 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-intl");
+	module.exports = require("redux");
 
 /***/ },
 /* 39 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux");
+	module.exports = require("redux-batched-actions");
 
 /***/ },
 /* 40 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-batched-actions");
-
-/***/ },
-/* 41 */
-/***/ function(module, exports) {
-
 	module.exports = require("sanitize-html");
 
 /***/ },
-/* 42 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2300,7 +2389,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactIntl = __webpack_require__(38);
+	var _reactIntl = __webpack_require__(36);
 
 	var _reactRedux = __webpack_require__(1);
 
@@ -2324,7 +2413,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(IntlWrapper);
 
 /***/ },
-/* 43 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2343,7 +2432,7 @@
 
 	var _reactRouter = __webpack_require__(2);
 
-	var _App = __webpack_require__(59);
+	var _App = __webpack_require__(58);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -2420,7 +2509,7 @@
 	}));
 
 /***/ },
-/* 44 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2431,9 +2520,9 @@
 	});
 	exports.configureStore = configureStore;
 
-	var _redux = __webpack_require__(39);
+	var _redux = __webpack_require__(38);
 
-	var _reduxThunk = __webpack_require__(94);
+	var _reduxThunk = __webpack_require__(95);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -2441,9 +2530,9 @@
 
 	var _DevTools2 = _interopRequireDefault(_DevTools);
 
-	var _reduxBatchedActions = __webpack_require__(40);
+	var _reduxBatchedActions = __webpack_require__(39);
 
-	var _reduxSocket = __webpack_require__(93);
+	var _reduxSocket = __webpack_require__(94);
 
 	var _reduxSocket2 = _interopRequireDefault(_reduxSocket);
 
@@ -2451,7 +2540,7 @@
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _initSocket = __webpack_require__(7);
+	var _initSocket = __webpack_require__(5);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2462,7 +2551,7 @@
 	  var initialState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
 	  // Middleware and store enhancers
-	  var enhancers = [(0, _redux.applyMiddleware)(_reduxThunk2.default), (0, _redux.applyMiddleware)(socketIoMiddleware)];
+	  var enhancers = [(0, _redux.applyMiddleware)(_reduxThunk2.default, socketIoMiddleware)];
 
 	  if (process.env.CLIENT && process.env.NODE_ENV === 'development') {
 	    // Enable DevTools only when rendering on client and during development.
@@ -2484,7 +2573,7 @@
 	}
 
 /***/ },
-/* 45 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2545,7 +2634,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 46 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2583,7 +2672,7 @@
 	exports.default = router;
 
 /***/ },
-/* 47 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2621,7 +2710,7 @@
 	exports.default = router;
 
 /***/ },
-/* 48 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2648,16 +2737,16 @@
 	  */
 
 /***/ },
-/* 49 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
 
 	var webpack = __webpack_require__(17);
-	var cssnext = __webpack_require__(82);
-	var postcssFocus = __webpack_require__(83);
-	var postcssReporter = __webpack_require__(84);
+	var cssnext = __webpack_require__(84);
+	var postcssFocus = __webpack_require__(85);
+	var postcssReporter = __webpack_require__(86);
 
 	module.exports = {
 	  devtool: 'cheap-module-eval-source-map',
@@ -2722,49 +2811,49 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, ""))
 
 /***/ },
-/* 50 */
+/* 49 */
 /***/ function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ },
-/* 51 */
+/* 50 */
 /***/ function(module, exports) {
 
 	module.exports = require("compression");
 
 /***/ },
-/* 52 */
+/* 51 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 53 */
+/* 52 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-dom/server");
 
 /***/ },
-/* 54 */
+/* 53 */
 /***/ function(module, exports) {
 
 	module.exports = require("socket.io");
 
 /***/ },
-/* 55 */
+/* 54 */
 /***/ function(module, exports) {
 
 	module.exports = require("webpack-dev-middleware");
 
 /***/ },
-/* 56 */
+/* 55 */
 /***/ function(module, exports) {
 
 	module.exports = require("webpack-hot-middleware");
 
 /***/ },
-/* 57 */
+/* 56 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2794,7 +2883,7 @@
 	};
 
 /***/ },
-/* 58 */
+/* 57 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2824,7 +2913,7 @@
 	};
 
 /***/ },
-/* 59 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2859,19 +2948,19 @@
 
 	var _DevTools2 = _interopRequireDefault(_DevTools);
 
-	var _Navbar = __webpack_require__(62);
+	var _Navbar = __webpack_require__(61);
 
 	var _Navbar2 = _interopRequireDefault(_Navbar);
 
-	var _Header = __webpack_require__(61);
+	var _Header = __webpack_require__(60);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Footer = __webpack_require__(60);
+	var _Footer = __webpack_require__(59);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _TechShowcase = __webpack_require__(63);
+	var _TechShowcase = __webpack_require__(62);
 
 	var _TechShowcase2 = _interopRequireDefault(_TechShowcase);
 
@@ -2885,13 +2974,13 @@
 
 	var _lightBaseTheme2 = _interopRequireDefault(_lightBaseTheme);
 
-	var _reactTapEventPlugin = __webpack_require__(89);
+	var _reactTapEventPlugin = __webpack_require__(90);
 
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 
 	var _AppActions = __webpack_require__(11);
 
-	var _AppReducer = __webpack_require__(3);
+	var _AppReducer = __webpack_require__(4);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2911,13 +3000,15 @@
 
 	// Import Actions
 
+	// Import Reducer
+
 	var _ref = _jsx(_DevTools2.default, {});
 
 	var _ref2 = _jsx(_Header2.default, {});
 
-	var _ref3 = _jsx(_TechShowcase2.default, {});
+	var _ref3 = _jsx(_Footer2.default, {});
 
-	var _ref4 = _jsx(_Footer2.default, {});
+	var _ref4 = _jsx(_TechShowcase2.default, {});
 
 	var App = exports.App = function (_Component) {
 	  _inherits(App, _Component);
@@ -2953,10 +3044,7 @@
 	        meta: [{ charset: 'utf-8' }, {
 	          'http-equiv': 'X-UA-Compatible',
 	          content: 'IE=edge'
-	        }, {
-	          name: 'viewport',
-	          content: 'width=device-width, initial-scale=1'
-	        }]
+	        }, { name: 'apple-mobile-web-app-capable', content: 'yes' }, { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }, { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' }]
 	      }), _jsx(_Navbar2.default, {
 	        user: this.props.user,
 	        isAuthenticated: this.props.isAuthenticated
@@ -2981,7 +3069,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
 /***/ },
-/* 60 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3022,7 +3110,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 61 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3038,7 +3126,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactParallax = __webpack_require__(88);
+	var _reactParallax = __webpack_require__(89);
 
 	var _Header = {
 	  "header-container": "_3eQVt3GEC69Gxh4gZaqvd7",
@@ -3229,7 +3317,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 62 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3251,11 +3339,11 @@
 
 	var _reactRouter = __webpack_require__(2);
 
-	var _materialUi = __webpack_require__(80);
+	var _materialUi = __webpack_require__(82);
 
 	var _AppActions = __webpack_require__(11);
 
-	var _AppReducer = __webpack_require__(3);
+	var _AppReducer = __webpack_require__(4);
 
 	var _animate = {
 	  "animated": "_2EKhZHq2OINFMF630dOojQ",
@@ -3470,7 +3558,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Navbar); // inject dispatch
 
 /***/ },
-/* 63 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3576,7 +3664,7 @@
 	exports.default = TechShowcase;
 
 /***/ },
-/* 64 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3586,22 +3674,39 @@
 	  value: true
 	});
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
 
-	// Import Components
-
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(0);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _BlogCommentListItem = __webpack_require__(65);
+	var _reactRedux = __webpack_require__(1);
+
+	var _BlogCommentListItem = __webpack_require__(64);
 
 	var _BlogCommentListItem2 = _interopRequireDefault(_BlogCommentListItem);
 
+	var _RaisedButton = __webpack_require__(6);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	var _BlogActions = __webpack_require__(3);
+
 	var _BlogCommentList = {
-	  "no-post-message": "_1MoxzdKWKapyZqivxJMVR7",
-	  "list-view": "_2U02VD2Zo-LGTHFtCgTtbz"
+	  "no-comment-message": "_1ngAQK0aAOk7Idhe1ghDG",
+	  "no-auth": "_1GnD2mI_B-nzt487Ri3hq1",
+	  "comment-list": "_1ei_WogLK6VgbomWwqIlzY",
+	  "list-view": "_2U02VD2Zo-LGTHFtCgTtbz",
+	  "form": "_2rwJWcAPQN8Fahu8mwOnZU",
+	  "form-content": "O5U0yHxDVzxq6w0z5KuKf",
+	  "form-title": "_36F6zuAaAk6dv1XYsOLTtf",
+	  "form-field": "_3YRKEjtUb87JOMjmrjQLik",
+	  "post-submit-button": "_3vvf5AIk2JDrC_cd3tDOUo",
+	  "appear": "_2rPDD-S75V0l1qOU-CIYMf"
 	};
 
 	var _BlogCommentList2 = _interopRequireDefault(_BlogCommentList);
@@ -3843,39 +3948,105 @@
 
 	var _animate2 = _interopRequireDefault(_animate);
 
+	var _initSocket = __webpack_require__(5);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _ref = _jsx('h4', {}, void 0, 'Comments');
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _ref2 = _jsx('p', {}, void 0, 'Start Blogging');
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function BlogCommentList(props) {
-	  return _jsx('div', {
-	    className: '' + _BlogCommentList2.default['list-view']
-	  }, void 0, _ref, props.comments.length === 0 ? _jsx('div', {
-	    className: _flexboxgrid2.default['container-fluid'] + ' ' + _BlogCommentList2.default['no-post-message']
-	  }, void 0, _ref2) : props.comments.map(function (comment, i) {
-	    return _jsx('div', {
-	      className: _animate2.default.animated + ' ' + _animate2.default.fadeIn,
-	      style: {
-	        WebkitAnimationDuration: '1s',
-	        WebkitAnimationDelay: i / 2 + 's'
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// Import Components
+
+
+	var _ref2 = _jsx('h4', {}, void 0, 'Comments');
+
+	var _ref3 = _jsx('p', {}, void 0, 'Be the first to comment!');
+
+	var BlogCommentList = function (_Component) {
+	  _inherits(BlogCommentList, _Component);
+
+	  function BlogCommentList() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, BlogCommentList);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = BlogCommentList.__proto__ || Object.getPrototypeOf(BlogCommentList)).call.apply(_ref, [this].concat(args))), _this), _this.addComment = function () {
+	      var username = _this.props.user.email;
+	      var postID = _this.props.post.cuid;
+	      var content = _this.refs.content.value;
+
+	      if (username && postID && postID) {
+	        var comment = {
+	          username: username,
+	          content: content,
+	          postID: postID
+	        };
+	        _this.props.dispatch((0, _BlogActions.emitAddCommentRequest)(comment));
+	        _initSocket.socket.emit('refresh commentlist');
+	        _this.refs.content.value = '';
 	      }
-	    }, comment.cuid, _jsx(_BlogCommentListItem2.default, {
-	      user: props.user,
-	      isAuthenticated: props.isAuthenticated,
-	      comment: comment,
-	      onDelete: function onDelete() {
-	        return props.handleDeleteComment(comment);
-	      }
-	    }));
-	  }));
-	}
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
 
-	exports.default = BlogCommentList;
+	  _createClass(BlogCommentList, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _jsx('div', {
+	        className: _BlogCommentList2.default['list-view'] + ' ' + _flexboxgrid2.default['container-fluid']
+	      }, void 0, _ref2, _jsx('div', {
+	        style: { overflowY: 'scroll' }
+	      }, void 0, _jsx('div', {
+	        className: _BlogCommentList2.default['comment-list'] + ' '
+	      }, void 0, _typeof(this.props.comments) !== undefined && this.props.comments.length === 0 && this.props.user ? _jsx('div', {
+	        className: '' + _BlogCommentList2.default['no-comment-message']
+	      }, void 0, _ref3) : this.props.comments.map(function (comment, i) {
+	        return _jsx('div', {
+	          className: _animate2.default.animated + ' ' + _animate2.default.fadeIn,
+	          style: {
+	            WebkitAnimationDuration: '1s',
+	            WebkitAnimationDelay: i / 4 + 's'
+	          }
+	        }, comment.cuid, _jsx(_BlogCommentListItem2.default, {
+	          user: _this2.props.user,
+	          comment: comment,
+	          onDelete: function onDelete() {
+	            return _this2.props.handleDeleteComment(comment);
+	          }
+	        }, comment.cuid));
+	      }).reverse())), this.props.user ? _jsx('div', {
+	        className: '' + _BlogCommentList2.default.form
+	      }, void 0, _jsx('div', {
+	        className: _BlogCommentList2.default['form-content']
+	      }, void 0, _jsx('h2', {
+	        className: _BlogCommentList2.default['form-title']
+	      }, void 0, 'Add Comment'), _jsx('h3', {}, void 0, this.props.user ? this.props.user.email.substr(0, this.props.user.email.indexOf('@')) : 'Loading'), _react2.default.createElement('textarea', { placeholder: 'Comment...', className: _BlogCommentList2.default['form-field'], ref: 'content' }), _jsx(_RaisedButton2.default, {
+	        backgroundColor: '#333c5a',
+	        labelColor: '#fff',
+	        onTouchTap: this.addComment,
+	        label: 'Submit'
+	      }))) : _jsx('div', {
+	        className: '' + _BlogCommentList2.default['no-auth']
+	      }, void 0, 'Login to comment'));
+	    }
+	  }]);
+
+	  return BlogCommentList;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)()(BlogCommentList);
 
 /***/ },
-/* 65 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3894,15 +4065,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(2);
-
-	var _format = __webpack_require__(34);
+	var _format = __webpack_require__(33);
 
 	var _format2 = _interopRequireDefault(_format);
-
-	var _RaisedButton = __webpack_require__(5);
-
-	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
 	var _animate = {
 	  "animated": "_2EKhZHq2OINFMF630dOojQ",
@@ -3987,66 +4152,194 @@
 
 	var _animate2 = _interopRequireDefault(_animate);
 
+	var _flexboxgrid = {
+	  "container-fluid": "_1FzNFdp-fUBxnzbn4kjCEO",
+	  "container": "_3JMwVBov_g1Ffn2EFzFRsY",
+	  "row": "_36mT-lKVZzd8S7d7wDjXyQ",
+	  "reverse": "wQMcXnv7vl7vcrmspdxi5",
+	  "col": "_2Oz7EQn2ckbbEKJB63mo0R",
+	  "col-xs": "_36pslXruL2xShxKWI8p3TB",
+	  "col-xs-1": "_2cyq_I7AamOAFpp4VBzETS",
+	  "col-xs-2": "_3AKCGDrtXsStEy1Vya839b",
+	  "col-xs-3": "_2FesomBXSsuH2Bt95v8N3",
+	  "col-xs-4": "f6K7yc3DY4LCeAuZ55UgY",
+	  "col-xs-5": "DtFpAtmXN42E5_NW5sVY5",
+	  "col-xs-6": "_3bc59IqfPChdn1OX6X6zc-",
+	  "col-xs-7": "_2tGPeTQEC70JAn0gqlZY1b",
+	  "col-xs-8": "_1y8OOZ8oxU298sL7H7-mwN",
+	  "col-xs-9": "_1F6LfiJ34OQRvwelpjH7dX",
+	  "col-xs-10": "R2boB9xZGQjjwfTX8y5S8",
+	  "col-xs-11": "_34JPEUfNH_dFmuQjqxWixH",
+	  "col-xs-12": "K_fixyCKrKkF9pmEOsBD1",
+	  "col-xs-offset-0": "_1UIb-BhtVCwQnhfD0YihVg",
+	  "col-xs-offset-1": "_12Z7v01QgLtnUOGyPHg2lj",
+	  "col-xs-offset-2": "_1rJV0tLlWdvh5aRO4PCnmD",
+	  "col-xs-offset-3": "_2l0vtYM71Yf5nz9eSQZf82",
+	  "col-xs-offset-4": "_2DqW3bvbbbaFjLTHbNIh0X",
+	  "col-xs-offset-5": "_1nIrFD03vK_8VzTAT_JQ-w",
+	  "col-xs-offset-6": "_1AbQvoIdyeyC8cGrvsMEY5",
+	  "col-xs-offset-7": "_1vG2Ki1qnqEDO3dv94Q2SK",
+	  "col-xs-offset-8": "_3P2MWOJ2DKJJg-8Jydl-Zm",
+	  "col-xs-offset-9": "_3lKlrxz5_O2oHWCYbGYrQJ",
+	  "col-xs-offset-10": "rzWfum7pFZ74Uq00cRfa4",
+	  "col-xs-offset-11": "_3tY1fbKcjqNwNgG06tQE6o",
+	  "col-xs-offset-12": "_1r0cxxpapxt5E93gy85FI0",
+	  "start-xs": "_16Fd4AN3AHl0wdFeI0f5yn",
+	  "center-xs": "qofg636Sks37KX0YUUcaN",
+	  "end-xs": "_1IPPfTV8FQAPhe1x-C_EYc",
+	  "top-xs": "_2YdzY16HxIiMw231cR3IAB",
+	  "middle-xs": "_1Ec_4rDqPrUaWXjYrRztIb",
+	  "bottom-xs": "_155AVzV1jpJbbbMLNcT0RW",
+	  "around-xs": "_3OQIeskr4-5vaUs_SHyoaO",
+	  "between-xs": "_2JeVbHMpWI_CpRhDOwq-wS",
+	  "first-xs": "_2i4TZ840e0RLLrWfzb08JL",
+	  "last-xs": "_2RL3Y1W2c6kwJFk48VuiJe",
+	  "col-sm": "_1tTeYDaAvISROH8rndVWZI",
+	  "col-sm-1": "LdSfqMwjlT07mVM01iCSO",
+	  "col-sm-2": "_2-mIzZzKKHAY3pDr-atBt9",
+	  "col-sm-3": "_2ucN25tAF6I7b6zAJcNMO-",
+	  "col-sm-4": "_17LUA2Bq7f_hLbFMjHevPT",
+	  "col-sm-5": "_1jrawwLa17v-Aluim-j_T8",
+	  "col-sm-6": "_3dzMqpr5RBORCgKDxTMY2j",
+	  "col-sm-7": "_13r3mQLGzy6aeXOGNUjtqd",
+	  "col-sm-8": "_3PzblTbSD13lAe0othmm6W",
+	  "col-sm-9": "_2O3_kW-oNKxMmVsUPepUIQ",
+	  "col-sm-10": "_3O_XoO8LSrNfI85Mysir64",
+	  "col-sm-11": "T3lhk6pUxs6lS1WreuLrZ",
+	  "col-sm-12": "_1LujGyBXEcvyRfCr94UOwn",
+	  "col-sm-offset-0": "_2QI9MiEweZemMbqhwKdy5x",
+	  "col-sm-offset-1": "_39YMS18WBi_dhmsmM534Rr",
+	  "col-sm-offset-2": "spaNn0IVwXmteSaUCBl72",
+	  "col-sm-offset-3": "_1HHyKI-fHAdlyy7djEL2GP",
+	  "col-sm-offset-4": "_34W_ywnxtFC3dVBf9Ew8S_",
+	  "col-sm-offset-5": "_1ngaHOH-p72cym5WkRPh1J",
+	  "col-sm-offset-6": "_1y2vcji2vAwH8atrBlbAiQ",
+	  "col-sm-offset-7": "_1ZdZjXonJu7Dq1OLeQFphv",
+	  "col-sm-offset-8": "_2RPAwhZQvuZMxMlDtzqzb5",
+	  "col-sm-offset-9": "_35R0L2Qzbk49lIv6uCXQoB",
+	  "col-sm-offset-10": "_2t8JtYqRQm4Ku5JxW8Mt4t",
+	  "col-sm-offset-11": "_36dtglqweZdxlB15S1fbUj",
+	  "col-sm-offset-12": "_2PT2rdFJGevWlk0QktvbNT",
+	  "start-sm": "NWcBAjqxo_af1LBJcmFyC",
+	  "center-sm": "_1Q2Vc76-tyhv1okp8BIWR7",
+	  "end-sm": "iFeuAhgM9UVyNCZZq0oqa",
+	  "top-sm": "DdX1wkXTU_eE8UbiFPtC6",
+	  "middle-sm": "_1TvYnmdfPmNWlcEHq-HLHa",
+	  "bottom-sm": "_1SMpSFeBtltufGhqhJ1dkq",
+	  "around-sm": "_1wVtTW2GUx1883z07P9sMP",
+	  "between-sm": "_1-oXGnOKbfXlzFJCh5fU5e",
+	  "first-sm": "_3PlMGpgCu-ygJyoU3J9E_X",
+	  "last-sm": "V8gXt6_3C5VEglZGIIFTl",
+	  "col-md": "zzJmpc9Dr90z0_tskJQu6",
+	  "col-md-1": "_2cIElGMruHPghMmclTD5pY",
+	  "col-md-2": "_2y_KSjKxPDtkrK3UjqzsM7",
+	  "col-md-3": "_2abwnzZadpZq3Yj2GDA5xg",
+	  "col-md-4": "_3wgfKRp50bdA4MRJMTZ8Zi",
+	  "col-md-5": "_8PQlFG_y_j8jkI-WNO6Nf",
+	  "col-md-6": "_1bp8gx7fsN11K4XtRf_Tt3",
+	  "col-md-7": "se7Z1h4rv1WaJwR3Bt3iT",
+	  "col-md-8": "_2GmJLZKvlSCtwRU-6ElNIa",
+	  "col-md-9": "j00RHMCP0EtFwtCEd5Sel",
+	  "col-md-10": "biYu6ScsJVTSTckLwrteE",
+	  "col-md-11": "_10lcxjmy7TZesngndbpW3L",
+	  "col-md-12": "_2mdyMHZsaU0AxE8XnvZJPv",
+	  "col-md-offset-0": "_26uh34MN6inffz2dYP0-qK",
+	  "col-md-offset-1": "_3aMseKckpY8lRsvduryqHb",
+	  "col-md-offset-2": "_2SLhd7EResOtBQClRSNKp7",
+	  "col-md-offset-3": "_3AdacV-cEQUVTo_h-OEVwz",
+	  "col-md-offset-4": "_33wyK2-PPud2Y86J0SklBS",
+	  "col-md-offset-5": "nkrAHdeZhoXfPSDBmFySl",
+	  "col-md-offset-6": "_3uJofslCOE9zKalW5TP6E1",
+	  "col-md-offset-7": "_1WMlUYdTFsJ47cvOrlkTUB",
+	  "col-md-offset-8": "_2f_-wPweMWmjbdmxjIKdW7",
+	  "col-md-offset-9": "_2lQbP9mbp36x0gThtcVKgV",
+	  "col-md-offset-10": "_1mQeHS02F-GNrL6wLc9uBg",
+	  "col-md-offset-11": "_2Y06P58F9lLJA0asfPKYcg",
+	  "col-md-offset-12": "_1FzvVjWOFp9kSZebK43mRq",
+	  "start-md": "_1FUxpz5hSIdxGo3BDgYBIZ",
+	  "center-md": "V5Fm74E0n5a23bKWmgK2t",
+	  "end-md": "_3VnklZpvmhgTDMZh4qwdrX",
+	  "top-md": "_29oVRuJKbMKWBIsPkEJGvV",
+	  "middle-md": "_1GkevMSDSbmVjU-AIAHydQ",
+	  "bottom-md": "_1ZOaZTeiw--YDAbaft_myp",
+	  "around-md": "_1n7A7L_8PvCoPVgUsc5CtB",
+	  "between-md": "_2pDr0GjxRC2DtSHIlNIydm",
+	  "first-md": "_3oVJIQcWP-kYg4xL8ePdco",
+	  "last-md": "_3YIrq3VRme6OJ8JbgGUcXy",
+	  "col-lg": "_15y7MSLRJJyU4eDsNaCB7w",
+	  "col-lg-1": "_2PIKzYmfd3B98kwSnxtTEN",
+	  "col-lg-2": "_2Ak_rKJd5ybRxdJGfWUakg",
+	  "col-lg-3": "_3dYSXPPcszdMMd8VSPtaRS",
+	  "col-lg-4": "z20ecYDMbz_C70lCQ8Gzx",
+	  "col-lg-5": "_1IyjaZ6OjfQ-Z_CUgn60CE",
+	  "col-lg-6": "_2j-J0SMpTl7ZJPoBUe8As0",
+	  "col-lg-7": "_1YB2ha9R4RZ8RcBgbSR5hJ",
+	  "col-lg-8": "_2XPNdHgDmod-NEA9x1sFAO",
+	  "col-lg-9": "_2TYLdHMkAgQZsMCU51rakB",
+	  "col-lg-10": "_2ZeFFwXBxK5bQ3e5KrR6aY",
+	  "col-lg-11": "_20DoaJ1ciBxGUunkjXr1zJ",
+	  "col-lg-12": "_16BZsUdOJfaHwxWiFE8tk5",
+	  "col-lg-offset-0": "_2b1tLxuT6np2GXOncEn3N-",
+	  "col-lg-offset-1": "_2nYMIpt2rz2RNnIz-GgbBB",
+	  "col-lg-offset-2": "QEizvJDPEggeAhDMoo09m",
+	  "col-lg-offset-3": "_1wIIfhiiwZWn8btzeX5c-O",
+	  "col-lg-offset-4": "_3xGVFBXXYl5zvsuu-YlMkD",
+	  "col-lg-offset-5": "_5jluw6RjxKAMaCEVpc_JY",
+	  "col-lg-offset-6": "_3OWGod410Yo6v36UStYHNy",
+	  "col-lg-offset-7": "Hzwdl4eZruPEx1KGkX4Le",
+	  "col-lg-offset-8": "oe1sNXhrk9D7bcl1oXbi-",
+	  "col-lg-offset-9": "y_qESph7611NuXU9ZR7bU",
+	  "col-lg-offset-10": "_1JzqcGyiewbD6fJ1NxKVqc",
+	  "col-lg-offset-11": "_232_Qyo5-HGk5IVhxJaCDH",
+	  "col-lg-offset-12": "_9VSDHV5-tv80pWM1DmU4c",
+	  "start-lg": "_3V8il_pyDkM3AeXDDmMQJo",
+	  "center-lg": "_15-8H5AFPSlDgd8i_5soQ",
+	  "end-lg": "_2H7dcdDfjyrUC9gGkDfGV8",
+	  "top-lg": "_1_G4dmwAReMJqqpvaefLwk",
+	  "middle-lg": "_1Z0rstP3ArUiDXthDRZndy",
+	  "bottom-lg": "_1lfDQYauY1zT6Mp76LtEU0",
+	  "around-lg": "JJLUriIBs0hYge8jLNqO0",
+	  "between-lg": "ww1mg_DbSBbFvez0ig-8t",
+	  "first-lg": "_1g-inlZbxhto_9bKkT-5Rj",
+	  "last-lg": "_1a0eDWwVC4z8McdFa2Lu_0"
+	};
+
+	var _flexboxgrid2 = _interopRequireDefault(_flexboxgrid);
+
 	var _BlogCommentListItem = {
 	  "comment": "TpmseAyPXKAFzHt-3n7Dr",
-	  "comment-title": "jSpQuWnDlgxOy-_zGoHbG",
 	  "author-name": "_3rzhOr6_RNeYz5tgMmEdMC",
 	  "comment-desc": "_1SL65p0OM1nsCvZ-w3850B",
-	  "comment-action": "_3gvyGrEJ9uKKdoGmhmFq7q",
 	  "comment-date": "_2HkK_AXHzJZ2wJ37wyWBOh",
-	  "divider": "_2eHjXgU6Aoj9yXnOGHsiVc",
-	  "comment-detail": "_1ldUS_d9FWM1ilksPfYkCu"
+	  "comment-action": "_3gvyGrEJ9uKKdoGmhmFq7q",
+	  "comment-detail": "_1ldUS_d9FWM1ilksPfYkCu",
+	  "comment-title": "jSpQuWnDlgxOy-_zGoHbG"
 	};
 
 	var _BlogCommentListItem2 = _interopRequireDefault(_BlogCommentListItem);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var actionStyles = {
-	  margin: '10px'
-	};
-
-	var _ref = _jsx('div', {});
-
 	function BlogCommentListItem(props) {
-	  var comment = props.comment,
-	      onDelete = props.onDelete,
-	      isAuthenticated = props.isAuthenticated,
-	      user = props.user;
+	  var comment = props.comment;
 
 	  return _jsx('div', {
-	    className: _BlogCommentListItem2.default.comment + ' ' + _animate2.default.animated + ' ' + _animate2.default.fadeIn
+	    className: _flexboxgrid2.default['container-fluid'] + ' ' + _animate2.default.animated + ' ' + _animate2.default.fadeIn
+	  }, void 0, _jsx('div', {
+	    className: _flexboxgrid2.default.row + ' ' + _BlogCommentListItem2.default.comment
 	  }, void 0, _jsx('p', {
-	    className: _BlogCommentListItem2.default['author-name']
-	  }, void 0, 'By ', comment.username.substr(0, comment.username.indexOf('@'))), _jsx('p', {
-	    className: _BlogCommentListItem2.default['comment-desc']
+	    className: '\n          ' + _BlogCommentListItem2.default['author-name'] + '\n           ' + _flexboxgrid2.default['col-xs-12'] + '\n           ' + _flexboxgrid2.default['col-sm-2'] + '\n           ' + _flexboxgrid2.default['col-md-2'] + '\n           ' + _flexboxgrid2.default['col-lg-1'] + '\n        '
+	  }, void 0, comment.username.substr(0, comment.username.indexOf('@'))), _jsx('p', {
+	    className: '\n            ' + _BlogCommentListItem2.default['comment-desc'] + ' \n            ' + _flexboxgrid2.default['col-xs-6'] + '\n            ' + _flexboxgrid2.default['col-sm-6'] + '\n            ' + _flexboxgrid2.default['col-md-7'] + '\n            ' + _flexboxgrid2.default['col-lg-8'] + '\n          '
 	  }, void 0, comment.content), _jsx('p', {
-	    className: _BlogCommentListItem2.default['comment-date']
-	  }, void 0, '' + (0, _format2.default)(comment.datetime, 'YYYY-MM-DD h:m:s A')), isAuthenticated && comment.username === user.email ? _jsx('div', {
-	    className: _BlogCommentListItem2.default['comment-action']
-	  }, void 0, _jsx(_RaisedButton2.default, {
-	    backgroundColor: '#333c5a',
-	    labelColor: '#fff',
-	    style: actionStyles,
-	    label: 'Delete',
-	    onTouchTap: onDelete
-	  }), _jsx(_RaisedButton2.default, {
-	    backgroundColor: '#333c5a',
-	    labelColor: '#fff',
-	    style: actionStyles,
-	    label: 'Comment',
-	    containerElement: _jsx(_reactRouter.Link, {
-	      to: '/edit/comment/' + comment.slug + '-' + comment.cuid
-	    })
-	  })) : _ref, _jsx('hr', {
-	    className: _BlogCommentListItem2.default.divider
-	  }));
+	    className: '\n            ' + _BlogCommentListItem2.default['comment-date'] + ' \n            ' + _flexboxgrid2.default['col-xs-6'] + ' \n            ' + _flexboxgrid2.default['col-sm-4'] + '\n            ' + _flexboxgrid2.default['col-md-3'] + '\n            ' + _flexboxgrid2.default['col-lg-3'] + '\n          '
+	  }, void 0, '' + (0, _format2.default)(comment.datetime, 'YYYY-MM-DD hh:mm:ss A'))));
 	}
 
 	exports.default = BlogCommentListItem;
 
 /***/ },
-/* 66 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4065,7 +4358,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _BlogListItem = __webpack_require__(67);
+	var _BlogListItem = __webpack_require__(66);
 
 	var _BlogListItem2 = _interopRequireDefault(_BlogListItem);
 
@@ -4330,19 +4623,19 @@
 	      }
 	    }, post.cuid, _jsx(_BlogListItem2.default, {
 	      user: props.user,
-	      isAuthenticated: props.isAuthenticated,
 	      post: post,
 	      onDelete: function onDelete() {
 	        return props.handleDeletePost(post);
-	      }
-	    }));
+	      },
+	      isAuthenticated: props.isAuthenticated
+	    }, post.cuid));
 	  }));
 	}
 
 	exports.default = BlogList;
 
 /***/ },
-/* 67 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4365,15 +4658,15 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _format = __webpack_require__(34);
+	var _format = __webpack_require__(33);
 
 	var _format2 = _interopRequireDefault(_format);
 
-	var _RaisedButton = __webpack_require__(5);
+	var _RaisedButton = __webpack_require__(6);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
-	var _BlogActions = __webpack_require__(4);
+	var _BlogActions = __webpack_require__(3);
 
 	var _animate = {
 	  "animated": "_2EKhZHq2OINFMF630dOojQ",
@@ -4480,7 +4773,6 @@
 	function BlogListItem(props) {
 	  var post = props.post,
 	      onDelete = props.onDelete,
-	      isAuthenticated = props.isAuthenticated,
 	      user = props.user;
 
 
@@ -4488,7 +4780,7 @@
 	    props.dispatch((0, _BlogActions.fetchComments)(5, 0, props.post.cuid));
 	    setTimeout(function () {
 	      _reactRouter.browserHistory.push('/posts/' + post.slug + '-' + post.cuid);
-	    }, 500);
+	    }, 1000);
 	  };
 
 	  return _jsx('div', {
@@ -4501,7 +4793,7 @@
 	    className: _BlogListItem2.default['post-desc']
 	  }, void 0, post.content), _jsx('p', {
 	    className: _BlogListItem2.default['post-date']
-	  }, void 0, '' + (0, _format2.default)(post.datetime, 'YYYY-MM-DD h:m:s A')), isAuthenticated && post.username === user.email ? _jsx('div', {
+	  }, void 0, '' + (0, _format2.default)(post.datetime, 'YYYY-MM-DD h:m:s A')), props.isAuthenticated && post.username === user.email ? _jsx('div', {
 	    className: _BlogListItem2.default['post-action']
 	  }, void 0, _jsx(_RaisedButton2.default, {
 	    backgroundColor: '#333c5a',
@@ -4537,6 +4829,112 @@
 	}
 
 	exports.default = (0, _reactRedux.connect)()(BlogListItem); // inject dispatch
+
+/***/ },
+/* 67 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(0);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactJsPagination = __webpack_require__(37);
+
+	var _reactJsPagination2 = _interopRequireDefault(_reactJsPagination);
+
+	var _BlogCommentList = __webpack_require__(63);
+
+	var _BlogCommentList2 = _interopRequireDefault(_BlogCommentList);
+
+	var _BlogActions = __webpack_require__(3);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// Import Actions
+
+
+	var paginateContainerStyle = {
+	  display: 'flex',
+	  flexDirection: 'row',
+	  justifyContent: 'center',
+	  width: '100%'
+	};
+
+	var _ref = _jsx('div', {});
+
+	var WrapBlogListWithComments = function (_Component) {
+	  _inherits(WrapBlogListWithComments, _Component);
+
+	  function WrapBlogListWithComments(props) {
+	    _classCallCheck(this, WrapBlogListWithComments);
+
+	    var _this = _possibleConstructorReturn(this, (WrapBlogListWithComments.__proto__ || Object.getPrototypeOf(WrapBlogListWithComments)).call(this, props));
+
+	    _this.onChange = function (page) {
+	      var offset = page - 1;
+	      _this.setState({ offset: offset, page: page }, function () {
+	        _this.props.dispatch((0, _BlogActions.fetchComments)(_this.state.limit, _this.state.offset, _this.props.params.cuid));
+	      });
+	    };
+
+	    _this.state = {
+	      offset: 0,
+	      limit: 5,
+	      page: 1
+	    };
+	    return _this;
+	  }
+
+	  _createClass(WrapBlogListWithComments, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.params.cuid));
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      console.log(this.props.commentsCount);
+	      return _jsx('div', {}, void 0, _jsx(_BlogCommentList2.default, {
+	        comments: this.props.comments || [],
+	        post: this.props.post,
+	        user: this.props.user
+	      }), this.props.commentsCount > 5 ? _jsx('div', {
+	        style: paginateContainerStyle
+	      }, void 0, _jsx(_reactJsPagination2.default, {
+	        activePage: this.state.page,
+	        itemsCountPerPage: this.state.limit,
+	        totalItemsCount: this.props.commentsCount,
+	        pageRangeDisplayed: 5,
+	        onChange: this.onChange
+	      })) : _ref);
+	    }
+	  }]);
+
+	  return WrapBlogListWithComments;
+	}(_react.Component);
+
+	WrapBlogListWithComments.need = [function (params) {
+	  return (0, _BlogActions.fetchComments)(5, 0, params.cuid);
+	}];
+
+	exports.default = WrapBlogListWithComments;
 
 /***/ },
 /* 68 */
@@ -4623,13 +5021,13 @@
 	  value: true
 	});
 
-	var _redux = __webpack_require__(39);
+	var _redux = __webpack_require__(38);
 
-	var _AppReducer = __webpack_require__(3);
+	var _AppReducer = __webpack_require__(4);
 
 	var _AppReducer2 = _interopRequireDefault(_AppReducer);
 
-	var _BlogReducer = __webpack_require__(6);
+	var _BlogReducer = __webpack_require__(7);
 
 	var _BlogReducer2 = _interopRequireDefault(_BlogReducer);
 
@@ -4680,15 +5078,7 @@
 
 	var _comment2 = _interopRequireDefault(_comment);
 
-	var _cuid = __webpack_require__(33);
-
-	var _cuid2 = _interopRequireDefault(_cuid);
-
-	var _limax = __webpack_require__(37);
-
-	var _limax2 = _interopRequireDefault(_limax);
-
-	var _sanitizeHtml = __webpack_require__(41);
+	var _sanitizeHtml = __webpack_require__(40);
 
 	var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
@@ -4702,7 +5092,7 @@
 	 */
 	function getComments(req, res) {
 	  var offset = parseInt(req.query.offset) || 0; // eslint-disable-line
-	  var limit = parseInt(req.query.limit) || 5; // eslint-disable-line
+	  var limit = parseInt(req.query.limit) || 0; // eslint-disable-line
 	  var postID = req.params.postID;
 
 	  _comment2.default.find({ postID: postID }).sort('-datetime').skip(offset * limit).limit(limit).exec(function (err, comments) {
@@ -4710,7 +5100,7 @@
 	      return res.status(500).send(err);
 	    }
 
-	    return _comment2.default.count(function (_err, commentsCount) {
+	    return _comment2.default.count({ postID: postID }, function (_err, commentsCount) {
 	      if (err) {
 	        return res.status(500).send(err);
 	      }
@@ -4736,9 +5126,6 @@
 	  newComment.username = (0, _sanitizeHtml2.default)(newComment.username);
 	  newComment.content = (0, _sanitizeHtml2.default)(newComment.content);
 	  newComment.postID = (0, _sanitizeHtml2.default)(newComment.postID);
-
-	  newComment.slug = (0, _limax2.default)(newComment.title.toLowerCase(), { lowercase: true });
-	  newComment.cuid = (0, _cuid2.default)();
 
 	  newComment.save(function (err, saved) {
 	    if (err) {
@@ -4828,15 +5215,15 @@
 
 	var _post2 = _interopRequireDefault(_post);
 
-	var _cuid = __webpack_require__(33);
+	var _cuid = __webpack_require__(75);
 
 	var _cuid2 = _interopRequireDefault(_cuid);
 
-	var _limax = __webpack_require__(37);
+	var _limax = __webpack_require__(81);
 
 	var _limax2 = _interopRequireDefault(_limax);
 
-	var _sanitizeHtml = __webpack_require__(41);
+	var _sanitizeHtml = __webpack_require__(40);
 
 	var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
@@ -4949,7 +5336,7 @@
 	    post.title = title; // eslint-disable-line
 	    post.save();
 
-	    res.send(post);
+	    res.send({ post: post });
 	  });
 	}
 
@@ -4973,7 +5360,7 @@
 
 	var _express2 = _interopRequireDefault(_express);
 
-	var _compression = __webpack_require__(51);
+	var _compression = __webpack_require__(50);
 
 	var _compression2 = _interopRequireDefault(_compression);
 
@@ -4981,15 +5368,15 @@
 
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 
-	var _bodyParser = __webpack_require__(50);
+	var _bodyParser = __webpack_require__(49);
 
 	var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-	var _path = __webpack_require__(52);
+	var _path = __webpack_require__(51);
 
 	var _path2 = _interopRequireDefault(_path);
 
-	var _IntlWrapper = __webpack_require__(42);
+	var _IntlWrapper = __webpack_require__(41);
 
 	var _IntlWrapper2 = _interopRequireDefault(_IntlWrapper);
 
@@ -4997,23 +5384,23 @@
 
 	var _webpack2 = _interopRequireDefault(_webpack);
 
-	var _webpackConfig = __webpack_require__(49);
+	var _webpackConfig = __webpack_require__(48);
 
 	var _webpackConfig2 = _interopRequireDefault(_webpackConfig);
 
-	var _webpackDevMiddleware = __webpack_require__(55);
+	var _webpackDevMiddleware = __webpack_require__(54);
 
 	var _webpackDevMiddleware2 = _interopRequireDefault(_webpackDevMiddleware);
 
-	var _webpackHotMiddleware = __webpack_require__(56);
+	var _webpackHotMiddleware = __webpack_require__(55);
 
 	var _webpackHotMiddleware2 = _interopRequireDefault(_webpackHotMiddleware);
 
-	var _dummyData = __webpack_require__(45);
+	var _dummyData = __webpack_require__(44);
 
 	var _dummyData2 = _interopRequireDefault(_dummyData);
 
-	var _store = __webpack_require__(44);
+	var _store = __webpack_require__(43);
 
 	var _reactRedux = __webpack_require__(1);
 
@@ -5021,7 +5408,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _server = __webpack_require__(53);
+	var _server = __webpack_require__(52);
 
 	var _reactRouter = __webpack_require__(2);
 
@@ -5039,17 +5426,17 @@
 
 	var _lightBaseTheme2 = _interopRequireDefault(_lightBaseTheme);
 
-	var _routes = __webpack_require__(43);
+	var _routes = __webpack_require__(42);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _fetchData = __webpack_require__(48);
+	var _fetchData = __webpack_require__(47);
 
-	var _post = __webpack_require__(47);
+	var _post = __webpack_require__(46);
 
 	var _post2 = _interopRequireDefault(_post);
 
-	var _comment = __webpack_require__(46);
+	var _comment = __webpack_require__(45);
 
 	var _comment2 = _interopRequireDefault(_comment);
 
@@ -5159,17 +5546,19 @@
 	});
 
 	// Prepare Socket.io
-	var io = __webpack_require__(54).listen(server);
+	var io = __webpack_require__(53).listen(server);
 	var clients = [];
 
 	io.on('connection', function (socket) {
 	  clients.push(socket);
-	  console.log('client connected');
+	  console.log('Client ' + socket.id + ' has connected');
+
 	  socket.on('disconnect', function () {
 	    var index = clients.indexOf(socket);
 	    clients.splice(index, 1);
 	    console.log('client disconnected');
 	  });
+
 	  socket.on('action', function (action) {
 	    if (action.type === 'server/addPost') {
 	      io.sockets.emit('action', { type: 'ADD_POST', post: action.post });
@@ -5178,9 +5567,18 @@
 	    if (action.type === 'server/updatePost') {
 	      io.sockets.emit('action', { type: 'UPDATE_POST', post: action.post });
 	    }
+
+	    if (action.type === 'server/addComment') {
+	      io.sockets.emit('action', { type: 'ADD_COMMENT', comment: action.comment });
+	    }
 	  });
+
 	  socket.on('refresh bloglist', function () {
 	    io.sockets.emit('refresh bloglist');
+	  });
+
+	  socket.on('refresh commentlist', function () {
+	    io.sockets.emit('refresh commentlist');
 	  });
 	});
 
@@ -5222,124 +5620,130 @@
 /* 75 */
 /***/ function(module, exports) {
 
-	module.exports = require("intl");
+	module.exports = require("cuid");
 
 /***/ },
 /* 76 */
 /***/ function(module, exports) {
 
-	module.exports = require("intl-locales-supported");
+	module.exports = require("intl");
 
 /***/ },
 /* 77 */
 /***/ function(module, exports) {
 
-	module.exports = require("intl/locale-data/jsonp/en");
+	module.exports = require("intl-locales-supported");
 
 /***/ },
 /* 78 */
 /***/ function(module, exports) {
 
-	module.exports = require("intl/locale-data/jsonp/fr");
+	module.exports = require("intl/locale-data/jsonp/en");
 
 /***/ },
 /* 79 */
 /***/ function(module, exports) {
 
-	module.exports = require("isomorphic-fetch");
+	module.exports = require("intl/locale-data/jsonp/fr");
 
 /***/ },
 /* 80 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui");
+	module.exports = require("isomorphic-fetch");
 
 /***/ },
 /* 81 */
 /***/ function(module, exports) {
 
-	module.exports = require("material-ui/Divider");
+	module.exports = require("limax");
 
 /***/ },
 /* 82 */
 /***/ function(module, exports) {
 
-	module.exports = require("postcss-cssnext");
+	module.exports = require("material-ui");
 
 /***/ },
 /* 83 */
 /***/ function(module, exports) {
 
-	module.exports = require("postcss-focus");
+	module.exports = require("material-ui/Divider");
 
 /***/ },
 /* 84 */
 /***/ function(module, exports) {
 
-	module.exports = require("postcss-reporter");
+	module.exports = require("postcss-cssnext");
 
 /***/ },
 /* 85 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-intl/locale-data/en");
+	module.exports = require("postcss-focus");
 
 /***/ },
 /* 86 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-intl/locale-data/fr");
+	module.exports = require("postcss-reporter");
 
 /***/ },
 /* 87 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-js-pagination");
+	module.exports = require("react-intl/locale-data/en");
 
 /***/ },
 /* 88 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-parallax");
+	module.exports = require("react-intl/locale-data/fr");
 
 /***/ },
 /* 89 */
 /***/ function(module, exports) {
 
-	module.exports = require("react-tap-event-plugin");
+	module.exports = require("react-parallax");
 
 /***/ },
 /* 90 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-devtools");
+	module.exports = require("react-tap-event-plugin");
 
 /***/ },
 /* 91 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-devtools-dock-monitor");
+	module.exports = require("redux-devtools");
 
 /***/ },
 /* 92 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-devtools-log-monitor");
+	module.exports = require("redux-devtools-dock-monitor");
 
 /***/ },
 /* 93 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-socket.io");
+	module.exports = require("redux-devtools-log-monitor");
 
 /***/ },
 /* 94 */
 /***/ function(module, exports) {
 
-	module.exports = require("redux-thunk");
+	module.exports = require("redux-socket.io");
 
 /***/ },
 /* 95 */
+/***/ function(module, exports) {
+
+	module.exports = require("redux-thunk");
+
+/***/ },
+/* 96 */
 /***/ function(module, exports) {
 
 	module.exports = require("socket.io-client");

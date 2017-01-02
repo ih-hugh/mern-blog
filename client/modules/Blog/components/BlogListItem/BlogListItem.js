@@ -16,13 +16,13 @@ const actionStyles = {
 };
 
 function BlogListItem(props) {
-  const { post, onDelete, isAuthenticated, user } = props;
+  const { post, onDelete, user } = props;
 
   const readHandler = () => {
     props.dispatch(fetchComments(5, 0, props.post.cuid));
     setTimeout(() => {
       browserHistory.push(`/posts/${post.slug}-${post.cuid}`);
-    }, 500);
+    }, 1000);
   };
 
   return (
@@ -37,7 +37,7 @@ function BlogListItem(props) {
         {`${format(post.datetime, 'YYYY-MM-DD h:m:s A')}`}
       </p>
       {
-        isAuthenticated && post.username === user.email
+        props.isAuthenticated && post.username === user.email
           ?
           <div className={styles['post-action']}>
             <RaisedButton
@@ -88,8 +88,8 @@ BlogListItem.propTypes = {
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
   user: PropTypes.object,
-  isAuthenticated: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
 export default connect()(BlogListItem); // inject dispatch

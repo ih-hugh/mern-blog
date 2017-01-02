@@ -1,6 +1,4 @@
 import Comment from '../models/comment';
-import cuid from 'cuid';
-import slug from 'limax';
 import sanitizeHtml from 'sanitize-html';
 
 /**
@@ -11,7 +9,7 @@ import sanitizeHtml from 'sanitize-html';
  */
 export function getComments(req, res) {
   const offset = parseInt(req.query.offset) || 0; // eslint-disable-line
-  const limit = parseInt(req.query.limit) || 5; // eslint-disable-line
+  const limit = parseInt(req.query.limit) || 0; // eslint-disable-line
   const postID = req.params.postID;
 
   Comment.find({ postID }).sort('-datetime')
@@ -22,7 +20,7 @@ export function getComments(req, res) {
         return res.status(500).send(err);
       }
 
-      return Comment.count((_err, commentsCount) => {
+      return Comment.count({ postID }, (_err, commentsCount) => {
         if (err) {
           return res.status(500).send(err);
         }
@@ -48,9 +46,6 @@ export function addComment(req, res) {
   newComment.username = sanitizeHtml(newComment.username);
   newComment.content = sanitizeHtml(newComment.content);
   newComment.postID = sanitizeHtml(newComment.postID);
-
-  newComment.slug = slug(newComment.title.toLowerCase(), { lowercase: true });
-  newComment.cuid = cuid();
 
   newComment.save((err, saved) => {
     if (err) {

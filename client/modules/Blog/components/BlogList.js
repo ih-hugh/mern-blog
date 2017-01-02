@@ -23,10 +23,11 @@ function BlogList(props) {
               }}
             >
               <BlogListItem
+                key={post.cuid}
                 user={props.user}
-                isAuthenticated={props.isAuthenticated}
                 post={post}
                 onDelete={() => props.handleDeletePost(post)}
+                isAuthenticated={props.isAuthenticated}
               />
             </div>
           ))
@@ -45,7 +46,7 @@ BlogList.propTypes = {
   })).isRequired,
   handleDeletePost: PropTypes.func.isRequired,
   user: PropTypes.object,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
 export default BlogList;

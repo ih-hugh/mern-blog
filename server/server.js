@@ -167,12 +167,14 @@ const clients = [];
 
 io.on('connection', (socket) => {
   clients.push(socket);
-  console.log('client connected');
+  console.log(`Client ${socket.id} has connected`);
+
   socket.on('disconnect', () => {
     const index = clients.indexOf(socket);
     clients.splice(index, 1);
     console.log('client disconnected');
   });
+
   socket.on('action', (action) => {
     if (action.type === 'server/addPost') {
       io.sockets.emit('action', { type: 'ADD_POST', post: action.post });
@@ -181,9 +183,18 @@ io.on('connection', (socket) => {
     if (action.type === 'server/updatePost') {
       io.sockets.emit('action', { type: 'UPDATE_POST', post: action.post });
     }
+
+    if (action.type === 'server/addComment') {
+      io.sockets.emit('action', { type: 'ADD_COMMENT', comment: action.comment });
+    }
   });
+
   socket.on('refresh bloglist', () => {
     io.sockets.emit('refresh bloglist');
+  });
+
+  socket.on('refresh commentlist', () => {
+    io.sockets.emit('refresh commentlist');
   });
 });
 

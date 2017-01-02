@@ -5,8 +5,10 @@ import {
   SERVER_ADD_POST,
   SERVER_UPDATE_POST,
   SET_POSTS_COUNT,
+  FETCH_POST_COUNT,
   SET_COMMENTS_COUNT,
   ADD_COMMENTS,
+  SERVER_ADD_COMMENT,
 } from './BlogActions';
 
 
@@ -34,6 +36,11 @@ const BlogReducer = (state = initialState, action) => {
       return {
         data: [action.post, ...state.data],
       };
+
+    case SERVER_ADD_COMMENT:
+      return Object.assign({}, state, {
+        comments: [action.comment, ...state.comments],
+      });
 
     case SET_POSTS_COUNT:
       return Object.assign({}, state, {
@@ -68,8 +75,10 @@ export const getPosts = state => state.blog.data;
 // Get all comments
 export const getComments = (state) => state.blog.comments;
 
-// Get Post Count
 export const getPostsCount = state => state.blog.postsCount;
+
+// Get Comment Count
+export const getCommentsCount = state => state.blog.commentsCount;
 
 // Get post by cuid
 export const getPost = (state, cuid) => state.blog.data.filter(post => post.cuid === cuid)[0];

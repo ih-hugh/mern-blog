@@ -8,6 +8,7 @@ export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGOUT = 'LOGOUT';
 export const ADD_POST = 'ADD_POST';
+export const GET_USER = 'GET_USER';
 
 // Export Actions
 export function authenticateUser() {

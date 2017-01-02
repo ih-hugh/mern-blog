@@ -113,6 +113,6 @@ export function updatePost(req, res) {
     post.title = title; // eslint-disable-line
     post.save();
 
-    res.send(post);
+    res.send({ post });
   });
 }

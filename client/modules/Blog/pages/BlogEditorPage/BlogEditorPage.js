@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { socket } from '../../../../util/initSocket';
 import { getAuthenticatedStatus, getUser } from '../../../App/AppReducer';
-import { emitUpdatePostRequest } from '../../BlogActions';
+import { emitUpdatePostRequest, fetchPost } from '../../BlogActions';
 import { getPost } from '../../BlogReducer';
 
 // Import Style
@@ -20,13 +20,11 @@ export class BlogEditor extends Component {
   }
 
   updatePost = () => {
-    const usernameRef = this.props.user.email || 'Loading';
     const titleRef = this.refs.title.value;
     const contentRef = this.refs.content.value;
 
-    if (usernameRef && titleRef && contentRef) {
+    if (titleRef && contentRef) {
       const post = {
-        username: usernameRef,
         title: titleRef,
         content: contentRef,
       };
@@ -56,6 +54,8 @@ export class BlogEditor extends Component {
     );
   }
 }
+
+BlogEditor.need = [params => fetchPost(params.cuid)];
 
 BlogEditor.propTypes = {
   user: PropTypes.object,

@@ -15,8 +15,7 @@ const socketIoMiddleware = createSocketIoMiddleware(socket, 'server/');
 export function configureStore(initialState = {}) {
   // Middleware and store enhancers
   const enhancers = [
-    applyMiddleware(thunk),
-    applyMiddleware(socketIoMiddleware),
+    applyMiddleware(thunk, socketIoMiddleware),
   ];
 
   if (process.env.CLIENT && process.env.NODE_ENV === 'development') {

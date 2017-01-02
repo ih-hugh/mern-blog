@@ -20,6 +20,7 @@ injectTapEventPlugin();
 
 // Import Actions
 import { toggleAddPost } from './AppActions';
+// Import Reducer
 import { getAuthenticatedStatus, getUser } from './AppReducer';
 
 export class App extends Component {
@@ -53,10 +54,9 @@ export class App extends Component {
                   'http-equiv': 'X-UA-Compatible',
                   content: 'IE=edge',
                 },
-                {
-                  name: 'viewport',
-                  content: 'width=device-width, initial-scale=1',
-                },
+                { name: 'apple-mobile-web-app-capable', content: 'yes' },
+                { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+                { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' }
               ]}
             />
             <Navbar user={this.props.user} isAuthenticated={this.props.isAuthenticated} />
@@ -64,14 +64,15 @@ export class App extends Component {
             <div className={styles.container}>
               {this.props.children}
             </div>
-            <TechShowcase />
             <Footer />
+            <TechShowcase />
           </div>
         </div>
       </MuiThemeProvider>
     );
   }
 }
+
 
 App.propTypes = {
   children: PropTypes.object.isRequired,

@@ -1,48 +1,68 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
 import format from 'date-fns/format';
-import RaisedButton from 'material-ui/RaisedButton';
 
 import animateStyles from '../../../../styles/animate.css';
+import fbStyles from '../../../../styles/flexboxgrid.css';
+
 
 // Import Style
 import styles from './BlogCommentListItem.css';
 
-const actionStyles = {
-  margin: '10px',
-};
-
 function BlogCommentListItem(props) {
-  const { comment, onDelete, isAuthenticated, user } = props;
+  const { comment } = props;
   return (
-    <div className={`${styles.comment} ${animateStyles.animated} ${animateStyles.fadeIn}`} >
-
-      <p className={styles['author-name']}>By {comment.username.substr(0, comment.username.indexOf('@'))}</p>
-      <p className={styles['comment-desc']}>{comment.content}</p>
-      <p className={styles['comment-date']}>
-        {`${format(comment.datetime, 'YYYY-MM-DD h:m:s A')}`}
-      </p>
-      {
-        isAuthenticated && comment.username === user.email ?
-          <div className={styles['comment-action']}>
-            <RaisedButton
-              backgroundColor="#333c5a"
-              labelColor="#fff"
-              style={actionStyles}
-              label="Delete"
-              onTouchTap={onDelete}
-            />
-            <RaisedButton
-              backgroundColor="#333c5a"
-              labelColor="#fff"
-              style={actionStyles}
-              label="Comment"
-              containerElement={<Link to={`/edit/comment/${comment.slug}-${comment.cuid}`} />}
-            />
-          </div> : <div></div>
-      }
-      <hr className={styles.divider} />
+    <div className={`${fbStyles['container-fluid']} ${animateStyles.animated} ${animateStyles.fadeIn}`} >
+      <div className={`${fbStyles.row} ${styles.comment}`}>
+        <p
+          className={`
+          ${styles['author-name']}
+           ${fbStyles['col-xs-12']}
+           ${fbStyles['col-sm-2']}
+           ${fbStyles['col-md-2']}
+           ${fbStyles['col-lg-1']}
+        `}
+        >
+          {comment.username.substr(0, comment.username.indexOf('@'))}
+        </p>
+        <p
+          className={`
+            ${styles['comment-desc']} 
+            ${fbStyles['col-xs-6']}
+            ${fbStyles['col-sm-6']}
+            ${fbStyles['col-md-7']}
+            ${fbStyles['col-lg-8']}
+          `}
+        >
+          {comment.content}
+        </p>
+        <p
+          className={`
+            ${styles['comment-date']} 
+            ${fbStyles['col-xs-6']} 
+            ${fbStyles['col-sm-4']}
+            ${fbStyles['col-md-3']}
+            ${fbStyles['col-lg-3']}
+          `}
+        >
+          {`${format(comment.datetime, 'YYYY-MM-DD hh:mm:ss A')}`}
+        </p>
+        {
+          /** user && user.email === comment.username ?
+            <div
+              className={`
+              ${styles['comment-action']}
+              ${fbStyles['col-xs-6']}
+              ${fbStyles['col-sm-1']}
+              ${fbStyles['col-md-1']}
+          `}>
+              <a>
+                Delete
+              </a>
+            </div> : <div></div> */
+        }
+      </div>
     </div>
+    
   );
 }
 
@@ -51,13 +71,10 @@ BlogCommentListItem.propTypes = {
     username: PropTypes.string.isRequired,
     postID: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    cuid: PropTypes.string.isRequired,
     datetime: PropTypes.string.isRequired,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
   user: PropTypes.object,
-  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default BlogCommentListItem;
