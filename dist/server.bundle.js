@@ -3027,7 +3027,7 @@
 	      return _jsx(_MuiThemeProvider2.default, {
 	        muiTheme: muiTheme
 	      }, void 0, _jsx('div', {}, void 0, this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && _ref, _jsx('div', {}, void 0, _jsx(_reactHelmet2.default, {
-	        title: 'Magic Leap Assignment - Blog App',
+	        title: 'Magic Leap Assignment',
 	        titleTemplate: '%s - Blog App',
 	        meta: [{ charset: 'utf-8' }, {
 	          'http-equiv': 'X-UA-Compatible',
@@ -3868,7 +3868,9 @@
 	      var postID = _this.props.post.slug + '-' + _this.props.post.cuid;
 	      var content = _this.refs.content.value;
 
-	      if (username && postID && postID) {
+	      console.log(content.length);
+
+	      if (username && postID && content) {
 	        var comment = {
 	          username: username,
 	          content: content,
@@ -5002,16 +5004,13 @@
 
 	  var newComment = new _comment2.default(req.body.comment);
 
-	  // Let's sanitize inputs
-	  newComment.username = (0, _sanitizeHtml2.default)(newComment.username);
 	  newComment.content = (0, _sanitizeHtml2.default)(newComment.content);
-	  newComment.postID = (0, _sanitizeHtml2.default)(newComment.postID);
 
 	  newComment.save(function (err, saved) {
 	    if (err) {
-	      res.status(500).send(err);
+	      return res.status(500).send(err);
 	    }
-	    res.json({ comment: saved });
+	    return res.json({ comment: saved });
 	  });
 	}
 
@@ -5047,33 +5046,6 @@
 	    });
 	  });
 	}
-
-	// /**
-	//  * Update a post
-	//  * @param req
-	//  * @param res
-	//  * @returns void
-	//  */
-	// export function updatePost(req, res) {
-	//   if (!req.body.post.title || !req.body.post.content) {
-	//     res.status(403).end();
-	//   }
-
-	//   const title = req.body.post.title;
-	//   const content = req.body.post.content;
-
-	//   Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
-	//     if (err) {
-	//       res.status(500).send(err);
-	//     }
-
-	//     post.content = content; // eslint-disable-line
-	//     post.title = title; // eslint-disable-line
-	//     post.save();
-
-	//     res.send(post);
-	//   });
-	// }
 
 /***/ },
 /* 71 */
