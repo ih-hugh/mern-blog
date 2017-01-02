@@ -23,10 +23,6 @@ class WrapBlogListWithComments extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.dispatch(fetchComments(5, 0, `${this.props.params.slug}-${this.props.params.cuid}`));
-  }
-
   onChange = page => {
     const offset = page - 1;
     this.setState({ offset, page }, () => {
@@ -39,7 +35,7 @@ class WrapBlogListWithComments extends Component {
     return (
       <div>
         <BlogCommentList
-          isAuthenticated={this.props.isAuthenticated}
+          isAuthenticated={this.props.isAuthenticated || false}
           comments={this.props.comments || []}
           post={this.props.post}
           user={this.props.user}
@@ -50,7 +46,7 @@ class WrapBlogListWithComments extends Component {
               <Pagination
                 activePage={this.state.page}
                 itemsCountPerPage={this.state.limit}
-                totalItemsCount={this.props.commentsCount}
+                totalItemsCount={this.props.commentsCount || 0}
                 pageRangeDisplayed={5}
                 onChange={this.onChange}
               />

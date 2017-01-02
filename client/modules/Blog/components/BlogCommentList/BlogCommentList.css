@@ -23,6 +23,10 @@
     border-radius: 4px;
     margin-top: 50px;
     width: 167px;
+    text-decoration: underline;
+    font-style: italic;
+    cursor: pointer;
+    
 }
 
 .comment-list-container {

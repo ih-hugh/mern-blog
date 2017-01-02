@@ -1,7 +1,5 @@
-![](http://res.cloudinary.com/hashnode/image/upload/w_200/v1466495663/static_imgs/mern/v2/mernio-logo.png)
-
 # mern-blog
-Magic Leap Blog built with MERN.
+Magic Leap Blog built with MERN. 
 
 
 MERN is a scaffolding tool which makes it easy to build isomorphic apps using Mongo, Express, React and NodeJS. It minimises the setup time and gets you up to speed using proven technologies.
@@ -33,7 +31,6 @@ MERN is a scaffolding tool which makes it easy to build isomorphic apps using Mo
 5. `npm run cover` - generates test coverage report
 
 6. `npm run lint` - runs linter to check for lint errors
-
 
 ### Caveats
 

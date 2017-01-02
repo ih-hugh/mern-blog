@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 // Import Components
 import BlogCommentListItem from '../BlogCommentListItem/BlogCommentListItem';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -30,6 +31,10 @@ class BlogCommentList extends Component {
       content = this.refs.content.value = '';
     }
   };
+
+  handleLoginRedirect = () => {
+    browserHistory.push('/login');
+  }
 
   render() {
     return (
@@ -71,7 +76,7 @@ class BlogCommentList extends Component {
                 label="Submit"
               />
             </div>
-          </div> : <div className={`${styles['no-auth']}`}>Login to comment</div>
+          </div> : <div className={`${styles['no-auth']}`}><a onTouchTap={this.handleLoginRedirect}>Login to comment</a></div>
         }
       </div>
     );

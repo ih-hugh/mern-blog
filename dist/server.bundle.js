@@ -3568,6 +3568,8 @@
 
 	var _reactRedux = __webpack_require__(1);
 
+	var _reactRouter = __webpack_require__(2);
+
 	var _BlogCommentListItem = __webpack_require__(63);
 
 	var _BlogCommentListItem2 = _interopRequireDefault(_BlogCommentListItem);
@@ -3876,6 +3878,8 @@
 	        _initSocket.socket.emit('refresh commentlist');
 	        content = _this.refs.content.value = '';
 	      }
+	    }, _this.handleLoginRedirect = function () {
+	      _reactRouter.browserHistory.push('/login');
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 
@@ -3914,7 +3918,9 @@
 	        label: 'Submit'
 	      }))) : _jsx('div', {
 	        className: '' + _BlogCommentList2.default['no-auth']
-	      }, void 0, 'Login to comment'));
+	      }, void 0, _jsx('a', {
+	        onTouchTap: this.handleLoginRedirect
+	      }, void 0, 'Login to comment')));
 	    }
 	  }]);
 
@@ -4781,16 +4787,11 @@
 	  }
 
 	  _createClass(WrapBlogListWithComments, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.params.slug + '-' + this.props.params.cuid));
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      console.log(this.props.commentsCount);
 	      return _jsx('div', {}, void 0, _jsx(_BlogCommentList2.default, {
-	        isAuthenticated: this.props.isAuthenticated,
+	        isAuthenticated: this.props.isAuthenticated || false,
 	        comments: this.props.comments || [],
 	        post: this.props.post,
 	        user: this.props.user
@@ -4799,7 +4800,7 @@
 	      }, void 0, _jsx(_reactJsPagination2.default, {
 	        activePage: this.state.page,
 	        itemsCountPerPage: this.state.limit,
-	        totalItemsCount: this.props.commentsCount,
+	        totalItemsCount: this.props.commentsCount || 0,
 	        pageRangeDisplayed: 5,
 	        onChange: this.onChange
 	      })) : _ref);
