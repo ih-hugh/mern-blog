@@ -25,8 +25,8 @@ export function signUserUp(credentials) {
     const password = credentials.password;
     firebase.auth().createUserWithEmailAndPassword(username, password)
       .then(() => {
-        dispatch(authenticateUser());
         browserHistory.push('/');
+        dispatch(authenticateUser());
       })
       .catch(error => {
         dispatch(authError(error));

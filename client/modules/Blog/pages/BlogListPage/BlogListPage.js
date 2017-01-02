@@ -35,12 +35,6 @@ class BlogListPage extends Component {
     });
   }
 
-  componentWillUnmount() {
-    socket.removeListener('refresh bloglist', () => {
-      this.props.dispatch(fetchPosts(5, 0));
-    });
-  }
-
   onChange = page => {
     const offset = page - 1;
     this.setState({ offset, page }, () => {

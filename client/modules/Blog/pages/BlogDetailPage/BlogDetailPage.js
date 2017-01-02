@@ -13,18 +13,17 @@ import { fetchPost, fetchComments } from '../../BlogActions';
 
 // Import Selectors
 import { getPost, getComments, getCommentsCount } from '../../BlogReducer';
-import { getUser } from '../../../App/AppReducer';
+import { getUser, getAuthenticatedStatus } from '../../../App/AppReducer';
 
 import { socket } from '../../../../util/initSocket';
 
 class BlogDetailPage extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPost(this.props.params.cuid));
-    this.props.dispatch(fetchComments(5, 0, this.props.params.cuid));
+    this.props.dispatch(fetchComments(5, 0, `${this.props.params.slug}-${this.props.params.cuid}`));
 
-    socket.on('refresh commentlist', () => this.props.dispatch(fetchComments(5, 0, this.props.post.cuid)));
+    socket.on('refresh commentlist', () => this.props.dispatch(fetchComments(5, 0, `${this.props.params.slug}-${this.props.params.cuid}`)));
   }
-
 
   render() {
     return (
@@ -40,6 +39,7 @@ class BlogDetailPage extends Component {
           </div>
           <Divider />
           <WrapBlogListWithComments
+            isAuthenticated={this.props.isAuthenticated}
             commentsCount={this.props.commentsCount}
             comments={this.props.comments}
             post={this.props.post}
@@ -56,6 +56,7 @@ class BlogDetailPage extends Component {
 // Actions required to provide data for this component to render in sever side.
 BlogDetailPage.need = [
   params => fetchPost(params.cuid),
+  params => fetchComments(5, 0, `${params.slug}-${params.cuid}`),
 ];
 
 BlogDetailPage.propTypes = {
@@ -75,6 +76,7 @@ BlogDetailPage.propTypes = {
   dispatch: PropTypes.func,
   params: PropTypes.object,
   commentsCount: PropTypes.number,
+  isAuthenticated: PropTypes.bool,
 };
 
 
@@ -85,6 +87,7 @@ function mapStateToProps(state, props) {
     comments: getComments(state),
     user: getUser(state),
     commentsCount: getCommentsCount(state),
+    isAuthenticated: getAuthenticatedStatus(state),
   };
 }
 

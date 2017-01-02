@@ -78,8 +78,8 @@ export default function () {
       qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem
       ipsum quia dolor sit amet.`;
 
-    const comment1 = new Comment({ username: 'hugoce17@gmail.com', postID: 'cikqgkv4q01ck7453ualdn3hd', content: content1 });
-    const comment2 = new Comment({ username: 'hugoce17@gmail.com', postID: 'cikqgkv4q01ck7453ualdn3hf', content: content2 });
+    const comment1 = new Comment({ username: 'hugoce17@gmail.com', postID: 'hello-magic-leap-cikqgkv4q01ck7453ualdn3hd', content: content1 });
+    const comment2 = new Comment({ username: 'hugoce17@gmail.com', postID: 'lorem-ipsum-cikqgkv4q01ck7453ualdn3hf', content: content2 });
 
     Comment.create([comment1, comment2], (error) => {
       if (!error) {

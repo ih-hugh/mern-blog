@@ -10,7 +10,6 @@ import DevTools from './components/DevTools';
 import Navbar from './components/Navbar/Navbar';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import TechShowcase from './components/TechShowcase/TechShowcase';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { getMuiTheme } from 'material-ui/styles';
@@ -65,7 +64,6 @@ export class App extends Component {
               {this.props.children}
             </div>
             <Footer />
-            <TechShowcase />
           </div>
         </div>
       </MuiThemeProvider>

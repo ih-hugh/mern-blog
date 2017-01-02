@@ -16,7 +16,7 @@ function BlogCommentListItem(props) {
         <p
           className={`
           ${styles['author-name']}
-           ${fbStyles['col-xs-12']}
+           ${fbStyles['col-xs-2']}
            ${fbStyles['col-sm-2']}
            ${fbStyles['col-md-2']}
            ${fbStyles['col-lg-1']}
@@ -38,8 +38,8 @@ function BlogCommentListItem(props) {
         <p
           className={`
             ${styles['comment-date']} 
-            ${fbStyles['col-xs-6']} 
-            ${fbStyles['col-sm-4']}
+            ${fbStyles['col-xs-3']} 
+            ${fbStyles['col-sm-3']}
             ${fbStyles['col-md-3']}
             ${fbStyles['col-lg-3']}
           `}
@@ -62,7 +62,6 @@ function BlogCommentListItem(props) {
         }
       </div>
     </div>
-    
   );
 }
 

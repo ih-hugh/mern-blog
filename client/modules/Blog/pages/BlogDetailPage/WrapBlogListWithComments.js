@@ -22,14 +22,15 @@ class WrapBlogListWithComments extends Component {
       page: 1,
     };
   }
+
   componentDidMount() {
-    this.props.dispatch(fetchComments(5, 0, this.props.params.cuid));
+    this.props.dispatch(fetchComments(5, 0, `${this.props.params.slug}-${this.props.params.cuid}`));
   }
 
   onChange = page => {
     const offset = page - 1;
     this.setState({ offset, page }, () => {
-      this.props.dispatch(fetchComments(this.state.limit, this.state.offset, this.props.params.cuid));
+      this.props.dispatch(fetchComments(this.state.limit, this.state.offset, `${this.props.params.slug}-${this.props.params.cuid}`));
     });
   }
 
@@ -38,12 +39,13 @@ class WrapBlogListWithComments extends Component {
     return (
       <div>
         <BlogCommentList
+          isAuthenticated={this.props.isAuthenticated}
           comments={this.props.comments || []}
           post={this.props.post}
           user={this.props.user}
         />
         {
-          this.props.commentsCount > 5 ?
+          this.props.isAuthenticated && this.props.commentsCount > 5 ?
             <div style={paginateContainerStyle}>
               <Pagination
                 activePage={this.state.page}
@@ -60,7 +62,7 @@ class WrapBlogListWithComments extends Component {
 }
 
 WrapBlogListWithComments.need = [
-  params => fetchComments(5, 0, params.cuid),
+  params => fetchComments(5, 0, `${params.slug}-${params.cuid}`),
 ];
 
 WrapBlogListWithComments.propTypes = {
@@ -80,7 +82,7 @@ WrapBlogListWithComments.propTypes = {
   dispatch: PropTypes.func,
   params: PropTypes.object,
   commentsCount: PropTypes.number,
-
+  isAuthenticated: PropTypes.number,
 };
 
 export default WrapBlogListWithComments;

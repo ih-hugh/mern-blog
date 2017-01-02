@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 73);
+/******/ 	return __webpack_require__(__webpack_require__.s = 72);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -345,7 +345,7 @@
 	});
 	exports.socket = undefined;
 
-	var _socket = __webpack_require__(96);
+	var _socket = __webpack_require__(95);
 
 	var _socket2 = _interopRequireDefault(_socket);
 
@@ -648,17 +648,17 @@
 
 	var _reactIntl = __webpack_require__(36);
 
-	var _intl = __webpack_require__(76);
+	var _intl = __webpack_require__(75);
 
 	var _intl2 = _interopRequireDefault(_intl);
 
-	var _intlLocalesSupported = __webpack_require__(77);
+	var _intlLocalesSupported = __webpack_require__(76);
 
 	var _intlLocalesSupported2 = _interopRequireDefault(_intlLocalesSupported);
 
-	__webpack_require__(78);
+	__webpack_require__(77);
 
-	var _en = __webpack_require__(87);
+	var _en = __webpack_require__(86);
 
 	var _en2 = _interopRequireDefault(_en);
 
@@ -666,9 +666,9 @@
 
 	var _en4 = _interopRequireDefault(_en3);
 
-	__webpack_require__(79);
+	__webpack_require__(78);
 
-	var _fr = __webpack_require__(88);
+	var _fr = __webpack_require__(87);
 
 	var _fr2 = _interopRequireDefault(_fr);
 
@@ -754,13 +754,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reduxDevtools = __webpack_require__(91);
+	var _reduxDevtools = __webpack_require__(90);
 
-	var _reduxDevtoolsLogMonitor = __webpack_require__(93);
+	var _reduxDevtoolsLogMonitor = __webpack_require__(92);
 
 	var _reduxDevtoolsLogMonitor2 = _interopRequireDefault(_reduxDevtoolsLogMonitor);
 
-	var _reduxDevtoolsDockMonitor = __webpack_require__(92);
+	var _reduxDevtoolsDockMonitor = __webpack_require__(91);
 
 	var _reduxDevtoolsDockMonitor2 = _interopRequireDefault(_reduxDevtoolsDockMonitor);
 
@@ -921,11 +921,11 @@
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
-	var _Divider = __webpack_require__(83);
+	var _Divider = __webpack_require__(82);
 
 	var _Divider2 = _interopRequireDefault(_Divider);
 
-	var _WrapBlogListWithComments = __webpack_require__(67);
+	var _WrapBlogListWithComments = __webpack_require__(66);
 
 	var _WrapBlogListWithComments2 = _interopRequireDefault(_WrapBlogListWithComments);
 
@@ -984,10 +984,10 @@
 	      var _this2 = this;
 
 	      this.props.dispatch((0, _BlogActions.fetchPost)(this.props.params.cuid));
-	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.params.cuid));
+	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.params.slug + '-' + this.props.params.cuid));
 
 	      _initSocket.socket.on('refresh commentlist', function () {
-	        return _this2.props.dispatch((0, _BlogActions.fetchComments)(5, 0, _this2.props.post.cuid));
+	        return _this2.props.dispatch((0, _BlogActions.fetchComments)(5, 0, _this2.props.params.slug + '-' + _this2.props.params.cuid));
 	      });
 	    }
 	  }, {
@@ -1004,6 +1004,7 @@
 	      }, void 0, 'By ', this.props.post.username.substr(0, this.props.post.username.indexOf('@'))), _jsx('p', {
 	        className: _BlogListItem2.default['post-desc']
 	      }, void 0, this.props.post.content)), _ref, _jsx(_WrapBlogListWithComments2.default, {
+	        isAuthenticated: this.props.isAuthenticated,
 	        commentsCount: this.props.commentsCount,
 	        comments: this.props.comments,
 	        post: this.props.post,
@@ -1022,6 +1023,8 @@
 
 	BlogDetailPage.need = [function (params) {
 	  return (0, _BlogActions.fetchPost)(params.cuid);
+	}, function (params) {
+	  return (0, _BlogActions.fetchComments)(5, 0, params.slug + '-' + params.cuid);
 	}];
 
 	// Retrieve data from store as props
@@ -1030,7 +1033,8 @@
 	    post: (0, _BlogReducer.getPost)(state, props.params.cuid),
 	    comments: (0, _BlogReducer.getComments)(state),
 	    user: (0, _AppReducer.getUser)(state),
-	    commentsCount: (0, _BlogReducer.getCommentsCount)(state)
+	    commentsCount: (0, _BlogReducer.getCommentsCount)(state),
+	    isAuthenticated: (0, _AppReducer.getAuthenticatedStatus)(state)
 	  };
 	}
 
@@ -1199,7 +1203,7 @@
 
 	var _reactJsPagination2 = _interopRequireDefault(_reactJsPagination);
 
-	var _BlogList = __webpack_require__(65);
+	var _BlogList = __webpack_require__(64);
 
 	var _BlogList2 = _interopRequireDefault(_BlogList);
 
@@ -1272,15 +1276,6 @@
 	      this.props.dispatch((0, _BlogActions.fetchPosts)(5, 0));
 	      _initSocket.socket.on('refresh bloglist', function () {
 	        _this2.props.dispatch((0, _BlogActions.fetchPosts)(5, 0));
-	      });
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      var _this3 = this;
-
-	      _initSocket.socket.removeListener('refresh bloglist', function () {
-	        _this3.props.dispatch((0, _BlogActions.fetchPosts)(5, 0));
 	      });
 	    }
 	  }, {
@@ -2152,8 +2147,8 @@
 	    var username = credentials.username;
 	    var password = credentials.password;
 	    _firebase2.default.auth().createUserWithEmailAndPassword(username, password).then(function () {
-	      dispatch(authenticateUser());
 	      _reactRouter.browserHistory.push('/');
+	      dispatch(authenticateUser());
 	    }).catch(function (error) {
 	      dispatch(authError(error));
 	    });
@@ -2227,7 +2222,7 @@
 	exports.API_URL = undefined;
 	exports.default = callApi;
 
-	var _isomorphicFetch = __webpack_require__(80);
+	var _isomorphicFetch = __webpack_require__(79);
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
@@ -2522,7 +2517,7 @@
 
 	var _redux = __webpack_require__(38);
 
-	var _reduxThunk = __webpack_require__(95);
+	var _reduxThunk = __webpack_require__(94);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -2532,11 +2527,11 @@
 
 	var _reduxBatchedActions = __webpack_require__(39);
 
-	var _reduxSocket = __webpack_require__(94);
+	var _reduxSocket = __webpack_require__(93);
 
 	var _reduxSocket2 = _interopRequireDefault(_reduxSocket);
 
-	var _reducers = __webpack_require__(70);
+	var _reducers = __webpack_require__(69);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -2612,8 +2607,8 @@
 
 	    var content2 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\n      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut\n      enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi\n      ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit\n      in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint\n      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id\n      est laborum. Sed ut perspiciatis unde omnis iste natus error\n      sit voluptatem accusantium doloremque laudantium, totam rem aperiam,\n      eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae\n      vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit\n      aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos\n      qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem\n      ipsum quia dolor sit amet.';
 
-	    var comment1 = new _comment2.default({ username: 'hugoce17@gmail.com', postID: 'cikqgkv4q01ck7453ualdn3hd', content: content1 });
-	    var comment2 = new _comment2.default({ username: 'hugoce17@gmail.com', postID: 'cikqgkv4q01ck7453ualdn3hf', content: content2 });
+	    var comment1 = new _comment2.default({ username: 'hugoce17@gmail.com', postID: 'hello-magic-leap-cikqgkv4q01ck7453ualdn3hd', content: content1 });
+	    var comment2 = new _comment2.default({ username: 'hugoce17@gmail.com', postID: 'lorem-ipsum-cikqgkv4q01ck7453ualdn3hf', content: content2 });
 
 	    _comment2.default.create([comment1, comment2], function (error) {
 	      if (!error) {
@@ -2646,7 +2641,7 @@
 
 	var _express = __webpack_require__(8);
 
-	var _comment = __webpack_require__(71);
+	var _comment = __webpack_require__(70);
 
 	var CommentController = _interopRequireWildcard(_comment);
 
@@ -2684,7 +2679,7 @@
 
 	var _express = __webpack_require__(8);
 
-	var _post = __webpack_require__(72);
+	var _post = __webpack_require__(71);
 
 	var PostController = _interopRequireWildcard(_post);
 
@@ -2721,7 +2716,7 @@
 	});
 	exports.fetchComponentData = fetchComponentData;
 
-	var _promiseUtils = __webpack_require__(74);
+	var _promiseUtils = __webpack_require__(73);
 
 	function fetchComponentData(store, components, params) {
 	  var needs = components.reduce(function (prev, current) {
@@ -2744,9 +2739,9 @@
 	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
 
 	var webpack = __webpack_require__(17);
-	var cssnext = __webpack_require__(84);
-	var postcssFocus = __webpack_require__(85);
-	var postcssReporter = __webpack_require__(86);
+	var cssnext = __webpack_require__(83);
+	var postcssFocus = __webpack_require__(84);
+	var postcssReporter = __webpack_require__(85);
 
 	module.exports = {
 	  devtool: 'cheap-module-eval-source-map',
@@ -2960,10 +2955,6 @@
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _TechShowcase = __webpack_require__(62);
-
-	var _TechShowcase2 = _interopRequireDefault(_TechShowcase);
-
 	var _MuiThemeProvider = __webpack_require__(15);
 
 	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
@@ -2974,7 +2965,7 @@
 
 	var _lightBaseTheme2 = _interopRequireDefault(_lightBaseTheme);
 
-	var _reactTapEventPlugin = __webpack_require__(90);
+	var _reactTapEventPlugin = __webpack_require__(89);
 
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 
@@ -3007,8 +2998,6 @@
 	var _ref2 = _jsx(_Header2.default, {});
 
 	var _ref3 = _jsx(_Footer2.default, {});
-
-	var _ref4 = _jsx(_TechShowcase2.default, {});
 
 	var App = exports.App = function (_Component) {
 	  _inherits(App, _Component);
@@ -3050,7 +3039,7 @@
 	        isAuthenticated: this.props.isAuthenticated
 	      }), _ref2, _jsx('div', {
 	        className: _App2.default.container
-	      }, void 0, this.props.children), _ref3, _ref4)));
+	      }, void 0, this.props.children), _ref3)));
 	    }
 	  }]);
 
@@ -3126,7 +3115,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactParallax = __webpack_require__(89);
+	var _reactParallax = __webpack_require__(88);
 
 	var _Header = {
 	  "header-container": "_3eQVt3GEC69Gxh4gZaqvd7",
@@ -3339,7 +3328,7 @@
 
 	var _reactRouter = __webpack_require__(2);
 
-	var _materialUi = __webpack_require__(82);
+	var _materialUi = __webpack_require__(81);
 
 	var _AppActions = __webpack_require__(11);
 
@@ -3568,112 +3557,6 @@
 	  value: true
 	});
 
-	var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
-
-	var _react = __webpack_require__(0);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _TechShowcase = {
-	  "tech-showcase": "_1rBrajJUG8QmnkJk7hR9vB",
-	  "tech-box": "_3ATtK-GuUF6URQUBuwMa-h",
-	  "title": "_3jgHgX7TixuXGS3IVS2fdy",
-	  "mongodb-img": "_2x2T0FvIhTiBPz_B6eeHvR",
-	  "react-img": "_3onUZsTjzujyYWFXX_qmqt",
-	  "nodejs-img": "s2gEXhN3n9u7A6fa2Ay4h",
-	  "redux-img": "_30e0-42_W_j-JVu1WRqi5z",
-	  "webpack-img": "_3pbTHnoPPWEaqRENpvcFxy"
-	};
-
-	var _TechShowcase2 = _interopRequireDefault(_TechShowcase);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var _ref = _jsx('a', {
-	  href: 'https://www.mongodb.com/',
-	  target: '_blank'
-	}, void 0, _jsx('img', {
-	  className: 'mongodb-img',
-	  role: 'presentation',
-	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456749/static_imgs/mern/v2/mongodb.jpg'
-	}));
-
-	var _ref2 = _jsx('a', {
-	  href: 'http://expressjs.com',
-	  target: '_blank'
-	}, void 0, _jsx('img', {
-	  className: 'express-img',
-	  role: 'presentation',
-	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456747/static_imgs/mern/v2/express.jpg'
-	}));
-
-	var _ref3 = _jsx('a', {
-	  href: 'https://facebook.github.io/react/',
-	  target: '_blank'
-	}, void 0, _jsx('img', {
-	  className: 'react-img',
-	  role: 'presentation',
-	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456747/static_imgs/mern/v2/react.png'
-	}));
-
-	var _ref4 = _jsx('a', {
-	  href: 'https://nodejs.org/en/',
-	  target: '_blank'
-	}, void 0, _jsx('img', {
-	  className: 'nodejs-img',
-	  role: 'presentation',
-	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456747/static_imgs/mern/v2/nodejs.png'
-	}));
-
-	var _ref5 = _jsx('a', {
-	  href: 'http://redux.js.org/',
-	  target: '_blank'
-	}, void 0, _jsx('img', {
-	  className: 'redux-img',
-	  role: 'presentation',
-	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456747/static_imgs/mern/v2/redux-logo.png'
-	}));
-
-	var _ref6 = _jsx('a', {
-	  href: 'https://webpack.github.io/',
-	  target: '_blank'
-	}, void 0, _jsx('img', {
-	  className: 'webpack-img',
-	  role: 'presentation',
-	  src: 'http://res.cloudinary.com/hashnode/image/upload/w_500,e_grayscale/v1466456748/static_imgs/mern/v2/webpack.png'
-	}));
-
-	var TechShowcase = function TechShowcase() {
-	  return _jsx('div', {
-	    className: '' + _TechShowcase2.default['tech-showcase']
-	  }, void 0, _jsx('div', {
-	    className: '' + _TechShowcase2.default['tech-box']
-	  }, void 0, _ref), _jsx('div', {
-	    className: '' + _TechShowcase2.default['tech-box']
-	  }, void 0, _ref2), _jsx('div', {
-	    className: '' + _TechShowcase2.default['tech-box']
-	  }, void 0, _ref3), _jsx('div', {
-	    className: '' + _TechShowcase2.default['tech-box']
-	  }, void 0, _ref4), _jsx('div', {
-	    className: '' + _TechShowcase2.default['tech-box']
-	  }, void 0, _ref5), _jsx('div', {
-	    className: '' + _TechShowcase2.default['tech-box']
-	  }, void 0, _ref6));
-	};
-
-	exports.default = TechShowcase;
-
-/***/ },
-/* 63 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
@@ -3686,7 +3569,7 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _BlogCommentListItem = __webpack_require__(64);
+	var _BlogCommentListItem = __webpack_require__(63);
 
 	var _BlogCommentListItem2 = _interopRequireDefault(_BlogCommentListItem);
 
@@ -3699,6 +3582,7 @@
 	var _BlogCommentList = {
 	  "no-comment-message": "_1ngAQK0aAOk7Idhe1ghDG",
 	  "no-auth": "_1GnD2mI_B-nzt487Ri3hq1",
+	  "comment-list-container": "_3RIZW8CBPH_sa8VRw5mpbO",
 	  "comment-list": "_1ei_WogLK6VgbomWwqIlzY",
 	  "list-view": "_2U02VD2Zo-LGTHFtCgTtbz",
 	  "form": "_2rwJWcAPQN8Fahu8mwOnZU",
@@ -3980,7 +3864,7 @@
 
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = BlogCommentList.__proto__ || Object.getPrototypeOf(BlogCommentList)).call.apply(_ref, [this].concat(args))), _this), _this.addComment = function () {
 	      var username = _this.props.user.email;
-	      var postID = _this.props.post.cuid;
+	      var postID = _this.props.post.slug + '-' + _this.props.post.cuid;
 	      var content = _this.refs.content.value;
 
 	      if (username && postID && postID) {
@@ -3991,7 +3875,7 @@
 	        };
 	        _this.props.dispatch((0, _BlogActions.emitAddCommentRequest)(comment));
 	        _initSocket.socket.emit('refresh commentlist');
-	        _this.refs.content.value = '';
+	        content = _this.refs.content.value = '';
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -4004,7 +3888,7 @@
 	      return _jsx('div', {
 	        className: _BlogCommentList2.default['list-view'] + ' ' + _flexboxgrid2.default['container-fluid']
 	      }, void 0, _ref2, _jsx('div', {
-	        style: { overflowY: 'scroll' }
+	        className: '' + _BlogCommentList2.default['comment-list-container']
 	      }, void 0, _jsx('div', {
 	        className: _BlogCommentList2.default['comment-list'] + ' '
 	      }, void 0, _typeof(this.props.comments) !== undefined && this.props.comments.length === 0 && this.props.user ? _jsx('div', {
@@ -4018,18 +3902,13 @@
 	          }
 	        }, comment.cuid, _jsx(_BlogCommentListItem2.default, {
 	          user: _this2.props.user,
-	          comment: comment,
-	          onDelete: function onDelete() {
-	            return _this2.props.handleDeleteComment(comment);
-	          }
+	          comment: comment
 	        }, comment.cuid));
-	      }).reverse())), this.props.user ? _jsx('div', {
+	      }).reverse())), this.props.isAuthenticated && this.props.user ? _jsx('div', {
 	        className: '' + _BlogCommentList2.default.form
 	      }, void 0, _jsx('div', {
 	        className: _BlogCommentList2.default['form-content']
-	      }, void 0, _jsx('h2', {
-	        className: _BlogCommentList2.default['form-title']
-	      }, void 0, 'Add Comment'), _jsx('h3', {}, void 0, this.props.user ? this.props.user.email.substr(0, this.props.user.email.indexOf('@')) : 'Loading'), _react2.default.createElement('textarea', { placeholder: 'Comment...', className: _BlogCommentList2.default['form-field'], ref: 'content' }), _jsx(_RaisedButton2.default, {
+	      }, void 0, _jsx('h3', {}, void 0, 'Logged in as ', this.props.user ? this.props.user.email.substr(0, this.props.user.email.indexOf('@')) : 'Loading'), _react2.default.createElement('textarea', { placeholder: 'Comment...', className: _BlogCommentList2.default['form-field'], ref: 'content' }), _jsx(_RaisedButton2.default, {
 	        backgroundColor: '#333c5a',
 	        labelColor: '#fff',
 	        onTouchTap: this.addComment,
@@ -4046,7 +3925,7 @@
 	exports.default = (0, _reactRedux.connect)()(BlogCommentList);
 
 /***/ },
-/* 64 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4328,18 +4207,18 @@
 	  }, void 0, _jsx('div', {
 	    className: _flexboxgrid2.default.row + ' ' + _BlogCommentListItem2.default.comment
 	  }, void 0, _jsx('p', {
-	    className: '\n          ' + _BlogCommentListItem2.default['author-name'] + '\n           ' + _flexboxgrid2.default['col-xs-12'] + '\n           ' + _flexboxgrid2.default['col-sm-2'] + '\n           ' + _flexboxgrid2.default['col-md-2'] + '\n           ' + _flexboxgrid2.default['col-lg-1'] + '\n        '
+	    className: '\n          ' + _BlogCommentListItem2.default['author-name'] + '\n           ' + _flexboxgrid2.default['col-xs-2'] + '\n           ' + _flexboxgrid2.default['col-sm-2'] + '\n           ' + _flexboxgrid2.default['col-md-2'] + '\n           ' + _flexboxgrid2.default['col-lg-1'] + '\n        '
 	  }, void 0, comment.username.substr(0, comment.username.indexOf('@'))), _jsx('p', {
 	    className: '\n            ' + _BlogCommentListItem2.default['comment-desc'] + ' \n            ' + _flexboxgrid2.default['col-xs-6'] + '\n            ' + _flexboxgrid2.default['col-sm-6'] + '\n            ' + _flexboxgrid2.default['col-md-7'] + '\n            ' + _flexboxgrid2.default['col-lg-8'] + '\n          '
 	  }, void 0, comment.content), _jsx('p', {
-	    className: '\n            ' + _BlogCommentListItem2.default['comment-date'] + ' \n            ' + _flexboxgrid2.default['col-xs-6'] + ' \n            ' + _flexboxgrid2.default['col-sm-4'] + '\n            ' + _flexboxgrid2.default['col-md-3'] + '\n            ' + _flexboxgrid2.default['col-lg-3'] + '\n          '
+	    className: '\n            ' + _BlogCommentListItem2.default['comment-date'] + ' \n            ' + _flexboxgrid2.default['col-xs-3'] + ' \n            ' + _flexboxgrid2.default['col-sm-3'] + '\n            ' + _flexboxgrid2.default['col-md-3'] + '\n            ' + _flexboxgrid2.default['col-lg-3'] + '\n          '
 	  }, void 0, '' + (0, _format2.default)(comment.datetime, 'YYYY-MM-DD hh:mm:ss A'))));
 	}
 
 	exports.default = BlogCommentListItem;
 
 /***/ },
-/* 65 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4358,7 +4237,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _BlogListItem = __webpack_require__(66);
+	var _BlogListItem = __webpack_require__(65);
 
 	var _BlogListItem2 = _interopRequireDefault(_BlogListItem);
 
@@ -4635,7 +4514,7 @@
 	exports.default = BlogList;
 
 /***/ },
-/* 66 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4831,7 +4710,7 @@
 	exports.default = (0, _reactRedux.connect)()(BlogListItem); // inject dispatch
 
 /***/ },
-/* 67 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4853,7 +4732,7 @@
 
 	var _reactJsPagination2 = _interopRequireDefault(_reactJsPagination);
 
-	var _BlogCommentList = __webpack_require__(63);
+	var _BlogCommentList = __webpack_require__(62);
 
 	var _BlogCommentList2 = _interopRequireDefault(_BlogCommentList);
 
@@ -4890,7 +4769,7 @@
 	    _this.onChange = function (page) {
 	      var offset = page - 1;
 	      _this.setState({ offset: offset, page: page }, function () {
-	        _this.props.dispatch((0, _BlogActions.fetchComments)(_this.state.limit, _this.state.offset, _this.props.params.cuid));
+	        _this.props.dispatch((0, _BlogActions.fetchComments)(_this.state.limit, _this.state.offset, _this.props.params.slug + '-' + _this.props.params.cuid));
 	      });
 	    };
 
@@ -4905,17 +4784,18 @@
 	  _createClass(WrapBlogListWithComments, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.params.cuid));
+	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.params.slug + '-' + this.props.params.cuid));
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      console.log(this.props.commentsCount);
 	      return _jsx('div', {}, void 0, _jsx(_BlogCommentList2.default, {
+	        isAuthenticated: this.props.isAuthenticated,
 	        comments: this.props.comments || [],
 	        post: this.props.post,
 	        user: this.props.user
-	      }), this.props.commentsCount > 5 ? _jsx('div', {
+	      }), this.props.isAuthenticated && this.props.commentsCount > 5 ? _jsx('div', {
 	        style: paginateContainerStyle
 	      }, void 0, _jsx(_reactJsPagination2.default, {
 	        activePage: this.state.page,
@@ -4931,13 +4811,13 @@
 	}(_react.Component);
 
 	WrapBlogListWithComments.need = [function (params) {
-	  return (0, _BlogActions.fetchComments)(5, 0, params.cuid);
+	  return (0, _BlogActions.fetchComments)(5, 0, params.slug + '-' + params.cuid);
 	}];
 
 	exports.default = WrapBlogListWithComments;
 
 /***/ },
-/* 68 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4964,7 +4844,7 @@
 	}
 
 /***/ },
-/* 69 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4978,7 +4858,7 @@
 
 	var _setup = __webpack_require__(18);
 
-	var _IntlActions = __webpack_require__(68);
+	var _IntlActions = __webpack_require__(67);
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
@@ -5011,7 +4891,7 @@
 	exports.default = IntlReducer;
 
 /***/ },
-/* 70 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5031,7 +4911,7 @@
 
 	var _BlogReducer2 = _interopRequireDefault(_BlogReducer);
 
-	var _IntlReducer = __webpack_require__(69);
+	var _IntlReducer = __webpack_require__(68);
 
 	var _IntlReducer2 = _interopRequireDefault(_IntlReducer);
 
@@ -5060,7 +4940,7 @@
 	// Import Reducers
 
 /***/ },
-/* 71 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5196,7 +5076,7 @@
 	// }
 
 /***/ },
-/* 72 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5215,11 +5095,11 @@
 
 	var _post2 = _interopRequireDefault(_post);
 
-	var _cuid = __webpack_require__(75);
+	var _cuid = __webpack_require__(74);
 
 	var _cuid2 = _interopRequireDefault(_cuid);
 
-	var _limax = __webpack_require__(81);
+	var _limax = __webpack_require__(80);
 
 	var _limax2 = _interopRequireDefault(_limax);
 
@@ -5341,7 +5221,7 @@
 	}
 
 /***/ },
-/* 73 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5586,7 +5466,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "server"))
 
 /***/ },
-/* 74 */
+/* 73 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5617,133 +5497,133 @@
 	}
 
 /***/ },
-/* 75 */
+/* 74 */
 /***/ function(module, exports) {
 
 	module.exports = require("cuid");
 
 /***/ },
-/* 76 */
+/* 75 */
 /***/ function(module, exports) {
 
 	module.exports = require("intl");
 
 /***/ },
-/* 77 */
+/* 76 */
 /***/ function(module, exports) {
 
 	module.exports = require("intl-locales-supported");
 
 /***/ },
-/* 78 */
+/* 77 */
 /***/ function(module, exports) {
 
 	module.exports = require("intl/locale-data/jsonp/en");
 
 /***/ },
-/* 79 */
+/* 78 */
 /***/ function(module, exports) {
 
 	module.exports = require("intl/locale-data/jsonp/fr");
 
 /***/ },
-/* 80 */
+/* 79 */
 /***/ function(module, exports) {
 
 	module.exports = require("isomorphic-fetch");
 
 /***/ },
-/* 81 */
+/* 80 */
 /***/ function(module, exports) {
 
 	module.exports = require("limax");
 
 /***/ },
-/* 82 */
+/* 81 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui");
 
 /***/ },
-/* 83 */
+/* 82 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui/Divider");
 
 /***/ },
-/* 84 */
+/* 83 */
 /***/ function(module, exports) {
 
 	module.exports = require("postcss-cssnext");
 
 /***/ },
-/* 85 */
+/* 84 */
 /***/ function(module, exports) {
 
 	module.exports = require("postcss-focus");
 
 /***/ },
-/* 86 */
+/* 85 */
 /***/ function(module, exports) {
 
 	module.exports = require("postcss-reporter");
 
 /***/ },
-/* 87 */
+/* 86 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-intl/locale-data/en");
 
 /***/ },
-/* 88 */
+/* 87 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-intl/locale-data/fr");
 
 /***/ },
-/* 89 */
+/* 88 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-parallax");
 
 /***/ },
-/* 90 */
+/* 89 */
 /***/ function(module, exports) {
 
 	module.exports = require("react-tap-event-plugin");
 
 /***/ },
-/* 91 */
+/* 90 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-devtools");
 
 /***/ },
-/* 92 */
+/* 91 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-devtools-dock-monitor");
 
 /***/ },
-/* 93 */
+/* 92 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-devtools-log-monitor");
 
 /***/ },
-/* 94 */
+/* 93 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-socket.io");
 
 /***/ },
-/* 95 */
+/* 94 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 96 */
+/* 95 */
 /***/ function(module, exports) {
 
 	module.exports = require("socket.io-client");

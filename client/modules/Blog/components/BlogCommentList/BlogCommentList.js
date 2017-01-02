@@ -16,8 +16,8 @@ class BlogCommentList extends Component {
 
   addComment = () => {
     const username = this.props.user.email;
-    const postID = this.props.post.cuid;
-    const content = this.refs.content.value;
+    const postID = `${this.props.post.slug}-${this.props.post.cuid}`;
+    let content = this.refs.content.value;
 
     if (username && postID && postID) {
       const comment = {
@@ -27,7 +27,7 @@ class BlogCommentList extends Component {
       };
       this.props.dispatch(emitAddCommentRequest(comment));
       socket.emit('refresh commentlist');
-      this.refs.content.value = '';
+      content = this.refs.content.value = '';
     }
   };
 
@@ -35,7 +35,7 @@ class BlogCommentList extends Component {
     return (
       <div className={`${styles['list-view']} ${fbStyles['container-fluid']}`}>
         <h4>Comments</h4>
-        <div style={{ overflowY: 'scroll' }}>
+        <div className={`${styles['comment-list-container']}`}>
           <div className={`${styles['comment-list']} `}>
             {
               (typeof this.props.comments !== undefined && this.props.comments.length === 0 && this.props.user)
@@ -53,7 +53,6 @@ class BlogCommentList extends Component {
                       key={comment.cuid}
                       user={this.props.user}
                       comment={comment}
-                      onDelete={() => this.props.handleDeleteComment(comment)}
                     />
                   </div>
                 )).reverse()
@@ -61,10 +60,9 @@ class BlogCommentList extends Component {
           </div>
         </div>
         {
-          this.props.user ? <div className={`${styles.form}`}>
+          this.props.isAuthenticated && this.props.user ? <div className={`${styles.form}`}>
             <div className={styles['form-content']}>
-              <h2 className={styles['form-title']}>Add Comment</h2>
-              <h3>{this.props.user ? this.props.user.email.substr(0, this.props.user.email.indexOf('@')) : 'Loading'}</h3>
+              <h3>Logged in as {this.props.user ? this.props.user.email.substr(0, this.props.user.email.indexOf('@')) : 'Loading'}</h3>
               <textarea placeholder="Comment..." className={styles['form-field']} ref="content" />
               <RaisedButton
                 backgroundColor="#333c5a"
@@ -90,6 +88,7 @@ BlogCommentList.propTypes = {
   user: PropTypes.object,
   post: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default connect()(BlogCommentList);

@@ -6,8 +6,9 @@
 .author-name {
     margin-bottom: 16px;
     color: #757575;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 500;
+    float: left;
 }
 
 .comment-desc {
@@ -21,12 +22,14 @@
     display: flex;
     color: #888;
     margin: 0;
-    text-decoration: none;
-    font-size: 12px;
+    text-decoration: underline;
+    font-size: 8px;
     font-style: italic;
     font-weight: 200;
+    float: right;
     justify-content: flex-end;
 }
+
 
 .comment-action a {
     margin: 0 15.5px;
