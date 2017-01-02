@@ -45,7 +45,7 @@ export class App extends Component {
           {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
           <div>
             <Helmet
-              title="Magic Leap Assignment - Blog App"
+              title="Magic Leap Assignment"
               titleTemplate="%s - Blog App"
               meta={[
                 { charset: 'utf-8' },
@@ -55,7 +55,7 @@ export class App extends Component {
                 },
                 { name: 'apple-mobile-web-app-capable', content: 'yes' },
                 { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
-                { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' }
+                { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' },
               ]}
             />
             <Navbar user={this.props.user} isAuthenticated={this.props.isAuthenticated} />

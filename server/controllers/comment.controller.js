@@ -42,16 +42,13 @@ export function addComment(req, res) {
 
   const newComment = new Comment(req.body.comment);
 
-  // Let's sanitize inputs
-  newComment.username = sanitizeHtml(newComment.username);
   newComment.content = sanitizeHtml(newComment.content);
-  newComment.postID = sanitizeHtml(newComment.postID);
 
   newComment.save((err, saved) => {
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
-    res.json({ comment: saved });
+    return res.json({ comment: saved });
   });
 }
 
@@ -87,30 +84,3 @@ export function deleteComment(req, res) {
     });
   });
 }
-
-// /**
-//  * Update a post
-//  * @param req
-//  * @param res
-//  * @returns void
-//  */
-// export function updatePost(req, res) {
-//   if (!req.body.post.title || !req.body.post.content) {
-//     res.status(403).end();
-//   }
-
-//   const title = req.body.post.title;
-//   const content = req.body.post.content;
-
-//   Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     }
-
-//     post.content = content; // eslint-disable-line
-//     post.title = title; // eslint-disable-line
-//     post.save();
-
-//     res.send(post);
-//   });
-// }

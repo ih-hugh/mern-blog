@@ -20,7 +20,9 @@ class BlogCommentList extends Component {
     const postID = `${this.props.post.slug}-${this.props.post.cuid}`;
     let content = this.refs.content.value;
 
-    if (username && postID && postID) {
+    console.log(content.length);
+
+    if (username && postID && content) {
       const comment = {
         username,
         content,
