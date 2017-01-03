@@ -15,14 +15,14 @@ import { fetchPost, fetchComments } from '../../BlogActions';
 import { getPost, getComments, getCommentsCount } from '../../BlogReducer';
 import { getUser, getAuthenticatedStatus } from '../../../App/AppReducer';
 
-import { socket } from '../../../../util/initSocket';
+// import { socket } from '../../../../util/initSocket';
 
 class BlogDetailPage extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchPost(this.props.params.cuid));
-    this.props.dispatch(fetchComments(5, 0, `${this.props.params.slug}-${this.props.params.cuid}`));
+    this.props.dispatch(fetchPost(this.props.post.cuid));
+    this.props.dispatch(fetchComments(5, 0, `${this.props.post.slug}-${this.props.post.cuid}`));
 
-    socket.on('refresh commentlist', () => this.props.dispatch(fetchComments(5, 0, `${this.props.params.slug}-${this.props.params.cuid}`)));
+    // socket.on('refresh commentlist', () => this.props.dispatch(fetchComments(5, 0, `${this.props.post.slug}-${this.props.post.cuid}`)));
   }
 
   render() {

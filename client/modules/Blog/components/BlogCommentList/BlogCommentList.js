@@ -15,6 +15,15 @@ import { socket } from '../../../../util/initSocket';
 
 class BlogCommentList extends Component {
 
+  componentDidMount() {
+    socket.emit('refresh commentlist');
+  }
+
+  componentWillUnmount() {
+    socket.emit('refresh commentlist');
+  }
+  
+
   addComment = () => {
     const username = this.props.user.email;
     const postID = `${this.props.post.slug}-${this.props.post.cuid}`;

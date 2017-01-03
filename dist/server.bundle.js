@@ -947,8 +947,6 @@
 
 	var _AppReducer = __webpack_require__(4);
 
-	var _initSocket = __webpack_require__(5);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -966,6 +964,8 @@
 	// Import Selectors
 
 
+	// import { socket } from '../../../../util/initSocket';
+
 	var _ref = _jsx(_Divider2.default, {});
 
 	var BlogDetailPage = function (_Component) {
@@ -980,14 +980,10 @@
 	  _createClass(BlogDetailPage, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var _this2 = this;
+	      this.props.dispatch((0, _BlogActions.fetchPost)(this.props.post.cuid));
+	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.post.slug + '-' + this.props.post.cuid));
 
-	      this.props.dispatch((0, _BlogActions.fetchPost)(this.props.params.cuid));
-	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.params.slug + '-' + this.props.params.cuid));
-
-	      _initSocket.socket.on('refresh commentlist', function () {
-	        return _this2.props.dispatch((0, _BlogActions.fetchComments)(5, 0, _this2.props.params.slug + '-' + _this2.props.params.cuid));
-	      });
+	      // socket.on('refresh commentlist', () => this.props.dispatch(fetchComments(5, 0, `${this.props.post.slug}-${this.props.post.cuid}`)));
 	    }
 	  }, {
 	    key: 'render',
@@ -3886,6 +3882,16 @@
 	  }
 
 	  _createClass(BlogCommentList, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      _initSocket.socket.emit('refresh commentlist');
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      _initSocket.socket.emit('refresh commentlist');
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
@@ -4745,6 +4751,8 @@
 
 	var _BlogActions = __webpack_require__(3);
 
+	var _initSocket = __webpack_require__(5);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4776,7 +4784,7 @@
 	    _this.onChange = function (page) {
 	      var offset = page - 1;
 	      _this.setState({ offset: offset, page: page }, function () {
-	        _this.props.dispatch((0, _BlogActions.fetchComments)(_this.state.limit, _this.state.offset, _this.props.params.slug + '-' + _this.props.params.cuid));
+	        _this.props.dispatch((0, _BlogActions.fetchComments)(_this.state.limit, _this.state.offset, _this.props.post.slug + '-' + _this.props.post.cuid));
 	      });
 	    };
 
@@ -4789,9 +4797,13 @@
 	  }
 
 	  _createClass(WrapBlogListWithComments, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // socket.on('refresh commentlist', () => this.props.dispatch(fetchComments(5, 0, `${this.props.post.slug}-${this.props.post.cuid}`)));
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.commentsCount);
 	      return _jsx('div', {}, void 0, _jsx(_BlogCommentList2.default, {
 	        isAuthenticated: this.props.isAuthenticated || false,
 	        comments: this.props.comments || [],
