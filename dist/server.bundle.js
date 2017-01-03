@@ -335,6 +335,12 @@
 
 /***/ },
 /* 5 */
+/***/ function(module, exports) {
+
+	module.exports = require("material-ui/RaisedButton");
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -352,12 +358,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var socket = exports.socket = process.env.NODE_ENV === 'development' ? _socket2.default.connect('http://localhost:8000') : _socket2.default.connect('http://mern-blog.herokuapp.com/');
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	module.exports = require("material-ui/RaisedButton");
 
 /***/ },
 /* 7 */
@@ -794,7 +794,7 @@
 
 	var _reactRouter = __webpack_require__(2);
 
-	var _RaisedButton = __webpack_require__(6);
+	var _RaisedButton = __webpack_require__(5);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -802,7 +802,7 @@
 
 	var _BlogActions = __webpack_require__(3);
 
-	var _initSocket = __webpack_require__(5);
+	var _initSocket = __webpack_require__(6);
 
 	var _BlogCreator = {
 	  "form": "_38jANhpciMq2hB_fIEqYWv",
@@ -1055,7 +1055,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _RaisedButton = __webpack_require__(6);
+	var _RaisedButton = __webpack_require__(5);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -1063,7 +1063,7 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _initSocket = __webpack_require__(5);
+	var _initSocket = __webpack_require__(6);
 
 	var _AppReducer = __webpack_require__(4);
 
@@ -1202,7 +1202,7 @@
 
 	var _BlogList2 = _interopRequireDefault(_BlogList);
 
-	var _initSocket = __webpack_require__(5);
+	var _initSocket = __webpack_require__(6);
 
 	var _AppReducer = __webpack_require__(4);
 
@@ -1347,7 +1347,7 @@
 
 	var _lib = __webpack_require__(34);
 
-	var _RaisedButton = __webpack_require__(6);
+	var _RaisedButton = __webpack_require__(5);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -1789,7 +1789,7 @@
 
 	var _lib = __webpack_require__(34);
 
-	var _RaisedButton = __webpack_require__(6);
+	var _RaisedButton = __webpack_require__(5);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -2530,7 +2530,7 @@
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _initSocket = __webpack_require__(5);
+	var _initSocket = __webpack_require__(6);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3570,7 +3570,7 @@
 
 	var _BlogCommentListItem2 = _interopRequireDefault(_BlogCommentListItem);
 
-	var _RaisedButton = __webpack_require__(6);
+	var _RaisedButton = __webpack_require__(5);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -3829,7 +3829,7 @@
 
 	var _animate2 = _interopRequireDefault(_animate);
 
-	var _initSocket = __webpack_require__(5);
+	var _initSocket = __webpack_require__(6);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4554,7 +4554,7 @@
 
 	var _format2 = _interopRequireDefault(_format);
 
-	var _RaisedButton = __webpack_require__(6);
+	var _RaisedButton = __webpack_require__(5);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -4751,8 +4751,6 @@
 
 	var _BlogActions = __webpack_require__(3);
 
-	var _initSocket = __webpack_require__(5);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4763,6 +4761,8 @@
 
 	// Import Actions
 
+
+	// import { socket } from '../../../../util/initSocket';
 
 	var paginateContainerStyle = {
 	  display: 'flex',
@@ -4799,7 +4799,7 @@
 	  _createClass(WrapBlogListWithComments, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      // socket.on('refresh commentlist', () => this.props.dispatch(fetchComments(5, 0, `${this.props.post.slug}-${this.props.post.cuid}`)));
+	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.post.slug + '-' + this.props.post.cuid));
 	    }
 	  }, {
 	    key: 'render',

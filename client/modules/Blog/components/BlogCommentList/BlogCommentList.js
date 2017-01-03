@@ -22,7 +22,7 @@ class BlogCommentList extends Component {
   componentWillUnmount() {
     socket.emit('refresh commentlist');
   }
-  
+
 
   addComment = () => {
     const username = this.props.user.email;

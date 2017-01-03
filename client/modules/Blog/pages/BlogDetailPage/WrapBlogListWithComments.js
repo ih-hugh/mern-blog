@@ -6,7 +6,7 @@ import BlogCommentList from '../../components/BlogCommentList/BlogCommentList';
 // Import Actions
 import { fetchComments } from '../../BlogActions';
 
-import { socket } from '../../../../util/initSocket';
+// import { socket } from '../../../../util/initSocket';
 
 const paginateContainerStyle = {
   display: 'flex',
@@ -26,7 +26,7 @@ class WrapBlogListWithComments extends Component {
   }
 
   componentDidMount() {
-    // socket.on('refresh commentlist', () => this.props.dispatch(fetchComments(5, 0, `${this.props.post.slug}-${this.props.post.cuid}`)));
+    this.props.dispatch(fetchComments(5, 0, `${this.props.post.slug}-${this.props.post.cuid}`));
   }
 
 
