@@ -982,8 +982,6 @@
 	    value: function componentDidMount() {
 	      this.props.dispatch((0, _BlogActions.fetchPost)(this.props.post.cuid));
 	      this.props.dispatch((0, _BlogActions.fetchComments)(5, 0, this.props.post.slug + '-' + this.props.post.cuid));
-
-	      // socket.on('refresh commentlist', () => this.props.dispatch(fetchComments(5, 0, `${this.props.post.slug}-${this.props.post.cuid}`)));
 	    }
 	  }, {
 	    key: 'render',
@@ -4761,8 +4759,6 @@
 
 	// Import Actions
 
-
-	// import { socket } from '../../../../util/initSocket';
 
 	var paginateContainerStyle = {
 	  display: 'flex',

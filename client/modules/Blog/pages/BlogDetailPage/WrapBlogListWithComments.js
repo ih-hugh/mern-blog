@@ -6,7 +6,6 @@ import BlogCommentList from '../../components/BlogCommentList/BlogCommentList';
 // Import Actions
 import { fetchComments } from '../../BlogActions';
 
-// import { socket } from '../../../../util/initSocket';
 
 const paginateContainerStyle = {
   display: 'flex',
