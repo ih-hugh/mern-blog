@@ -4671,7 +4671,7 @@
 	      onDelete = props.onDelete,
 	      user = props.user;
 
-
+	  var postContent = post.content.length > 400 ? post.content.substr(0, 400) + '...' : post.content;
 	  var readHandler = function readHandler() {
 	    props.dispatch((0, _BlogActions.fetchComments)(5, 0, props.post.cuid));
 	    setTimeout(function () {
@@ -4687,7 +4687,7 @@
 	    className: _BlogListItem2.default['author-name']
 	  }, void 0, 'By ', post.username.substr(0, post.username.indexOf('@'))), _jsx('p', {
 	    className: _BlogListItem2.default['post-desc']
-	  }, void 0, post.content.substr(0, 300), '...'), _jsx('p', {
+	  }, void 0, postContent), _jsx('p', {
 	    className: _BlogListItem2.default['post-date']
 	  }, void 0, '' + (0, _format2.default)(post.datetime, 'YYYY-MM-DD h:m:s A')), props.isAuthenticated && post.username === user.email ? _jsx('div', {
 	    className: _BlogListItem2.default['post-action']
