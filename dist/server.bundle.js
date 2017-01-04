@@ -87,7 +87,7 @@
 	exports.serverAddComment = serverAddComment;
 	exports.emitAddCommentRequest = emitAddCommentRequest;
 
-	var _apiCaller = __webpack_require__(30);
+	var _apiCaller = __webpack_require__(31);
 
 	var _apiCaller2 = _interopRequireDefault(_apiCaller);
 
@@ -503,13 +503,13 @@
 	exports.addPostRequest = addPostRequest;
 	exports.verifyAuth = verifyAuth;
 
-	var _firebase = __webpack_require__(12);
+	var _firebase = __webpack_require__(13);
 
 	var _firebase2 = _interopRequireDefault(_firebase);
 
 	var _reactRouter = __webpack_require__(2);
 
-	var _apiCaller = __webpack_require__(30);
+	var _apiCaller = __webpack_require__(31);
 
 	var _apiCaller2 = _interopRequireDefault(_apiCaller);
 
@@ -590,10 +590,16 @@
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = require("firebase");
+	module.exports = require("date-fns/format");
 
 /***/ },
 /* 13 */
+/***/ function(module, exports) {
+
+	module.exports = require("firebase");
+
+/***/ },
+/* 14 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -610,31 +616,31 @@
 	exports.default = config;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui/styles");
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui/styles/MuiThemeProvider");
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = require("material-ui/styles/baseThemes/lightBaseTheme");
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	module.exports = require("webpack");
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -737,7 +743,7 @@
 	localizationData.fr.messages = flattenMessages(localizationData.fr.messages);
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -771,7 +777,7 @@
 	}, void 0, _jsx(_reduxDevtoolsLogMonitor2.default, {})));
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -896,7 +902,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(BlogCreator);
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -923,6 +929,10 @@
 	var _Divider = __webpack_require__(82);
 
 	var _Divider2 = _interopRequireDefault(_Divider);
+
+	var _format = __webpack_require__(12);
+
+	var _format2 = _interopRequireDefault(_format);
 
 	var _WrapBlogListWithComments = __webpack_require__(66);
 
@@ -995,6 +1005,8 @@
 	      }, void 0, this.props.post.title), _jsx('p', {
 	        className: _BlogListItem2.default['author-name']
 	      }, void 0, 'By ', this.props.post.username.substr(0, this.props.post.username.indexOf('@'))), _jsx('p', {
+	        className: _BlogListItem2.default['post-date']
+	      }, void 0, '' + (0, _format2.default)(this.props.post.datetime, 'YYYY-MM-DD h:m:s A')), _jsx('p', {
 	        className: _BlogListItem2.default['post-desc']
 	      }, void 0, this.props.post.content)), _ref, _jsx(_WrapBlogListWithComments2.default, {
 	        isAuthenticated: this.props.isAuthenticated,
@@ -1034,7 +1046,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(BlogDetailPage);
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1170,7 +1182,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(BlogEditor);
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1319,7 +1331,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(BlogListPage);
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1509,9 +1521,9 @@
 
 	var _flexboxgrid2 = _interopRequireDefault(_flexboxgrid);
 
-	var _LoginActions = __webpack_require__(25);
+	var _LoginActions = __webpack_require__(26);
 
-	var _LoginReducer = __webpack_require__(26);
+	var _LoginReducer = __webpack_require__(27);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1636,7 +1648,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Login);
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1652,7 +1664,7 @@
 	exports.fetchSignedInUser = fetchSignedInUser;
 	exports.logUserIn = logUserIn;
 
-	var _firebase = __webpack_require__(12);
+	var _firebase = __webpack_require__(13);
 
 	var _firebase2 = _interopRequireDefault(_firebase);
 
@@ -1707,7 +1719,7 @@
 	}
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1718,7 +1730,7 @@
 	});
 	exports.getLoginError = exports.getAuthenticatedStatus = undefined;
 
-	var _LoginActions = __webpack_require__(25);
+	var _LoginActions = __webpack_require__(26);
 
 	// Initial State
 	var initialState = {
@@ -1761,7 +1773,7 @@
 	exports.default = LoginReducer;
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1951,9 +1963,9 @@
 
 	var _flexboxgrid2 = _interopRequireDefault(_flexboxgrid);
 
-	var _RegistrationActions = __webpack_require__(28);
+	var _RegistrationActions = __webpack_require__(29);
 
-	var _RegistrationReducer = __webpack_require__(29);
+	var _RegistrationReducer = __webpack_require__(30);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2095,7 +2107,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Registration);
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2109,7 +2121,7 @@
 	exports.authError = authError;
 	exports.signUserUp = signUserUp;
 
-	var _firebase = __webpack_require__(12);
+	var _firebase = __webpack_require__(13);
 
 	var _firebase2 = _interopRequireDefault(_firebase);
 
@@ -2149,7 +2161,7 @@
 	}
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2160,7 +2172,7 @@
 	});
 	exports.getRegistrationError = exports.getAuthenticatedStatus = undefined;
 
-	var _RegistrationActions = __webpack_require__(28);
+	var _RegistrationActions = __webpack_require__(29);
 
 	// Initial State
 	var initialState = {
@@ -2203,7 +2215,7 @@
 	exports.default = RegistrationReducer;
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2219,7 +2231,7 @@
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
-	var _config = __webpack_require__(13);
+	var _config = __webpack_require__(14);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -2256,7 +2268,7 @@
 	}
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2284,7 +2296,7 @@
 	exports.default = _mongoose2.default.model('Comment', commentSchema);
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2312,12 +2324,6 @@
 	});
 
 	exports.default = _mongoose2.default.model('Post', postSchema);
-
-/***/ },
-/* 33 */
-/***/ function(module, exports) {
-
-	module.exports = require("date-fns/format");
 
 /***/ },
 /* 34 */
@@ -2440,12 +2446,12 @@
 	 */
 	if (process.env.NODE_ENV !== 'production') {
 	  // Require async routes only in development for react-hot-reloader to work.
+	  __webpack_require__(24);
+	  __webpack_require__(22);
 	  __webpack_require__(23);
 	  __webpack_require__(21);
-	  __webpack_require__(22);
-	  __webpack_require__(20);
-	  __webpack_require__(27);
-	  __webpack_require__(24);
+	  __webpack_require__(28);
+	  __webpack_require__(25);
 	}
 
 	// react-router setup with code-splitting
@@ -2456,42 +2462,42 @@
 	}, void 0, _jsx(_reactRouter.IndexRoute, {
 	  getComponent: function getComponent(nextState, cb) {
 	    Promise.resolve().catch(function(err) { __webpack_require__.oe(err); }).then((function (require) {
-	      cb(null, __webpack_require__(23).default);
+	      cb(null, __webpack_require__(24).default);
 	    }).bind(null, __webpack_require__));
 	  }
 	}), _jsx(_reactRouter.Route, {
 	  path: '/posts/:slug-:cuid',
 	  getComponent: function getComponent(nextState, cb) {
 	    Promise.resolve().catch(function(err) { __webpack_require__.oe(err); }).then((function (require) {
-	      cb(null, __webpack_require__(21).default);
+	      cb(null, __webpack_require__(22).default);
 	    }).bind(null, __webpack_require__));
 	  }
 	}), _jsx(_reactRouter.Route, {
 	  path: '/register',
 	  getComponent: function getComponent(nextState, cb) {
 	    Promise.resolve().catch(function(err) { __webpack_require__.oe(err); }).then((function (require) {
-	      cb(null, __webpack_require__(27).default);
+	      cb(null, __webpack_require__(28).default);
 	    }).bind(null, __webpack_require__));
 	  }
 	}), _jsx(_reactRouter.Route, {
 	  path: '/create',
 	  getComponent: function getComponent(nextState, cb) {
 	    Promise.resolve().catch(function(err) { __webpack_require__.oe(err); }).then((function (require) {
-	      cb(null, __webpack_require__(20).default);
+	      cb(null, __webpack_require__(21).default);
 	    }).bind(null, __webpack_require__));
 	  }
 	}), _jsx(_reactRouter.Route, {
 	  path: '/edit/post/:slug-:cuid',
 	  getComponent: function getComponent(nextState, cb) {
 	    Promise.resolve().catch(function(err) { __webpack_require__.oe(err); }).then((function (require) {
-	      cb(null, __webpack_require__(22).default);
+	      cb(null, __webpack_require__(23).default);
 	    }).bind(null, __webpack_require__));
 	  }
 	}), _jsx(_reactRouter.Route, {
 	  path: '/login',
 	  getComponent: function getComponent(nextState, cb) {
 	    Promise.resolve().catch(function(err) { __webpack_require__.oe(err); }).then((function (require) {
-	      cb(null, __webpack_require__(24).default);
+	      cb(null, __webpack_require__(25).default);
 	    }).bind(null, __webpack_require__));
 	  }
 	}));
@@ -2514,7 +2520,7 @@
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _DevTools = __webpack_require__(19);
+	var _DevTools = __webpack_require__(20);
 
 	var _DevTools2 = _interopRequireDefault(_DevTools);
 
@@ -2611,11 +2617,11 @@
 	  });
 	};
 
-	var _post = __webpack_require__(32);
+	var _post = __webpack_require__(33);
 
 	var _post2 = _interopRequireDefault(_post);
 
-	var _comment = __webpack_require__(31);
+	var _comment = __webpack_require__(32);
 
 	var _comment2 = _interopRequireDefault(_comment);
 
@@ -2731,7 +2737,7 @@
 	"use strict";
 	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
 
-	var webpack = __webpack_require__(17);
+	var webpack = __webpack_require__(18);
 	var cssnext = __webpack_require__(83);
 	var postcssFocus = __webpack_require__(84);
 	var postcssReporter = __webpack_require__(85);
@@ -2932,7 +2938,7 @@
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
-	var _DevTools = __webpack_require__(19);
+	var _DevTools = __webpack_require__(20);
 
 	var _DevTools2 = _interopRequireDefault(_DevTools);
 
@@ -2948,13 +2954,13 @@
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _MuiThemeProvider = __webpack_require__(15);
+	var _MuiThemeProvider = __webpack_require__(16);
 
 	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 
-	var _styles = __webpack_require__(14);
+	var _styles = __webpack_require__(15);
 
-	var _lightBaseTheme = __webpack_require__(16);
+	var _lightBaseTheme = __webpack_require__(17);
 
 	var _lightBaseTheme2 = _interopRequireDefault(_lightBaseTheme);
 
@@ -3955,7 +3961,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _format = __webpack_require__(33);
+	var _format = __webpack_require__(12);
 
 	var _format2 = _interopRequireDefault(_format);
 
@@ -4548,7 +4554,7 @@
 
 	var _reactRedux = __webpack_require__(1);
 
-	var _format = __webpack_require__(33);
+	var _format = __webpack_require__(12);
 
 	var _format2 = _interopRequireDefault(_format);
 
@@ -4681,7 +4687,7 @@
 	    className: _BlogListItem2.default['author-name']
 	  }, void 0, 'By ', post.username.substr(0, post.username.indexOf('@'))), _jsx('p', {
 	    className: _BlogListItem2.default['post-desc']
-	  }, void 0, post.content), _jsx('p', {
+	  }, void 0, post.content.substr(0, 300), '...'), _jsx('p', {
 	    className: _BlogListItem2.default['post-date']
 	  }, void 0, '' + (0, _format2.default)(post.datetime, 'YYYY-MM-DD h:m:s A')), props.isAuthenticated && post.username === user.email ? _jsx('div', {
 	    className: _BlogListItem2.default['post-action']
@@ -4842,7 +4848,7 @@
 
 	exports.switchLanguage = switchLanguage;
 
-	var _setup = __webpack_require__(18);
+	var _setup = __webpack_require__(19);
 
 	// Export Constants
 	var SWITCH_LANGUAGE = exports.SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
@@ -4866,7 +4872,7 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _setup = __webpack_require__(18);
+	var _setup = __webpack_require__(19);
 
 	var _IntlActions = __webpack_require__(67);
 
@@ -4925,11 +4931,11 @@
 
 	var _IntlReducer2 = _interopRequireDefault(_IntlReducer);
 
-	var _LoginReducer = __webpack_require__(26);
+	var _LoginReducer = __webpack_require__(27);
 
 	var _LoginReducer2 = _interopRequireDefault(_LoginReducer);
 
-	var _RegistrationReducer = __webpack_require__(29);
+	var _RegistrationReducer = __webpack_require__(30);
 
 	var _RegistrationReducer2 = _interopRequireDefault(_RegistrationReducer);
 
@@ -4964,7 +4970,7 @@
 	exports.getComment = getComment;
 	exports.deleteComment = deleteComment;
 
-	var _comment = __webpack_require__(31);
+	var _comment = __webpack_require__(32);
 
 	var _comment2 = _interopRequireDefault(_comment);
 
@@ -5071,7 +5077,7 @@
 	exports.deletePost = deletePost;
 	exports.updatePost = updatePost;
 
-	var _post = __webpack_require__(32);
+	var _post = __webpack_require__(33);
 
 	var _post2 = _interopRequireDefault(_post);
 
@@ -5240,7 +5246,7 @@
 
 	var _IntlWrapper2 = _interopRequireDefault(_IntlWrapper);
 
-	var _webpack = __webpack_require__(17);
+	var _webpack = __webpack_require__(18);
 
 	var _webpack2 = _interopRequireDefault(_webpack);
 
@@ -5276,13 +5282,13 @@
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
-	var _MuiThemeProvider = __webpack_require__(15);
+	var _MuiThemeProvider = __webpack_require__(16);
 
 	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 
-	var _styles = __webpack_require__(14);
+	var _styles = __webpack_require__(15);
 
-	var _lightBaseTheme = __webpack_require__(16);
+	var _lightBaseTheme = __webpack_require__(17);
 
 	var _lightBaseTheme2 = _interopRequireDefault(_lightBaseTheme);
 
@@ -5300,7 +5306,7 @@
 
 	var _comment2 = _interopRequireDefault(_comment);
 
-	var _config = __webpack_require__(13);
+	var _config = __webpack_require__(14);
 
 	var _config2 = _interopRequireDefault(_config);
 

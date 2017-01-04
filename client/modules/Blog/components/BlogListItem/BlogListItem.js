@@ -32,7 +32,7 @@ function BlogListItem(props) {
       </h3>
 
       <p className={styles['author-name']}>By {post.username.substr(0, post.username.indexOf('@'))}</p>
-      <p className={styles['post-desc']}>{post.content}</p>
+      <p className={styles['post-desc']}>{post.content.substr(0, 300)}...</p>
       <p className={styles['post-date']}>
         {`${format(post.datetime, 'YYYY-MM-DD h:m:s A')}`}
       </p>

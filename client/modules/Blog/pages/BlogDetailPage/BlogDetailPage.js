@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import Divider from 'material-ui/Divider';
+import format from 'date-fns/format';
 
 import WrapBlogListWithComments from './WrapBlogListWithComments';
 
@@ -32,6 +33,9 @@ class BlogDetailPage extends Component {
             <h3 className={styles['post-title']}>{this.props.post.title}</h3>
             <p className={styles['author-name']}>
               By {this.props.post.username.substr(0, this.props.post.username.indexOf('@'))}
+            </p>
+            <p className={styles['post-date']}>
+              {`${format(this.props.post.datetime, 'YYYY-MM-DD h:m:s A')}`}
             </p>
             <p className={styles['post-desc']}>{this.props.post.content}</p>
           </div>
@@ -64,6 +68,7 @@ BlogDetailPage.propTypes = {
     content: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
     cuid: PropTypes.string.isRequired,
+    datetime: PropTypes.string.isRequired,
   }).isRequired,
   comments: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string.isRequired,
